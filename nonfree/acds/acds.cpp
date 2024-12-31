@@ -51,8 +51,19 @@ public:
       fprintf(f,"  OUTP %i\n",outp);
       fprintf(f,"  X %i\n",anchor_x);
       fprintf(f,"  Y %i\n",anchor_y);
+      fprintf(f,"  X_off %i\n",x_off);
+      fprintf(f,"  Y_off %i\n",y_off);
+      if (flags&1) fprintf(f,"  SROUTE ON\n");
       std::vector<void *>::iterator obj;
       std::vector<long>::iterator field;
+      long n;
+      if (precharge_mask) fprintf(f,"  CONN FROM %u, 12 ",ID);
+      for(n=0;n<12;n=n+1) {
+          if ((precharge_mask>>n)&1) {
+              fprintf(f,"TO %u, %u:%u:%u ",ID,n,0,size);
+          }
+      }
+      if (precharge_mask) fprintf(f,"\n");
       for(obj=driven_obj.begin(),field=driven_off_pos.begin(); 
           obj!=driven_obj.end() && field!=driven_off_pos.end();obj++,field++) {
           unsigned n,pos,cnt,off,othersz;
