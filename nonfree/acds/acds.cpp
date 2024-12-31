@@ -18,6 +18,7 @@ int global_anchor_x;
 int global_anchor_y;
 int global_bus_X_off;
 int global_bus_Y_off;
+int acds_global_ID_counter=0;
 
 class __acds_cell {
   int phase;
@@ -28,6 +29,7 @@ class __acds_cell {
   short y_off;
   short x_mod;
   short y_mod;
+  unsigned int ID;
   void *Owner;
   std::vector<void *> driven_obj;
   std::vector<long> driven_off_pos;
@@ -43,9 +45,11 @@ class __acds_cell {
 };
 
   void __acds_cell::printcell(file *f) {
-      fprintf(f,"BEGIN %ll\n",(long long) this&-1);
+      fprintf(f,"BEGIN %u\n",ID);
       fprintf(f,"  INP %i\n",INP);
-      fprintf(f,"  outp %i\n",outp);
+      fprintf(f,"  OUTP %i\n",outp);
+      fprintf(f,"  PREC %i\n",precharge_mask);
+      fprintf(f,"END %u\n",ID);
   }
   void __acds_cell::eval() {
       long n,n2;
@@ -109,6 +113,7 @@ template <long _size,long _precharge_mask,long _outp,long _INP> class acds_cell 
   short y_off;
   short x_mod;
   short y_mod;
+  unsigned int ID;
   void *Owner;
   std::vector<void *> driven_obj;
   std::vector<long> driven_off_pos;
@@ -132,6 +137,7 @@ template <long _size,long _precharge_mask,long _outp,long _INP> class acds_cell 
       for(n=0;n<(size*16);n=n+1) {
           if ((1<<((n/size)&15))&INP) io[1][n%16][n/16]=0xff;
       }
+      ID=acds_global_ID_counter++;
   }
   acds_cell<_size,_precharge_mask,_outp,_INP> (int x,int y) {
       anchor_x=global_anchor_x+x;
@@ -148,8 +154,9 @@ template <long _size,long _precharge_mask,long _outp,long _INP> class acds_cell 
       for(n=0;n<(size*16);n=n+1) {
           if ((1<<((n/size)&15))&INP) io[1][n%16][n/16]=0xff;
       }
+      ID=acds_global_ID_counter++;
   }
-  int add_input(void * from, int off, int pos, int count) {
+  int acds_cell::add_input(void * from, int off, int pos, int count) {
     __acds_cell *f=(__acds_cell *) from;
     if (off>f->size && off>0 || off<size && off<0) return 0;//error
     f->driven_obj[f->driven_obj.size()]=((void *)this);
