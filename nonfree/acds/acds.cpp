@@ -41,6 +41,12 @@ class __acds_cell {
   void drive();
   void printcell(file * f);
 };
+
+  void __acds_cell::printcell(file *f) {
+      fprintf(f,"BEGIN %ll\n",(long long) this&-1);
+      fprintf(f,"  INP %i\n",INP);
+      fprintf(f,"  outp %i\n",outp);
+  }
   void __acds_cell::eval() {
       long n,n2;
       for(n=size;n<(size*16);n++) {
