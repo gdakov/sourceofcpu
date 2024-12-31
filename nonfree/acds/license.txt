@@ -1,5 +1,2 @@
-YOU are granted a non exculsive non transferable 1 seat 1 year license per purchase on the patreon website CISClikeCPU.
-There is no warranty of any kind, not even the implied warranty of merchantibility or fitness for particular purpose, except if you do all the placement, routing and timing correctly.
-The warranty shall be limited to the fee paid whenever the law allows that.
-THERE ARE DESIGN RULES WHERE YOU MIGHT BE ABLE TO GUARANTEE, size of die limited, that the design will not erroneously self trigger from self radiation.
+NO LICENSE IMPLIED UNLESS AGREED OTHER TERMS WITH AUTHOR
 

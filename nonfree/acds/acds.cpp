@@ -1,4 +1,5 @@
 #include <vector>
+#include <cstdio>
 
 #define driven_phase_mask 0xff
 #define driven_off_mask 0xffff0000
@@ -21,6 +22,7 @@ int global_bus_Y_off;
 int acds_global_ID_counter=0;
 
 class __acds_cell {
+public:
   int phase;
   int size;
   short anchor_x;
@@ -40,25 +42,25 @@ class __acds_cell {
   void eval();
   void antiphase();
   void drive();
-  void printcell(file * f);
+  void printcell(FILE * f);
 };
 
-  void __acds_cell::printcell(file *f) {
+  void __acds_cell::printcell(FILE *f) {
       fprintf(f,"BEGIN %u\n",ID);
       fprintf(f,"  INP %i\n",INP);
       fprintf(f,"  OUTP %i\n",outp);
       fprintf(f,"  X %i\n",anchor_x);
       fprintf(f,"  Y %i\n",anchor_y);
       std::vector<void *>::iterator obj;
-      std::vector<long>::iterator offs;
+      std::vector<long>::iterator field;
       for(obj=driven_obj.begin(),field=driven_off_pos.begin(); 
           obj!=driven_obj.end() && field!=driven_off_pos.end();obj++,field++) {
-          long n,pos,cnt,off,othersz;
+          unsigned n,pos,cnt,off,othersz;
           pos=(*field&driven_phase_mask);      
           off=(*field&driven_off_mask)>>driven_off_shift;
           cnt=(*field&driven_count_mask)>>driven_count_shift;
           othersz=((__acds_cell *)*obj)->size;
-          fprintf(f,"  CONN FROM %u TO %u,%u:%u:%u\n",ID,(*obj).ID,pos,off,cnt);
+          fprintf(f,"  CONN FROM %u TO %u,%u:%u:%u\n",ID,((__acds_cell *)(*obj))->ID,pos,off,cnt);
       }
       fprintf(f,"END %u\n",ID);
   }
@@ -145,7 +147,7 @@ template <long _size,long _precharge_mask,long _outp,long _INP> class acds_cell 
       outp=_outp;
       INP=_INP;
       for(n=0;n<(size*16);n=n+1) {
-          if ((1<<((n/size)&15))&INP) io[1][n%16][n/16]=0xff;
+          if ((1<<((n/size)&15))&INP) io[1][n]=0xff;
       }
       ID=acds_global_ID_counter++;
       io[0]=(char *) io_data;
@@ -163,13 +165,21 @@ template <long _size,long _precharge_mask,long _outp,long _INP> class acds_cell 
       flags=_flags;
       long n;
       for(n=0;n<(size*16);n=n+1) {
-          if ((1<<((n/size)&15))&INP) io[1][n%16][n/16]=0xff;
+          if ((1<<((n/size)&15))&INP) io[1][n]=0xff;
       }
       ID=acds_global_ID_counter++;
       io[0]=(char *) io_data;
       io[1]=(char *) io_data+1;
   }
-  int acds_cell::add_input(void * from, int off, int pos, int count) {
+  void eval() {
+      __acds_cell *f=(__acds_cell *) this;
+      f->eval();
+      f->drive();
+  }
+  int  add_input(void * from, int off, int pos, int count);
+};
+
+  int  acds_cell <long _size,long _precharge_mask,long _outp,long _INP> ::add_input(void * from, int off, int pos, int count) {
     __acds_cell *f=(__acds_cell *) from;
     if (off>f->size && off>0 || off<size && off<0) return 0;//error
     f->driven_obj[f->driven_obj.size()]=((void *)this);
@@ -180,9 +190,3 @@ template <long _size,long _precharge_mask,long _outp,long _INP> class acds_cell 
     if (cntmax<count) return 0;
     return count;
   }
-  void eval() {
-      __acds_cell *f=(__acds_cell *) this;
-      f->eval();
-      f->drive();
-  }
-};
