@@ -179,7 +179,8 @@ template <long _size,long _precharge_mask,long _outp,long _INP> class acds_cell 
   int  add_input(void * from, int off, int pos, int count);
 };
 
-  int  acds_cell <long _size,long _precharge_mask,long _outp,long _INP> ::add_input(void * from, int off, int pos, int count) {
+  template <long _size,long _precharge_mask,long _outp,long _INP> 
+    int acds_cell<_size,_precharge_mask, _outp,_INP>::add_input(void * from, int off, int pos, int count) {
     __acds_cell *f=(__acds_cell *) from;
     if (off>f->size && off>0 || off<size && off<0) return 0;//error
     f->driven_obj[f->driven_obj.size()]=((void *)this);
