@@ -27,16 +27,15 @@ class __acds_cell {
   short anchor_y;
   short x_off;
   short y_off;
-  short x_mod;
-  short y_mod;
   unsigned int ID;
+  unsigned int flags;//0x1=S route enable
   void *Owner;
   std::vector<void *> driven_obj;
   std::vector<long> driven_off_pos;
   unsigned short precharge_mask;
   unsigned short outp;
   unsigned short INP;
-  unsigned char io[2][16];
+  unsigned char * io[2];
   public:
   void eval();
   void antiphase();
@@ -123,24 +122,23 @@ template <long _size,long _precharge_mask,long _outp,long _INP> class acds_cell 
   short anchor_y;
   short x_off;
   short y_off;
-  short x_mod;
-  short y_mod;
   unsigned int ID;
+  unsigned int flags; //0x1=S route enable
   void *Owner;
   std::vector<void *> driven_obj;
   std::vector<long> driven_off_pos;
   unsigned short precharge_mask;
   unsigned short outp;
   unsigned short INP;
-  unsigned char io[2][16][_size];
+  unsigned char *io[2];
+  unsigned char io_data[2][16][_size];
   public:
-  acds_cell<_size,_precharge_mask,_outp,_INP> () {
+  acds_cell<_size,_precharge_mask,_outp,_INP> (int _flags) {
       anchor_x=global_anchor_x;
       anchor_y=global_anchor_y;
       x_off=global_bus_X_off;
       y_off=global_bus_Y_off;
-      x_mod=16000;
-      y_mod=16000;
+      flags=_flags;
       long n;
       size=_size;
       precharge_mask=_precharge_mask;
@@ -150,23 +148,26 @@ template <long _size,long _precharge_mask,long _outp,long _INP> class acds_cell 
           if ((1<<((n/size)&15))&INP) io[1][n%16][n/16]=0xff;
       }
       ID=acds_global_ID_counter++;
+      io[0]=(char *) io_data;
+      io[1]=(char *) io_data+1;
   }
-  acds_cell<_size,_precharge_mask,_outp,_INP> (int x,int y) {
+  acds_cell<_size,_precharge_mask,_outp,_INP> (int x,int y,int _flags) {
       anchor_x=global_anchor_x+x;
       anchor_y=global_anchor_y+y;
       x_off=global_bus_X_off;
       y_off=global_bus_Y_off;
-      x_mod=16000;
-      y_mod=16000;
       size=_size;
       precharge_mask=_precharge_mask;
       outp=_outp;
       INP=_INP;
+      flags=_flags;
       long n;
       for(n=0;n<(size*16);n=n+1) {
           if ((1<<((n/size)&15))&INP) io[1][n%16][n/16]=0xff;
       }
       ID=acds_global_ID_counter++;
+      io[0]=(char *) io_data;
+      io[1]=(char *) io_data+1;
   }
   int acds_cell::add_input(void * from, int off, int pos, int count) {
     __acds_cell *f=(__acds_cell *) from;
