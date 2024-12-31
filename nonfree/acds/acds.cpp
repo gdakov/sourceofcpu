@@ -49,6 +49,18 @@ class __acds_cell {
       fprintf(f,"  INP %i\n",INP);
       fprintf(f,"  OUTP %i\n",outp);
       fprintf(f,"  X %i\n",anchor_x);
+      fprintf(f,"  Y %i\n",anchor_y);
+      std::vector<void *>::iterator obj;
+      std::vector<long>::iterator offs;
+      for(obj=driven_obj.begin(),field=driven_off_pos.begin(); 
+          obj!=driven_obj.end() && field!=driven_off_pos.end();obj++,field++) {
+          long n,pos,cnt,off,othersz;
+          pos=(*field&driven_phase_mask);      
+          off=(*field&driven_off_mask)>>driven_off_shift;
+          cnt=(*field&driven_count_mask)>>driven_count_shift;
+          othersz=((__acds_cell *)*obj)->size;
+          fprintf(f,"  CONN FROM %u TO %u,%u:%u:%u\n",ID,(*obj).ID,pos,off,cnt);
+      }
       fprintf(f,"END %u\n",ID);
   }
   void __acds_cell::eval() {
