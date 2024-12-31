@@ -48,7 +48,7 @@ class __acds_cell {
       fprintf(f,"BEGIN %u\n",ID);
       fprintf(f,"  INP %i\n",INP);
       fprintf(f,"  OUTP %i\n",outp);
-      //fprintf(f,"  PREC %i\n",precharge_mask);
+      fprintf(f,"  X %i\n",anchor_x);
       fprintf(f,"END %u\n",ID);
   }
   void __acds_cell::eval() {
