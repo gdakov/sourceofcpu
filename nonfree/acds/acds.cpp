@@ -39,6 +39,7 @@ class __acds_cell {
   void eval();
   void antiphase();
   void drive();
+  void printcell(file * f);
 };
   void __acds_cell::eval() {
       long n,n2;
