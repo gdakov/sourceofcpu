@@ -61,94 +61,11 @@ module addrcalc_block(
   u5_LSQ_no,u5_II_no,u5_WQ_no,
   u5_lsflag,u5_clkEn,u5_attr,u5_thread,
   mOp0_clHit,mOp1_clHit,mOp2_clHit,mOp3_clHit,
-  miss4,
-  mOpY4_en,
-  mOpY4_hit,
-  mOpY4_dupl,//write to a non-exclusive cl
-  //mOp4_thread,
-  mOpY4_addrEven,
-  mOpY4_addrOdd,
-  mOpY4_sz,
-  mOpY4_first,
-  mOpY4_banks,
-  mOpY4_bank0,
-  mOpY4_bank1,
-  mOpY4_bgn_b,
-  mOpY4_end_b,
-  mOpY4_odd,
-  mOpY4_addr_low,
-  mOpY4_split,
-  mOpY4_clHit,
-  mOpY4_data,
-  mOpY4_pbit,
-  mOpY4_type,
-  mOpY4_II,
-  mOpY4_en_o,
-  mOpY4_addrEven_o,
-  mOpY4_addrOdd_o,
-  mOpY4_sz_o,
-  mOpY4_first_o,
-  mOpY4_banks_o,
-  mOpY4_bank0_o,
-  mOpY4_bank1_o,
-  mOpY4_bgn_b_o,
-  mOpY4_end_b_o,
-  mOpY4_odd_o,
-  mOpY4_addr_low_o,
-  mOpY4_split_o,
-//  mOpY4_clHit_o,
-  mOpY4_data_o,
-  mOpY4_dataN_o,
-  mOpY4_pbit_o,
-  mOpY4_type_o,
-  mOpY4_II_o,
-  miss5,
-  mOpY5_en,
-  mOpY5_hit,
-  mOpY5_dupl,//write to a non-exclusive cl
-  //mOp4_thread,
-  mOpY5_addrEven,
-  mOpY5_addrOdd,
-  mOpY5_sz,
-  mOpY5_first,
-  mOpY5_banks,
-  mOpY5_bank0,
-  mOpY5_bank1,
-  mOpY5_bgn_b,
-  mOpY5_end_b,
-  mOpY5_odd,
-  mOpY5_addr_low,
-  mOpY5_split,
-  mOpY5_clHit,
-  mOpY5_data,
-  mOpY5_pbit,
-  mOpY5_type,
-  mOpY5_II,
-  mOpY5_en_o,
-  //mOp4_thread,
-  mOpY5_addrEven_o,
-  mOpY5_addrOdd_o,
-  mOpY5_sz_o,
-  mOpY5_first_o,
-  mOpY5_banks_o,
-  mOpY5_bank0_o,
-  mOpY5_bank1_o,
-  mOpY5_bgn_b_o,
-  mOpY5_end_b_o,
-  mOpY5_odd_o,
-  mOpY5_addr_low_o,
-  mOpY5_split_o,
-  mOpY5_data_o,
-  mOpY5_dataN_o,
-  mOpY5_pbit_o,
-  mOpY5_type_o,
-  mOpY5_II_o,
   p0_adata,p0_banks,p0_LSQ,p0_en,p0_rsEn,p0_secq,p0_ret,p0_repl,p0_lsfwd,p0_skip_LDQ,
   p1_adata,p1_banks,p1_LSQ,p1_en,p1_rsEn,p1_secq,p1_ret,p1_repl,p1_lsfwd,p1_skip_LDQ,
   p2_adata,p2_banks,p2_LSQ,p2_en,p2_rsEn,p2_secq,p2_ret,p2_repl,p2_lsfwd,p2_data,p2_pbit,p2_brdbanks,p2_skip_LDQ,
   p3_adata,p3_banks,p3_LSQ,p3_en,p3_rsEn,p3_ioEn,p3_io_ack,p3_ret,p3_data,p3_pbit,p3_brdbanks,p3_repl,p3_lsfwd,p3_skip_LDQ,p3_pfx,
   p4_adata,p4_LSQ,p4_en,p4_secq,p4_ret,
-  p5_adata,p5_LSQ,p5_en,p5_secq,p5_ret,
   p_bankNone,
   FU0Hit,FU1Hit,FU2Hit,FU3Hit,
   FU0,FU1,FU2,FU3,FU4,FU5,FU6,FU7,FU8,FU9,
@@ -167,24 +84,7 @@ module addrcalc_block(
   reqBus_low,
   reqBus_bank0,
   insert_isData,
-  insBus_req,
-  wr0_hit,
-  wr0_addrE,wr0_addrO,
-  wr0_banks,
-  wr0_begin,wr0_end,
-  wr0_bgn_ben,wr0_end_ben,
-  wr0_odd,wr0_split,
-  wr0_data,
-  wr0_pbit,wr0_d128,
-  wr1_hit,
-  wr1_addrE,wr1_addrO,
-  wr1_banks,
-  wr1_begin,wr1_end,
-  wr1_bgn_ben,wr1_end_ben,
-  wr1_odd,wr1_split,
-  wr1_data,
-  wr1_pbit,wr1_d128,
-  wrStall
+  insBus_req
   );
   parameter [4:0] BUS_ID=5'd0;
   localparam TLB_DATA_WIDTH=`dmlbData_width;
@@ -284,88 +184,6 @@ module addrcalc_block(
   input [1:0] mOp2_clHit;
   input [1:0] mOp3_clHit;
 
-  input miss4;
-  input        mOpY4_en;
-  input        mOpY4_hit;
-  input [1:0]  mOpY4_dupl;//write to a non-exclusive cl
-  //mOp4_thread,
-  input [35:0] mOpY4_addrEven;
-  input [35:0] mOpY4_addrOdd;
-  input [4:0]  mOpY4_sz;
-  input        mOpY4_first;
-  input [31:0] mOpY4_banks;
-  input [4:0]  mOpY4_bank0;
-  input [4:0]  mOpY4_bank1; // end bank
-  input [3:0]  mOpY4_bgn_b;
-  input [3:0]  mOpY4_end_b;
-  input        mOpY4_odd;
-  input [1:0]  mOpY4_addr_low;
-  input        mOpY4_split;
-  input [1:0]  mOpY4_clHit;
-  input[159:0] mOpY4_data;
-  input [1:0]  mOpY4_type;
-  input [9:0]  mOpY4_II;
-  input [1:0]  mOpY4_pbit;
-  output        mOpY4_en_o;
-  //mOp4_thread,
-  output [35:0] mOpY4_addrEven_o;
-  output [35:0] mOpY4_addrOdd_o;
-  output [4:0]  mOpY4_sz_o;
-  output        mOpY4_first_o;
-  output [31:0] mOpY4_banks_o;
-  output [4:0]  mOpY4_bank0_o;
-  output [4:0]  mOpY4_bank1_o; // end bank
-  output [3:0]  mOpY4_bgn_b_o;
-  output [3:0]  mOpY4_end_b_o;
-  output        mOpY4_odd_o;
-  output [1:0]  mOpY4_addr_low_o;
-  output        mOpY4_split_o;
-  output[159:0] mOpY4_data_o;
-  output[159:0] mOpY4_dataN_o;
-  output [1:0]  mOpY4_type_o;
-  output [9:0]  mOpY4_II_o;
-  output [1:0]  mOpY4_pbit_o;
-  input miss5;
-  input        mOpY5_en;
-  input        mOpY5_hit;
-  input [1:0]  mOpY5_dupl;//write to a non-exclusive cl
-  //mOp4_thread,
-  input [35:0] mOpY5_addrEven;
-  input [35:0] mOpY5_addrOdd;
-  input [4:0]  mOpY5_sz;
-  input        mOpY5_first;
-  input [31:0] mOpY5_banks;
-  input [4:0]  mOpY5_bank0;
-  input [4:0]  mOpY5_bank1; // end bank
-  input [3:0]  mOpY5_bgn_b;
-  input [3:0]  mOpY5_end_b;
-  input        mOpY5_odd;
-  input [1:0]  mOpY5_addr_low;
-  input        mOpY5_split;
-  input [1:0]  mOpY5_clHit;
-  input[159:0] mOpY5_data;
-  input [1:0]  mOpY5_type;
-  input [9:0]  mOpY5_II;
-  input [1:0]  mOpY5_pbit;
-  output        mOpY5_en_o;
-  //mOp4_thread,
-  output [35:0] mOpY5_addrEven_o;
-  output [35:0] mOpY5_addrOdd_o;
-  output [4:0]  mOpY5_sz_o;
-  output        mOpY5_first_o;
-  output [31:0] mOpY5_banks_o;
-  output [4:0]  mOpY5_bank0_o;
-  output [4:0]  mOpY5_bank1_o; // end bank
-  output [3:0]  mOpY5_bgn_b_o;
-  output [3:0]  mOpY5_end_b_o;
-  output        mOpY5_odd_o;
-  output [1:0]  mOpY5_addr_low_o;
-  output        mOpY5_split_o;
-  output[159:0] mOpY5_data_o;
-  output[159:0] mOpY5_dataN_o;
-  output [1:0]  mOpY5_type_o;
-  output [9:0]  mOpY5_II_o;
-  output [1:0]  mOpY5_pbit_o;
   output [`lsaddr_width-1:0] p0_adata;
   output [31:0]p0_banks;
   output [8:0] p0_LSQ;
@@ -419,12 +237,6 @@ module addrcalc_block(
   output       p4_en;
   output       p4_secq;
   output [13:0]p4_ret;
-  output [`lsaddr_width-1:0] p5_adata;
-  output [8:0] p5_LSQ;
-  output       p5_en;
-  output       p5_secq;
-  output [13:0]p5_ret;
-  output [31:0] p_bankNone;
 
   input FU0Hit,FU1Hit,FU2Hit,FU3Hit;
 
@@ -468,31 +280,6 @@ module addrcalc_block(
   input insert_isData;
   input [9:0] insBus_req;
 
-  output [1:0] wr0_hit;
-  output [35:0] wr0_addrE;
-  output [35:0] wr0_addrO;
-  output [31:0] wr0_banks;
-  output [4:0] wr0_begin;
-  output [4:0] wr0_end;
-  output [3:0] wr0_bgn_ben;
-  output [3:0] wr0_end_ben;
-  output wr0_odd,wr0_split;
-  output [159:0] wr0_data;
-  output [1:0] wr0_pbit;
-  output wr0_d128;
-  output [1:0] wr1_hit;
-  output [35:0] wr1_addrE;
-  output [35:0] wr1_addrO;
-  output [31:0] wr1_banks;
-  output [4:0] wr1_begin;
-  output [4:0] wr1_end;
-  output [3:0] wr1_bgn_ben;
-  output [3:0] wr1_end_ben;
-  output [159:0] wr1_data;
-  output [1:0] wr1_pbit;
-  output wr1_d128;
-  output wr1_odd,wr1_split;
-  input wrStall;
 
   input u1_thread;
   input u2_thread;
@@ -625,83 +412,6 @@ module addrcalc_block(
   reg insert_isData_reg;
   reg insert_isData_reg2;
  
-  reg [35:0] mOpY4_addrEven_o_reg;
-  reg [35:0] mOpY4_addrOdd_o_reg;
-  reg [31:0] mOpY4_banks_o_reg;
-  reg [4:0]  mOpY4_bank0_o_reg;
-  reg [4:0]  mOpY4_bank1_o_reg;
-  reg [3:0]  mOpY4_bgn_b_o_reg;
-  reg [3:0]  mOpY4_end_b_o_reg;
-  reg        mOpY4_odd_o_reg;
-  reg        mOpY4_split_o_reg;
-  reg [159:0]mOpY4_data_o_reg;
-  reg [1  :0]mOpY4_pbit_o_reg;
-  reg        mOpY4_d128_o_reg;
-
-  reg [35:0] mOpY4_addrEven_o_reg2;
-  reg [35:0] mOpY4_addrOdd_o_reg2;
-  reg [31:0] mOpY4_banks_o_reg2;
-  reg [4:0]  mOpY4_bank0_o_reg2;
-  reg [4:0]  mOpY4_bank1_o_reg2;
-  reg [3:0]  mOpY4_bgn_b_o_reg2;
-  reg [3:0]  mOpY4_end_b_o_reg2;
-  reg        mOpY4_odd_o_reg2;
-  reg        mOpY4_split_o_reg2;
-  reg [159:0]mOpY4_data_o_reg2;
-  reg [1  :0]mOpY4_pbit_o_reg2;
-  reg        mOpY4_d128_o_reg2;
-  
-  reg [35:0] mOpY4_addrEven_o_reg3;
-  reg [35:0] mOpY4_addrOdd_o_reg3;
-  reg [31:0] mOpY4_banks_o_reg3;
-  reg [4:0]  mOpY4_bank0_o_reg3;
-  reg [4:0]  mOpY4_bank1_o_reg3;
-  reg [3:0]  mOpY4_bgn_b_o_reg3;
-  reg [3:0]  mOpY4_end_b_o_reg3;
-  reg        mOpY4_odd_o_reg3;
-  reg        mOpY4_split_o_reg3;
-  reg [159:0]mOpY4_data_o_reg3;
-  reg [1  :0]mOpY4_pbit_o_reg3;
-  reg        mOpY4_d128_o_reg3;
-
-  reg [35:0] mOpY5_addrEven_o_reg;
-  reg [35:0] mOpY5_addrOdd_o_reg;
-  reg [31:0] mOpY5_banks_o_reg;
-  reg [4:0]  mOpY5_bank0_o_reg;
-  reg [4:0]  mOpY5_bank1_o_reg;
-  reg [3:0]  mOpY5_bgn_b_o_reg;
-  reg [3:0]  mOpY5_end_b_o_reg;
-  reg        mOpY5_odd_o_reg;
-  reg        mOpY5_split_o_reg;
-  reg [159:0]mOpY5_data_o_reg;
-  reg [1  :0]mOpY5_pbit_o_reg;
-  reg        mOpY5_d128_o_reg;
-
-  reg [35:0] mOpY5_addrEven_o_reg2;
-  reg [35:0] mOpY5_addrOdd_o_reg2;
-  reg [31:0] mOpY5_banks_o_reg2;
-  reg [4:0]  mOpY5_bank0_o_reg2;
-  reg [4:0]  mOpY5_bank1_o_reg2;
-  reg [3:0]  mOpY5_bgn_b_o_reg2;
-  reg [3:0]  mOpY5_end_b_o_reg2;
-  reg        mOpY5_odd_o_reg2;
-  reg        mOpY5_split_o_reg2;
-  reg [159:0]mOpY5_data_o_reg2;
-  reg [1  :0]mOpY5_pbit_o_reg2;
-  reg        mOpY5_d128_o_reg2;
-  
-  reg [35:0] mOpY5_addrEven_o_reg3;
-  reg [35:0] mOpY5_addrOdd_o_reg3;
-  reg [31:0] mOpY5_banks_o_reg3;
-  reg [4:0]  mOpY5_bank0_o_reg3;
-  reg [4:0]  mOpY5_bank1_o_reg3;
-  reg [3:0]  mOpY5_bgn_b_o_reg3;
-  reg [3:0]  mOpY5_end_b_o_reg3;
-  reg        mOpY5_odd_o_reg3;
-  reg        mOpY5_split_o_reg3;
-  reg [159:0]mOpY5_data_o_reg3;
-  reg [1  :0]mOpY5_pbit_o_reg3;
-  reg        mOpY5_d128_o_reg3;
 
   wire alt_bus_hold;
   wire [36:0] alt_bus_addr;
@@ -780,13 +490,6 @@ module addrcalc_block(
   wire mOpR_dupl;
   wire mOpR_stall;
  
-  wire p0_conflict;
-  wire p1_conflict;
-  wire p2_conflict;
-  wire p3_conflict;
-  wire p4_conflict;
-  wire p5_conflict;
-
   wire p0_sec_in,p1_sec_in,p2_sec_in,p3_sec_in;
   wire p4_sec_in,p5_sec_in;
   wire p0_ndiff,p1_ndiff,p2_ndiff,p3_ndiff;
@@ -800,13 +503,6 @@ module addrcalc_block(
  
   wire other_flip;
 
-  reg p0_conflict_reg;
-  reg p1_conflict_reg;
-  reg p2_conflict_reg;
-  reg p0_conflict_reg2;
-  reg p1_conflict_reg2;
-  reg p2_conflict_reg2;
-  
   reg [`lsaddr_width-1:0] p0_adata_reg;
   reg [`lsaddr_width-1:0] p1_adata_reg;
   reg [`lsaddr_width-1:0] p2_adata_reg;
@@ -855,13 +551,8 @@ module addrcalc_block(
   wire        p4_mex_en;
   wire [3:0]  p4_mex_attr;
   wire [43:0] p4_mex_addr;
-  wire        p5_mex_en;
-  wire [3:0]  p5_mex_attr;
-  wire [43:0] p5_mex_addr;
   wire [4:0]  p4_mex_sz;
-  wire [4:0]  p5_mex_sz;
   reg        p4_mex_en_reg;
-  reg        p5_mex_en_reg;
 
   reg        u1_clkEn_reg;
   reg [12:0] u1_op_reg;
@@ -1568,11 +1259,10 @@ module addrcalc_block(
   add_addrcalc aadd3(uu_base3,u3_const_reg,uu_index3,p2_cmplxAddr_d,p2_sec_in,
     p2_ndiff,1'b1,u3_sh_reg,u3_sh2_reg,u3_op_reg[12]);
   add_addrcalc aadd4(uu_base4,u4_const_reg,uu_index4,p4_cmplxAddr_d,p4_sec_in,
-    p4_ndiff,~p4_mex_en,u4_sh_reg,u4_sh2_reg,u4_op_reg[12]);
+    p4_ndiff,1'b1,u4_sh_reg,u4_sh2_reg,u4_op_reg[12]);
   add_addrcalc aadd5(uu_base5,u5_const_reg,uu_index5,p5_cmplxAddr_d,p5_sec_in,
     p5_ndiff,~p5_mex_en,u5_sh_reg,u5_sh2_reg,u5_op_reg[12]);
 
-  assign p4_cmplxAddr_d=p4_mex_en ? {5'b11111,7'b0,7'h7f,1'b1,p4_mex_addr} : 64'bz;
   assign p5_cmplxAddr_d=p5_mex_en ? {5'b11111,7'b0,7'h7f,1'b1,p5_mex_addr} : 64'bz;
 
   saddrcalc Waddrcalc_mod(
@@ -1639,69 +1329,6 @@ module addrcalc_block(
   .mlb_hit(mlb_hitR[4])
   );
   
-  saddrcalc Waddrcalc2_mod(
-  .clk(clk),
-  .rst(rst),
-  .except(except),
-  .attr(u5_attr_reg),
-  .read_clkEn(u5_clkEn_reg),
-  .doStall(),
-  .bus_hold(wt_pause_addrcalc_reg), 
-  .mex_addr(p5_mex_addr),
-  .mex_attr(p5_mex_attr),
-  .mex_en(p5_mex_en),
-  .op(p5_mex_en ? {7'b0,p5_mex_sz,1'b1} : u5_op_reg),
-  .shiftSize(u5_sh_reg),
-  .regno(9'b0),
-  .LSQ_no(u5_LSQ_no_reg),
-  .II_no(u5_II_no_reg),
-  .WQ_no(u5_WQ_no_reg),
-  .thread(1'b0),
-  .lsflag(u5_lsflag_reg),
-  .cmplxAddr(p5_cmplxAddr),
-  .cin_secq(p5_mex_en_reg ? 1'b1 : p5_sec_in_reg|~mflags[u5_thread_reg2][19]),
-  .ptrdiff(p5_mex_en_reg ? 1'b0 : ~p5_ndiff_reg),
-  .error(u5_error_reg2),
-  //.conflict(),
-  .mlbMiss(p5_mlbmiss),
-  .mOp_register(),
-  .mOp_type(mOp5_type),
-  .mOp_LSQ(mOp5_LSQ),
-  .mOp_II(mOp5_II),
-  .mOp_WQ(mOp5_WQ),
-  .mOp_attr(mOp5_attr),
-  .mOp_addrEven(mOpX5_addrEven),
-  .mOp_addrOdd(mOpX5_addrOdd),
-  .mOp_addrMain(mOp5_addrMain),
-  .mOp_sz(mOp5_sz),
-  .mOp_st(),
-  .mOp_en(mOp5_en),
-  .mOp_secq(mOp5_sec),
-  //.mOp_ptrdiff(mOp5_ptrdiff),
-  .mOp_rsEn(),
-  .mOp_thread(),
-  .mOp_lsflag(mOp5_lsflag),
-  .mOp_banks(mOp5_banks),
-  .mOp_bank0(mOp5_bank0),
-  //.mOp_bank1(dc_wrBeginB[n]),
-  .mOp_odd(mOp5_odd),
-  .mOp_addr_low(mOp5_low),
-  .mOp_split(mOp5_split),
-  .pageFault(p5_pageFault),
-  .faultCode(p5_faultCode),
-  .faultNo(p5_faultNo),
-  //.mOp_noBanks(),
-  .msrss_no(msrss_addr),.msrss_thr(msrss_thread),.msrss_en(msrss_en),.msrss_data(msrss_data),
-  .cout_secq(),
-  .mlb_clkEn(),
-  .addrTlb(addrTlbR[5]),
-  .attrTlb(attrTlbR[5]),
-  .sproc(sprocR[5]),
-  .mlb_data0(mlb_data0R[5]),
-  .mlb_data1(mlb_data1R[5]),
-  .mlb_hit(mlb_hitR[5])
-
-  );
           
   wtmiss wtmiss_mod(
   clk,
@@ -1740,44 +1367,10 @@ module addrcalc_block(
   mOpX4_II,
   mOpX4_WQ,
   mOpX4_lsflag,
-  p5_mlbmiss,
-  mOp5_en,
-  1'b0,
-  mOp5_addrMain,
-  mOp5_type,
-  mOp5_sz,
-  mOp5_banks,
-  mOp5_bank0,
-  mOp5_odd,
-  mOp5_low,
-  mOp5_split,
-  mOp5_LSQ,
-  mOp5_II,
-  mOp5_WQ,
-  mOp5_attr,
-  mOp5_lsflag,
-  mOpX5_en,
-  mOpX5_thread,
- // mOp1_addrMain_o,
-  mOpX5_type,
-  mOpX5_sz,
-  mOpX5_banks,
-  mOpX5_bank0,
-  mOpX5_odd,
-  mOpX5_low,
-  mOpX5_split,
-  mOpX5_LSQ,
-  mOpX5_II,
-  mOpX5_WQ,
-  mOpX5_lsflag,
   p4_mex_addr,
   p4_mex_sz,
   p4_mex_attr,
   p4_mex_en,
-  p5_mex_addr,
-  p5_mex_sz,
-  p5_mex_attr,
-  p5_mex_en,
   Em_mlb_req_en,
   Em_mlb_req_addr,
   Em_mlb_req_attr,
@@ -1994,172 +1587,77 @@ module addrcalc_block(
   mlb_hitR[2] 
 
   );
-  
-  addrcalccam recirculate_mod(
-  .clk(clk),
-  .rst(rst),
-  .except(except),
-  .except_thread(1'b0),
-  .read_clkEn(~Em_mlb_req_en && ~rec_stall &&~bus_holds_addrcalc_reg &&~miss_holds_addrcalc_reg &&~alt_bus_hold_reg),// && ~miss_pause_addrcalc),
-  .doSkip(pause_addrcalc),
-  .rsStall(rsStall[3]),
-  .conflict0(p0_conflict | p0_mlbmiss_reg),
-  .mOp0_lsflag(mOp0_lsflag),
-  .mOp0_thread(1'b0),
-  .mOp0_addrMain(mOp0_addrMain),
-  .mOp0_regNo(mOp0_register),
-  .mOp0_sz(mOp0_sz),
-  .mOp0_invmlb(mOp0_invmlb),
-  .mOp0_split(mOp0_split),
-  .mOp0_bank0(mOp0_bank0),
-  .mOp0_LSQ(mOp0_LSQ),
-  .mOp0_type(mOp0_type),
-  .mOp0_II(mOp0_II),
-  .mOp0_WQ(mOp0_WQ),
-  .mOp0_attr(mOp0_attr),
-  .conflict1(p1_conflict | p1_mlbmiss_reg),
-  .mOp1_lsflag(mOp1_lsflag),
-  .mOp1_thread(1'b0),
-  .mOp1_addrMain(mOp1_addrMain),
-  .mOp1_regNo(mOp1_register),
-  .mOp1_sz(mOp1_sz),
-  .mOp1_invmlb(mOp1_invmlb),
-  .mOp1_split(mOp1_split),
-  .mOp1_bank0(mOp1_bank0),
-  .mOp1_LSQ(mOp1_LSQ),
-  .mOp1_type(mOp1_type),
-  .mOp1_II(mOp1_II),
-  .mOp1_WQ(mOp1_WQ),
-  .mOp1_attr(mOp1_attr),
-  .conflict2(p2_conflict | p2_mlbmiss_reg),
-  .mOp2_lsflag(mOp2_lsflag),
-  .mOp2_thread(1'b0),
-  .mOp2_addrMain(mOp2_addrMain),
-  .mOp2_regNo(mOp2_register),
-  .mOp2_sz(mOp2_sz),
-  .mOp2_invmlb(mOp2_invmlb),
-  .mOp2_split(mOp2_split),
-  .mOp2_bank0(mOp2_bank0),
-  .mOp2_LSQ(mOp2_LSQ),
-  .mOp2_type(mOp2_type),
-  .mOp2_II(mOp2_II),
-  .mOp2_WQ(mOp2_WQ),
-  .mOp2_attr(mOp2_attr),
- 
-  .mOpR_lsflag(rec_lsflag),
-  .mOpR_addrMain(rec_addr),
-  .mOpR_addrEven(rec_addrE),
-  .mOpR_addrOdd(rec_addrO),
-  .mOpR_lsfw(rec_lsfwd),
-  .mOpR_odd(rec_odd),
-  .mOpR_low(rec_addr_low),
-  .mOpR_regNo(rec_register),
-  .mOpR_sz(rec_size),
-  .mOpR_invmlb(rec_invmlb),
-  .mOpR_split(rec_split),
-  .mOpR_en(rec_en),
-  .mOpR_bank0(rec_beginA),
-  .mOpR_LSQ(rec_LSQ),
-  .mOpR_II(rec_II),
-  .mOpR_WQ(rec_WQ),
-  .mOpR_attr(rec_attr),
-  .mOpR_type(rec_type),
-  .mOpR_thread()
+
+  addrcalc #(0) addrcalc3(
+  clk,
+  rst,
+  except,
+  u4_attr,
+  rsStall[3],
+  u4_clkEn,
+  ,
+  bus_holds_addrcalc|miss_holds_addrcalc,
+  u4_op,
+  u4_sh,
+  u4_reg,
+  u4_LSQ_no,
+  u4_II_no,
+  u4_WQ_no,
+  1'b0,
+  u4_lsflag,
+  p3_cmplxAddr_d,
+  p3_sec_in|~mflags[u4_thread_reg][19],
+  ~p3_ndiff,
+  u4_error_reg,
+  mOp1_rsBanks,
+  mOp0_rsBanks,
+  mOp3_banks,
+  ~other_flip,
+  p3_conflict,
+  p3_mlbmiss,
+  p3_pageFault,
+  p3_faultCode,
+  p3_faultNo,
+  mOp3_register,
+  mOp3_type,
+  mOp3_skip_LDQ,
+  mOp3_LSQ,
+  mOp3_II,
+  mOp3_WQ,
+  mOp3_attr,
+  mOp3_addrEven,
+  mOp3_addrOdd,
+  mOp3_addrMain,
+  mOp3_sz,
+  ,
+  mOp3_en,
+  mOp3_sec,
+  mOp3_invmlb,
+  mOp3_rsEn,
+  ,
+  mOp3_lsflag,
+  mOp3_banks,
+  mOp3_rsBanks,
+  mOp3_bank0,
+  mOp3_odd,
+  mOp3_low,
+  mOp3_split,
+  mOp_noBanks,
+  msrss_addr,
+  msrss_en,
+  msrss_thread,
+  msrss_data,
+  ,
+  ,
+  addrTlbR[3],
+  attrTlbR[3],
+  sprocR[3],
+  mlb_data0R[3],
+  mlb_data1R[3],
+  mlb_hitR[3] 
+
   );
-  
-  addrcalc_r rec_addrcalc_mod(
-  .clk(clk),
-  .rst(rst),
-  .except(except),
-  .doStall(rec_stall),
-  .bus_hold(bus_holds_addrcalc_reg|miss_holds_addrcalc_reg|alt_bus_hold_reg),
-  .pause_miss(miss_pause_addrcalc),
-  .rsStall(rsStall[3]),
-  .mOp0_en(rec_en),
-  .mOp0_thread(1'b0),
-  .mOp0_addrMain(rec_addr),
-  .mOp0_addrEven(rec_addrE),
-  .mOp0_addrOdd(rec_addrO),
-  .mOp0_lsfwd(1'b0),
-  .mOp0_odd(rec_odd),
-  .mOp0_addr_low(rec_addr_low),
-  .mOp0_bread(rec_brdbnk),
-  .mOp0_data(rec_data),
-  .mOp0_pbit(rec_pbit),
-  .mOp0_sz(rec_size),
-  .mOp0_invmlb(rec_invmlb),
-  .mOp0_st(1'b0),
-  .mOp0_split(rec_split),
-  .mOp0_bank0(rec_beginA),
-  .mOp0_regNo(rec_register),
-  .mOp0_LSQ(rec_LSQ),
-  .mOp0_type(rec_type),
-  .mOp0_II(rec_II),
-  .mOp0_WQ(rec_WQ),
-  .mOp0_attr(rec_attr),
-  .mOp0_error(1'b0),
-  .mOp0_lsflag(rec_lsflag),
- 
-  .reqmlb_addr(Em_mlb_req_addr),
-  .reqmlb_attr(Em_mlb_req_attr),
-  .reqmlb_en(Em_mlb_req_en),
-  .reqmlb_ack(Em_mlb_req_ack), 
-  .reqC_addr(req_addr),
-  .reqC_attr(req_mlbAttr),
-  .reqC_mlbEn(req_mlbEn),
-  .busC_mlb_data(bus_mlb_data),
-  .busC_mlb_en(bus_mlb_en),
-  .msrss_no(msrss_addr),.msrss_en(msrss_en),.msrss_thread(msrss_thread),.msrss_data(msrss_data),
-  .pageFault(p3_pageFault),
-  .pageFaultX(p3_pageFaultX),
-  .faultCode(p3_faultCode),
-  .faultNo(p3_faultNo),
-  .mOp_addrEven(mOp3_addrEven),
-  .mOp_addrOdd(mOp3_addrOdd),
-  .mOp_sz(mOp3_sz),
-  .mOp_st(),
-  .mOp_en(mOp3_en),
-  .mOp_rsEn(mOp3_rsEn),
-  .mOp_ioEn(p3_ioEn),
- // .mOp_thread(),
-  .mOp_banks(mOp3_banks),
-  .mOp_bank0(mOp3_bank0),
-  .mOp_odd(mOp3_odd),
-  .mOp_addr_low(mOp3_low),
-  .mOp_split(mOp3_split),
-  .mOp_regNo(mOp3_register),
-  .mOp_LSQ(mOp3_LSQ),
-  .mOp_type(mOp3_type),
-  .mOp_II(mOp3_II),
-  .mOp_WQ(mOp3_WQ),
-  .mOp_lsfwd(mOp3_lsfwd),
-  .mOp_bread(mOp3_brdread),
-  .mOp_data(mOp3_data),
-  .mOp_pbit(mOp3_pbit),
-  .mOp_lsflag(mOp3_lsflag),
-  .mOp_mlb_miss(rec_mlb_miss),
-  .mOp_skip_LDQ(mOp3_skip_LDQ),
-  .FU3Hit(FU3Hit),
-  .FU3reg(FUreg3_reg),
-  .FU3Data(dc_rdataA),
-  .extern_feed(p3_io_ack),
-  .writeTlb_IP(mlb_addr),
-  .writeTlb_wen(mlb_wen),
-  .writeTlb_force_way(mlb_frc_way),
-  .writeTlb_force_way_en(mlb_frc_en),
-  .writeTlb_data0(mlb_data0),
-  .writeTlb_data1(mlb_data1),
-  .writeTlb_data2(mlb_data2),
-  .addrTlb(addrTlbR[3]),
-  .attrTlb(attrTlbR[3]),
-  .sproc(sprocR[3]),
-  .mlb_data0(mlb_data0R[3]),
-  .mlb_data1(mlb_data1R[3]),
-  .mlb_hit(mlb_hitR[3]),
-  .mlb_way(mlb_wayR[3]),
-  .cout_secq(),
-  .mlb_clkEn()
-  );
+
 
   assign miss0=~FU0Hit & mOpX0_en_reg3 & ~p0_conflict_reg2 & 
     ~bus_holds_addrcalc_reg4 &  
@@ -2173,33 +1671,6 @@ module addrcalc_block(
   assign miss3=~FU3Hit & mOpX3_en_reg3 & ~alt_bus_hold_reg4 & 
     ~bus_holds_addrcalc_reg4 & (~except || mOpX3_register_reg3==9'h1fc);
   
-  assign wr0_hit={mOpY4_hit && mOpY4_odd_o_reg3 | mOpY4_split_o_reg3,mOpY4_hit && ~mOpY4_odd_o_reg3 | mOpY4_split_o_reg3};
-  assign wr0_addrE=mOpY4_addrEven_o_reg3;
-  assign wr0_addrO=mOpY4_addrOdd_o_reg3;
-  assign wr0_banks=mOpY4_banks_o_reg3;
-  assign wr0_begin=mOpY4_bank0_o_reg3;
-  assign wr0_end=mOpY4_bank1_o_reg3;
-  assign wr0_bgn_ben=mOpY4_bgn_b_o_reg3;
-  assign wr0_end_ben=mOpY4_end_b_o_reg3;
-  assign wr0_odd=mOpY4_odd_o_reg3;
-  assign wr0_split=mOpY4_split_o_reg3;
-  assign wr0_data=mOpY4_data_o_reg3;
-  assign wr0_pbit=mOpY4_pbit_o_reg3;
-  assign wr0_d128=mOpY4_d128_o_reg3;
-  
-  assign wr1_hit={mOpY5_hit && mOpY5_odd_o_reg3 | mOpY5_split_o_reg3,mOpY5_hit && ~mOpY5_odd_o_reg3 | mOpY5_split_o_reg3};
-  assign wr1_addrE=mOpY5_addrEven_o_reg3;
-  assign wr1_addrO=mOpY5_addrOdd_o_reg3;
-  assign wr1_banks=mOpY5_banks_o_reg3;
-  assign wr1_begin=mOpY5_bank0_o_reg3;
-  assign wr1_end=mOpY5_bank1_o_reg3;
-  assign wr1_bgn_ben=mOpY5_bgn_b_o_reg3;
-  assign wr1_end_ben=mOpY5_end_b_o_reg3;
-  assign wr1_odd=mOpY5_odd_o_reg3;
-  assign wr1_split=mOpY5_split_o_reg3;
-  assign wr1_data=mOpY5_data_o_reg3;
-  assign wr1_pbit=mOpY5_pbit_o_reg3;
-  assign wr1_d128=mOpY5_d128_o_reg3;
  /* 
   assign miss_clDo[0]=mOpR_en && ~mOpR_clHit[0] && ~miss_doneEven && ~mOpR_odd|mOpR_split;
   assign miss_clDo[1]=mOpR_en && ~mOpR_clHit[1] && ~miss_doneOdd &&  mOpR_odd|mOpR_split;
@@ -2388,88 +1859,6 @@ module addrcalc_block(
   mOpX3_pbit,
   mOpX3_type,
   mOpX3_brdread,
-  miss4,
-  mOpY4_en,
-  mOpY4_dupl,//write to a non-exclusive cl
-  //mOp4_thread,
-  mOpY4_addrEven,
-  mOpY4_addrOdd,
-  mOpY4_sz,
-  mOpY4_first,
-  mOpY4_banks,
-  mOpY4_bank0,
-  mOpY4_bank1,
-  mOpY4_bgn_b,
-  mOpY4_end_b,
-  mOpY4_odd,
-  mOpY4_addr_low,
-  mOpY4_split,
-  mOpY4_clHit,
-  mOpY4_data,
-  mOpY4_pbit,
-  mOpY4_type,
-  mOpY4_II,
-  mOpY4_en_o,
-//  mOp4_dupl_o,
-  //mOp4_thread_o,
-  mOpY4_addrEven_o,
-  mOpY4_addrOdd_o,
-  mOpY4_sz_o,
-//  mOp4_first_o,
-  mOpY4_banks_o,
-  mOpY4_bank0_o,
-  mOpY4_bank1_o,
-  mOpY4_bgn_b_o,
-  mOpY4_end_b_o,
-  mOpY4_odd_o,
-  mOpY4_addr_low_o,
-  mOpY4_split_o,
-  mOpY4_data_o,
-  mOpY4_dataN_o,
-  mOpY4_pbit_o,
-  mOpY4_type_o,
-  mOpY4_II_o,
-  miss5,
-  mOpY5_en,
-  mOpY5_dupl,
- // mOp5_thread,
-  mOpY5_addrEven,
-  mOpY5_addrOdd,
-  mOpY5_sz,
-  mOpY5_first,
-  mOpY5_banks,
-  mOpY5_bank0,
-  mOpY5_bank1,
-  mOpY5_bgn_b,
-  mOpY5_end_b,
-  mOpY5_odd,
-  mOpY5_addr_low,
-  mOpY5_split,
-  mOpY5_clHit,
-  mOpY5_data,
-  mOpY5_pbit,
-  mOpY5_type,
-  mOpY5_II,
-  mOpY5_en_o,
-//  mOp5_dupl_o,
- // mOp5_thread_o,
-  mOpY5_addrEven_o,
-  mOpY5_addrOdd_o,
-  mOpY5_sz_o,
-//  mOp5_first_o,
-  mOpY5_banks_o,
-  mOpY5_bank0_o,
-  mOpY5_bank1_o,
-  mOpY5_bgn_b_o,
-  mOpY5_end_b_o,
-  mOpY5_odd_o,
-  mOpY5_addr_low_o,
-  mOpY5_split_o,
-  mOpY5_data_o,
-  mOpY5_dataN_o,
-  mOpY5_pbit_o,
-  mOpY5_type_o,
-  mOpY5_II_o,
 
   mOp_noBanks,
   mOp_noBanks_o,
@@ -2707,46 +2096,14 @@ module addrcalc_block(
   assign p4_secq=mOp4_sec_reg;
   assign p4_ret={1'b0,p4_faultCode[3:0],p4_faultNo};
 
-  assign p5_adata[`lsaddr_addrE]=mOpX5_addrEven_reg;
-  assign p5_adata[`lsaddr_addrO]=mOpX5_addrOdd_reg;
-  assign p5_adata[`lsaddr_banks]=mOpX5_banks_reg;
-  assign p5_adata[`lsaddr_bank0]=mOpX5_bank0_reg;
-  assign p5_adata[`lsaddr_low]=  mOpX5_low_reg;
-  assign p5_adata[`lsaddr_split]=mOpX5_split_reg;
-  assign p5_adata[`lsaddr_odd]=  mOpX5_odd_reg;
-  assign p5_adata[`lsaddr_st]=   1'b1;
-  assign p5_adata[`lsaddr_sz]=   mOpX5_sz_reg;
-  assign p5_adata[`lsaddr_odd_round]=mOpX5_LSQ_reg[8];
-  assign p5_adata[`lsaddr_II]=   mOpX5_II_reg;
-  assign p5_adata[`lsaddr_WQ]=   mOpX5_WQ_reg;
-  assign p5_adata[`lsaddr_reg_hi]=mOpX5_register_reg[8:4];
-  assign p5_adata[`lsaddr_reg_low]=mOpX5_register_reg[3:0];
-  assign p5_adata[`lsaddr_mtype]=mOpX5_type_reg;
-  assign p5_adata[`lsaddr_flag]= mOpX5_lsflag_reg;
-  assign p5_adata[`lsaddr_pconfl]=1'b0;
-  assign p5_adata[`lsaddr_except]=p5_pageFault;
-  assign p5_adata[`lsaddr_blow]=get_byte_mod4(mOpX5_low_reg,mOpX5_sz_reg);
-  assign p5_adata[`lsaddr_OH]=   mOpX5_odd_reg;
-  assign p5_adata[`lsaddr_EH]=  ~mOpX5_odd_reg;
-  assign p5_adata[`lsaddr_GOR]=(mOpX5_odd_reg && ~mOpX5_split_reg|~mOpX5_bank0_reg[4]) 
-        || (~mOpX5_odd_reg && mOpX5_split_reg && mOpX5_bank0_reg[4]);
-  assign p5_adata[`lsaddr_EL]=(~mOpX5_odd_reg && ~mOpX5_split_reg|~mOpX5_bank0_reg[4])
-    || (mOpX5_odd_reg && mOpX5_split_reg && mOpX5_bank0_reg[4]);
-  assign p5_adata[`lsaddr_etype]=p5_faultCode[3:0];
-  assign p5_en=mOpX5_en_reg;
-  assign p5_LSQ=mOpX5_LSQ_reg;
-  assign p5_secq=mOp5_sec_reg;
-  assign p5_ret={1'b0,p5_faultCode[3:0],p5_faultNo};
 
   always @(posedge clk) begin
       if (p4_mex_en) $display("mex4");
-      if (p5_mex_en) $display("mex5");
       if (Em_mlb_req_en) $display("dmlbR ", Em_mlb_req_addr);
       if (Em_mlb_req_ack) $display("dmlbW");
       if (rec_invmlb) $display("rec_invmlb");
 
       p4_mex_en_reg<=p4_mex_en;
-      p5_mex_en_reg<=p5_mex_en;
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) begin
           u1_clkEn_reg<=u1_clkEn;
           u1_thread_reg<=u1_thread;
@@ -2792,20 +2149,21 @@ module addrcalc_block(
           u3_error_reg<=u3_error;
       end
 
-      u4_clkEn_reg<=u4_clkEn;
-      u4_thread_reg<=u4_thread;
-      u4_thread_reg2<=u1_thread_reg;
-      u4_op_reg<=u4_op;
-      u4_sh_reg<=u4_sh;
-      u4_sh2_reg<=u4_sh2;
-      u4_reg_reg<=u4_reg;
-      u4_LSQ_no_reg<=u4_LSQ_no;
-      u4_II_no_reg<=u4_II_no;
-      u4_WQ_no_reg<=u4_WQ_no;
-      u4_lsflag_reg<=u4_lsflag;
-      u4_const_reg<={{20{u4_const[32]}},u4_const};
-      u4_error_reg<=u4_error;
-      u4_error_reg2<=u4_error_reg;
+      if (~(rsStall[3]&~now_flushing&~alt_bus_hold_reg)) begin
+          u4_clkEn_reg<=u4_clkEn;
+          u4_thread_reg<=u4_thread;
+          u4_op_reg<=u4_op;
+          u4_sh_reg<=u4_sh;
+          u4_sh2_reg<=u4_sh2;
+          u4_reg_reg<=u4_reg;
+          u4_LSQ_no_reg<=u4_LSQ_no;
+          u4_II_no_reg<=u4_II_no;
+          u4_WQ_no_reg<=u4_WQ_no;
+          u4_lsflag_reg<=u4_lsflag;
+          u4_const_reg<={{20{u4_const[32]}},u4_const};
+          u4_error_reg<=u4_error;
+      end
+
 
       u5_clkEn_reg<=u5_clkEn;
       u5_op_reg<=u5_op;
@@ -2855,14 +2213,16 @@ module addrcalc_block(
           u3_lsflag_reg2<=u3_lsflag_reg;
       end
 
-      u4_clkEn_reg2<=u4_clkEn_reg & ~except;
-      u4_op_reg2<=u4_op_reg;
-      u4_sh_reg2<=u4_sh_reg;
-      u4_reg_reg2<=u4_reg_reg;
-      u4_LSQ_no_reg2<=u4_LSQ_no_reg;
-      u4_II_no_reg2<=u4_II_no_reg;
-      u4_WQ_no_reg2<=u4_WQ_no_reg;
-      u4_lsflag_reg2<=u4_lsflag_reg;
+      if (~(rsStall[3]&~now_flushing&~alt_bus_hold_reg)) begin      
+          u4_clkEn_reg2<=u4_clkEn_reg & ~except;
+          u4_op_reg2<=u4_op_reg;
+          u4_sh_reg2<=u4_sh_reg;
+          u4_reg_reg2<=u4_reg_reg;
+          u4_LSQ_no_reg2<=u4_LSQ_no_reg;
+          u4_II_no_reg2<=u4_II_no_reg;
+          u4_WQ_no_reg2<=u4_WQ_no_reg;
+          u4_lsflag_reg2<=u4_lsflag_reg;
+      end
 
       u5_clkEn_reg2<=u5_clkEn_reg & ~except;
       u5_op_reg2<=u5_op_reg;
@@ -2876,15 +2236,17 @@ module addrcalc_block(
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) mOp0_sec_reg<=mOp0_sec&~now_flushing&~alt_bus_hold_reg;
       if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) mOp1_sec_reg<=mOp1_sec&~now_flushing&~alt_bus_hold_reg;
       if (~(rsStall[2]&~now_flushing&~alt_bus_hold_reg)) mOp2_sec_reg<=mOp2_sec&~now_flushing&~alt_bus_hold_reg;
+      if (~(rsStall[3]&~now_flushing&~alt_bus_hold_reg)) mOp3_sec_reg<=mOp3_sec&~now_flushing&~alt_bus_hold_reg;
       mOp4_sec_reg<=mOp4_sec;
-      mOp5_sec_reg<=mOp5_sec;
 
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) mOp0_sec_reg2<=mOp0_sec_reg;
       if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) mOp1_sec_reg2<=mOp1_sec_reg;
       if (~(rsStall[2]&~now_flushing&~alt_bus_hold_reg)) mOp2_sec_reg2<=mOp2_sec_reg;
+      if (~(rsStall[3]&~now_flushing&~alt_bus_hold_reg)) mOp3_sec_reg2<=mOp3_sec_reg;
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) mOp0_sec_reg3<=mOp0_sec_reg2;
       if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) mOp1_sec_reg3<=mOp1_sec_reg2;
       if (~(rsStall[2]&~now_flushing&~alt_bus_hold_reg)) mOp2_sec_reg3<=mOp2_sec_reg2;
+      if (~(rsStall[3]&~now_flushing&~alt_bus_hold_reg)) mOp3_sec_reg3<=mOp3_sec_reg2;
 
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) mOp0_rsEn_reg<=mOp0_rsEn;
       if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) mOp1_rsEn_reg<=mOp1_rsEn;
@@ -2934,15 +2296,15 @@ module addrcalc_block(
           mOpX3_en_reg     <=mOpX3_en;
           mOpX3_lsflag_reg <=mOpX3_lsflag;
           mOpX3_type_reg   <=mOpX3_type;
-          mOpX3_en_reg2    <=mOpX3_en_reg & (~except || mOpX3_register_reg==9'h1fc);
+          mOpX3_en_reg2    <=mOpX3_en_reg & ~except;
           mOpX3_lsflag_reg2<=mOpX3_lsflag_reg;
           mOpX3_type_reg2  <=mOpX3_type_reg;
-          mOpX3_en_reg3    <=mOpX3_en_reg2 & (~except || mOpX3_register_reg2==9'h1fc);
+          mOpX3_en_reg3    <=mOpX3_en_reg2 & ~except;
           mOpX3_lsflag_reg3<=mOpX3_lsflag_reg2;
           mOpX3_type_reg3  <=mOpX3_type_reg2;
-          mOpX3_lsfwd_reg  <=mOpX3_lsfwd;
           mOpX3_skip_LDQ_reg   <=mOp3_skip_LDQ;
       end
+
 
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) begin
           mOpX0_addrEven_reg<=mOpX0_addrEven;
@@ -3032,53 +2394,30 @@ module addrcalc_block(
       mOpX4_WQ_reg<=mOpX4_WQ;
       mOpX4_lsflag_reg<=mOpX4_lsflag;
   
-      mOpX5_en_reg<=mOpX5_en & ~except;
-      mOpX5_addrEven_reg<=mOpX5_addrEven;
-      mOpX5_addrOdd_reg<=mOpX5_addrOdd;
-      mOpX5_sz_reg<=mOpX5_sz;
-      mOpX5_banks_reg<=mOpX5_banks;
-      mOpX5_bank0_reg<=mOpX5_bank0;
-      mOpX5_odd_reg<=mOpX5_odd;
-      mOpX5_low_reg<=mOpX5_low;
-      mOpX5_split_reg<=mOpX5_split;
-      mOpX5_register_reg<=mOpX5_register;
-      mOpX5_type_reg<=mOpX5_type;
-      mOpX5_LSQ_reg<=mOpX5_LSQ;
-      mOpX5_II_reg<=mOpX5_II;
-      mOpX5_WQ_reg<=mOpX5_WQ;
-      mOpX5_lsflag_reg<=mOpX5_lsflag;
 
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) p0_cmplxAddr<=p0_cmplxAddr_d;
       if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) p1_cmplxAddr<=p1_cmplxAddr_d;
       if (~(rsStall[2]&~now_flushing&~alt_bus_hold_reg)) p2_cmplxAddr<=p2_cmplxAddr_d;
       if (~(rsStall[3]&~now_flushing&~alt_bus_hold_reg)) p3_cmplxAddr<=p3_cmplxAddr_d;
       p4_cmplxAddr<=p4_cmplxAddr_d;
-      p5_cmplxAddr<=p5_cmplxAddr_d;
 
-      if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) p0_conflict_reg<=p0_conflict;
-      if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) p1_conflict_reg<=p1_conflict;
-      if (~(rsStall[2]&~now_flushing&~alt_bus_hold_reg)) p2_conflict_reg<=p2_conflict;
-      if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) p0_conflict_reg2<=p0_conflict_reg;
-      if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) p1_conflict_reg2<=p1_conflict_reg;
-      if (~(rsStall[2]&~now_flushing&~alt_bus_hold_reg)) p2_conflict_reg2<=p2_conflict_reg;
 
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) p0_mlbmiss_reg<=p0_mlbmiss;
       if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) p1_mlbmiss_reg<=p1_mlbmiss;
       if (~(rsStall[2]&~now_flushing&~alt_bus_hold_reg)) p2_mlbmiss_reg<=p2_mlbmiss;
+      if (~(rsStall[3]&~now_flushing&~alt_bus_hold_reg)) p3_mlbmiss_reg<=p3_mlbmiss;
 
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) p0_sec_in_reg<=p0_sec_in;
       if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) p1_sec_in_reg<=p1_sec_in;
       if (~(rsStall[2]&~now_flushing&~alt_bus_hold_reg)) p2_sec_in_reg<=p2_sec_in;
       if (~(rsStall[3]&~now_flushing&~alt_bus_hold_reg)) p3_sec_in_reg<=p3_sec_in;
       p4_sec_in_reg<=p4_sec_in;
-      p5_sec_in_reg<=p5_sec_in;
 
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) p0_ndiff_reg<=p0_ndiff;
       if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) p1_ndiff_reg<=p1_ndiff;
       if (~(rsStall[2]&~now_flushing&~alt_bus_hold_reg)) p2_ndiff_reg<=p2_ndiff;
       if (~(rsStall[3]&~now_flushing&~alt_bus_hold_reg)) p3_ndiff_reg<=p3_ndiff;
       p4_ndiff_reg<=p4_ndiff;
-      p5_ndiff_reg<=p5_ndiff;
 
       wt_pause_addrcalc_reg<=wt_pause_addrcalc;
       miss_holds_addrcalc_reg<=miss_holds_addrcalc;
@@ -3097,83 +2436,6 @@ module addrcalc_block(
       bus_holds_addrcalc_reg4<=bus_holds_addrcalc_reg3;
       bus_holds_addrcalc_reg5<=bus_holds_addrcalc_reg4;
      
-      mOpY4_addrEven_o_reg<=mOpY4_addrEven_o;
-      mOpY4_addrOdd_o_reg<=mOpY4_addrOdd_o;
-      mOpY4_banks_o_reg<=mOpY4_banks_o;
-      mOpY4_bank0_o_reg<=mOpY4_bank0_o;
-      mOpY4_bank1_o_reg<=mOpY4_bank1_o;
-      mOpY4_bgn_b_o_reg<=mOpY4_bgn_b_o;
-      mOpY4_end_b_o_reg<=mOpY4_end_b_o;
-      mOpY4_odd_o_reg<=mOpY4_odd_o;
-      mOpY4_split_o_reg<=mOpY4_split_o;
-      mOpY4_data_o_reg<=mOpY4_data_o|~mOpY4_dataN_o;
-      mOpY4_pbit_o_reg<=mOpY5_pbit_o;
-      mOpY4_d128_o_reg<=get_d128(mOpY4_sz_o);
-
-      mOpY4_addrEven_o_reg2<=mOpY4_addrEven_o_reg;
-      mOpY4_addrOdd_o_reg2<=mOpY4_addrOdd_o_reg;
-      mOpY4_banks_o_reg2<=mOpY4_banks_o_reg;
-      mOpY4_bank0_o_reg2<=mOpY4_bank0_o_reg;
-      mOpY4_bank1_o_reg2<=mOpY4_bank1_o_reg;
-      mOpY4_bgn_b_o_reg2<=mOpY4_bgn_b_o_reg;
-      mOpY4_end_b_o_reg2<=mOpY4_end_b_o_reg;
-      mOpY4_odd_o_reg2<=mOpY4_odd_o_reg;
-      mOpY4_split_o_reg2<=mOpY4_split_o_reg;
-      mOpY4_data_o_reg2<=mOpY4_data_o_reg;
-      mOpY4_pbit_o_reg2<=mOpY5_pbit_o_reg;
-      mOpY4_d128_o_reg2<=mOpY5_d128_o_reg;
-
-      mOpY4_addrEven_o_reg3<=mOpY4_addrEven_o_reg2;
-      mOpY4_addrOdd_o_reg3<=mOpY4_addrOdd_o_reg2;
-      mOpY4_banks_o_reg3<=mOpY4_banks_o_reg2;
-      mOpY4_bank0_o_reg3<=mOpY4_bank0_o_reg2;
-      mOpY4_bank1_o_reg3<=mOpY4_bank1_o_reg2;
-      mOpY4_bgn_b_o_reg3<=mOpY4_bgn_b_o_reg2;
-      mOpY4_end_b_o_reg3<=mOpY4_end_b_o_reg2;
-      mOpY4_odd_o_reg3<=mOpY4_odd_o_reg2;
-      mOpY4_split_o_reg3<=mOpY4_split_o_reg2;
-      mOpY4_data_o_reg3<=mOpY4_data_o_reg2;
-      mOpY4_pbit_o_reg3<=mOpY5_pbit_o_reg2;
-      mOpY4_d128_o_reg3<=mOpY5_d128_o_reg2;
-
-      mOpY5_addrEven_o_reg<=mOpY5_addrEven_o;
-      mOpY5_addrOdd_o_reg<=mOpY5_addrOdd_o;
-      mOpY5_banks_o_reg<=mOpY5_banks_o;
-      mOpY5_bank0_o_reg<=mOpY5_bank0_o;
-      mOpY5_bank1_o_reg<=mOpY5_bank1_o;
-      mOpY5_bgn_b_o_reg<=mOpY5_bgn_b_o;
-      mOpY5_end_b_o_reg<=mOpY5_end_b_o;
-      mOpY5_odd_o_reg<=mOpY5_odd_o;
-      mOpY5_split_o_reg<=mOpY5_split_o;
-      mOpY5_data_o_reg<=mOpY5_data_o|~mOpY5_dataN_o;
-      mOpY5_pbit_o_reg<=mOpY5_pbit_o;
-      mOpY5_d128_o_reg<=get_d128(mOpY5_sz_o);
-
-      mOpY5_addrEven_o_reg2<=mOpY5_addrEven_o_reg;
-      mOpY5_addrOdd_o_reg2<=mOpY5_addrOdd_o_reg;
-      mOpY5_banks_o_reg2<=mOpY5_banks_o_reg;
-      mOpY5_bank0_o_reg2<=mOpY5_bank0_o_reg;
-      mOpY5_bank1_o_reg2<=mOpY5_bank1_o_reg;
-      mOpY5_bgn_b_o_reg2<=mOpY5_bgn_b_o_reg;
-      mOpY5_end_b_o_reg2<=mOpY5_end_b_o_reg;
-      mOpY5_odd_o_reg2<=mOpY5_odd_o_reg;
-      mOpY5_split_o_reg2<=mOpY5_split_o_reg;
-      mOpY5_data_o_reg2<=mOpY5_data_o_reg;
-      mOpY5_pbit_o_reg2<=mOpY5_pbit_o_reg;
-      mOpY5_d128_o_reg2<=mOpY5_d128_o_reg;
-
-      mOpY5_addrEven_o_reg3<=mOpY5_addrEven_o_reg2;
-      mOpY5_addrOdd_o_reg3<=mOpY5_addrOdd_o_reg2;
-      mOpY5_banks_o_reg3<=mOpY5_banks_o_reg2;
-      mOpY5_bank0_o_reg3<=mOpY5_bank0_o_reg2;
-      mOpY5_bank1_o_reg3<=mOpY5_bank1_o_reg2;
-      mOpY5_bgn_b_o_reg3<=mOpY5_bgn_b_o_reg2;
-      mOpY5_end_b_o_reg3<=mOpY5_end_b_o_reg2;
-      mOpY5_odd_o_reg3<=mOpY5_odd_o_reg2;
-      mOpY5_split_o_reg3<=mOpY5_split_o_reg2;
-      mOpY5_data_o_reg3<=mOpY5_data_o_reg2;
-      mOpY5_pbit_o_reg3<=mOpY5_pbit_o_reg2;
-      mOpY5_d128_o_reg3<=mOpY5_d128_o_reg2;
 
       if (~(rsStall[0]&~now_flushing&~alt_bus_hold_reg)) p0_en_reg<=p0_en;
       if (~(rsStall[1]&~now_flushing&~alt_bus_hold_reg)) p1_en_reg<=p1_en;
