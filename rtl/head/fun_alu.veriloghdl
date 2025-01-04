@@ -900,7 +900,7 @@ alu_shift sh5_alu(
   .Res(FUMUL),
   .flg(MULFL)
  );
-imul_gatheronly imul2_mod(
+  imul imul2_mod(
   .clk(clk),
   .rst(rst),
   .clkEn(~(|fxFRT_alten2_reg3)),
