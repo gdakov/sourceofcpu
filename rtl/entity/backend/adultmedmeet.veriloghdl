@@ -1339,7 +1339,7 @@ instr[13:8]==6'd8) begin
       if (!isPtrSec && instr[28]) begin
 	  prA[16]={3'b0,instr[27],1'b0};
 	  puseBConst[16]=1'b1;
-	  pconstant[16]={64{~instr[5]}};
+	  pconstant[16]=64'hffffe00000000001;
 	  prT[16]={3'b0,instr[27],1'b0};
 	  perror[16]=2'b0;
 	  //jump imm={instr[26:9],1'b0}
