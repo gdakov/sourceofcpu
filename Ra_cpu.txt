@@ -1,0 +1,2 @@
+ra level cpu: 300k vector with max 1s runtime, or 100k vector with 9 seconds runtime.
+1.2 k cores to 2.5 k cores. memory size shrinks after a run.
