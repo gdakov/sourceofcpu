@@ -188,7 +188,7 @@ module jump_decoder(
           end
           cleave= instr[13:12];
           cleaveoff =instr[16:14];
-          if (!opcode_main[0]) jumpType={1'b0,4'd1};
+          if (!opcode_main[0]) jumpType={1'b0,4'd7};
       end else if (isSelfTestCJump) begin
           //warning: if magic is 0 then error
           constant[0]=1'b0;
@@ -211,7 +211,7 @@ module jump_decoder(
           popCallStack=1'b1;
           jumpType=5'b10001;
       end else if (isShlAddMulLike&&instr[28]) begin 
-          jumpType={1'b0,3'h0,instr[8]};
+          jumpType={1'b0,3'h3,instr[8]};
 	  constant={{45{instr[26]}},instr[26:9],1'b0};
           cloopntk=~instr[8];
           cloop_is=1'b1;

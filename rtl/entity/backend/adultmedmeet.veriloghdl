@@ -1308,8 +1308,8 @@ instr[13:8]==6'd8) begin
       casex({instr[28],instr[29],instr[0],isPtrSec})
       4'b0x00: poperation[16]=`op_sadd_even|4096;
       4'b0x10: poperation[16]=`op_sadd_odd|4096;
-      4'b1x00: begin poperation[16]=`op_cloop_even; pjumpType[16]={1'b0,3'h0,instr[8]}; end 
-      4'b1x10: begin poperation[16]=`op_cloop_odd; pjumpType[16]={1'b0,3'h0,instr[8]}; end
+      4'b1x00: begin poperation[16]=`op_cloop_even; pjumpType[16]={1'b0,3'h3,instr[8]}; end 
+      4'b1x10: begin poperation[16]=`op_cloop_odd; pjumpType[16]={1'b0,3'h3,instr[8]}; end
       4'b00x1: begin poperation[16]=`op_sec64|4096; pport[16]=PORT_MUL; end
       4'b01x1: begin poperation[16]=`op_swp32|4096; pport[16]=PORT_MUL; end
       4'b11x1: begin poperation[16]=`op_swp64|4096; pport[16]=PORT_MUL; end
@@ -1339,7 +1339,7 @@ instr[13:8]==6'd8) begin
       if (!isPtrSec && instr[28]) begin
 	  prA[16]={3'b0,instr[27],1'b0};
 	  puseBConst[16]=1'b1;
-	  pconstant[16]=64'hffffe00000000001;
+	  pconstant[16]=64'hffff_ffff_0000_0001;
 	  prT[16]={3'b0,instr[27],1'b0};
 	  perror[16]=2'b0;
 	  //jump imm={instr[26:9],1'b0}
@@ -1488,7 +1488,7 @@ instr[13:8]==6'd8) begin
           prT_use[21]=1'b1;
           prAlloc[21]=1'b1;
           pflags_write[21]=1'b1;
-          pjumptype[21]={1'b0,4'd1}; //non zero
+          pjumptype[21]={1'b0,4'd7}; //non zero
           pconstant[21]={64{opcode_main[7:1]==7'd118}};
       end
       

@@ -1295,8 +1295,8 @@ endmodule
 
   wire [43:0] c_s;
 
-  wire [63+PTRBIT:0] ptr=(c[64] & shift[0]) ? c[63+PTRBIT:0] : a[63+PTRBIT:0]|{c[63+PTRBIT:44]&~{21{swppr}},44'b0};
-  wire [63:0] unptr=(c[64] & shift[0]) ? a[63:0] : c[63:0];
+  wire [63+PTRBIT:0] ptr=(c[64] & shift==4'b1) ? c[63+PTRBIT:0] : a[63+PTRBIT:0]|{c[63+PTRBIT:44]&~{21{swppr}},44'b0};
+  wire [63:0] unptr=(c[64] & shift==4'b1) ? a[63:0] : {32'b0,c[31:0]};
 
   genvar k;
   
@@ -1304,10 +1304,10 @@ endmodule
   assign nxorab=a[43:0]~^b[43:0];
   assign andab=a[43:0]&b[43:0];
   assign orab=a[43:0]|b[43:0];
-  assign c1={c[42:0],3'b0} & {44{shift[0]}};
-  assign c2={c[41:0],4'b0} & {44{shift[1]}};
-  assign c3={c[40:0],5'b0} & {44{shift[2]}};
-  assign c4={c[39:0],6'b0} & {44{shift[3]}};
+  assign c1={12'b0,c[31:0],3'b0} & {44{shift[0]}};
+  assign c2={11'b0,c[31:0],4'b0} & {44{shift[1]}};
+  assign c3={10'b0,c[31:0],5'b0} & {44{shift[2]}};
+  assign c4={9'b0,c[31:0],6'b0} & {44{shift[3]}};
   
   assign tmp2[0]=1'b0;
 
