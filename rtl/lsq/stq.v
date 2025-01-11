@@ -557,7 +557,6 @@ module stq(
               aStall|aDoStall,
               excpt,
               W_NL0_en0, W_NL0_en, W_NL0_WQ, W_NL0_odd1[b], W_NL0_bytes[b], W_NL0_subBNK[b], W_NL0_subBNK2[b],
-              W_NL1_en0, W_NL1_en, W_NL1_WQ, W_NL1_odd1[b], W_NL1_bytes[b], W_NL1_subBNK[b], W_NL1_subBNK2[b],
               chk0_en, chk0_addrEO, chk0_odd1[b], chk0_bytes[b], chk0_subBNK[b], chk0_subBNK2[b], chk0_match[b], chk0_partial[b],
 	      chk0_matchW[b],chk0_partialW[b],chk0_pre0,chk0_pre1,
               chk1_en, chk1_addrEO, chk1_odd1[b], chk1_bytes[b], chk1_subBNK[b], chk1_subBNK2[b], chk1_match[b], chk1_partial[b],
@@ -566,12 +565,11 @@ module stq(
 	      chk2_matchW[b],chk2_partialW[b],chk2_pre0,chk2_pre1,
               chk3_en, chk3_addrEO, chk3_odd1[b], chk3_bytes[b], chk3_subBNK[b], chk3_subBNK2[b], chk3_match[b], chk3_partial[b],
 	      chk3_matchW[b],chk3_partialW[b],chk3_pre0,chk3_pre1,
-              chk4_en, chk4_addrEO, chk4_odd1[b], chk4_bytes[b], chk4_subBNK[b], chk4_subBNK2[b], chk4_match[b], chk4_partial[b],
-	      chk4_matchW[b],chk4_partialW[b],chk4_pre0,chk4_pre1,
-              chk5_en, chk5_addrEO, chk5_odd1[b], chk5_bytes[b], chk5_subBNK[b], chk5_subBNK2[b], chk5_match[b], chk5_partial[b],
-	      chk5_matchW[b],chk5_partialW[b],chk5_pre0,chk5_pre1,
+              chkWB0_en, chkWB0_addrEO, chkWB0_odd1[b], chkWB0_bytes[b], chkWB0_subBNK[b], chkWB0_subBNK2[b], chkWB0_match[b], chkWB0_partial[b],
+	      chkWB0_matchW[b],chkWB0_partialW[b],chkWB0_pre0,chkWB0_pre1,
+              chkWB1_en, chkWB1_addrEO, chkWB1_odd1[b], chkWB1_bytes[b], chkWB1_subBNK[b], chkWB1_subBNK2[b], chkWB1_match[b], chkWB1_partial[b],
+	      chkWB1_matchW[b],chkWB1_partialW[b],chkWB1_pre0,chkWB1_pre1,
               upd0_en0, 
-              upd1_en0, 
               free_en,free,upd,passe,passe_en);
 
           end else begin : wout_free
@@ -581,7 +579,6 @@ module stq(
               aStall|aDoStall,
               excpt,
               W_NL0_en0, W_NL0_en, W_NL0_WQ, W_NL0_odd1[b], W_NL0_bytes[b], W_NL0_subBNK[b], W_NL0_subBNK2[b],
-              W_NL1_en0, W_NL1_en, W_NL1_WQ, W_NL1_odd1[b], W_NL1_bytes[b], W_NL1_subBNK[b], W_NL1_subBNK2[b],
               chk0_en, chk0_addrEO, chk0_odd1[b], chk0_bytes[b], chk0_subBNK[b], chk0_subBNK2[b], chk0_match[b], chk0_partial[b],
 	      chk0_matchW[b],chk0_partialW[b],chk0_pre0,chk0_pre1,
               chk1_en, chk1_addrEO, chk1_odd1[b], chk1_bytes[b], chk1_subBNK[b], chk1_subBNK2[b], chk1_match[b], chk1_partial[b],
@@ -590,10 +587,10 @@ module stq(
 	      chk2_matchW[b],chk2_partialW[b],chk2_pre0,chk2_pre1,
               chk3_en, chk3_addrEO, chk3_odd1[b], chk3_bytes[b], chk3_subBNK[b], chk3_subBNK2[b], chk3_match[b], chk3_partial[b],
 	      chk3_matchW[b],chk3_partialW[b],chk3_pre0,chk3_pre1,
-              chk4_en, chk4_addrEO, chk4_odd1[b], chk4_bytes[b], chk4_subBNK[b], chk4_subBNK2[b], chk4_match[b], chk4_partial[b],
-	      chk4_matchW[b],chk4_partialW[b],chk4_pre0,chk4_pre1,
-              chk5_en, chk5_addrEO, chk5_odd1[b], chk5_bytes[b], chk5_subBNK[b], chk5_subBNK2[b], chk5_match[b], chk5_partial[b],
-	      chk5_matchW[b],chk5_partialW[b],chk5_pre0,chk5_pre1,
+              chkWB0_en, chkWB0_addrEO, chkWB0_odd1[b], chkWB0_bytes[b], chkWB0_subBNK[b], chkWB0_subBNK2[b], chkWB0_match[b], chkWB0_partial[b],
+	      chkWB0_matchW[b],chkWB0_partialW[b],chkWB0_pre0,chkWB0_pre1,
+              chkWB1_en, chkWB1_addrEO, chkWB1_odd1[b], chkWB1_bytes[b], chkWB1_subBNK[b], chkWB1_subBNK2[b], chkWB1_match[b], chkWB1_partial[b],
+	      chkWB1_matchW[b],chkWB1_partialW[b],chkWB1_pre0,chkWB1_pre1,
               upd0_en0, 
               upd1_en0, 
               free_en,,,,passe_en);
@@ -780,9 +777,11 @@ module stq(
   chk1_en, chk1_addrEO, chk1_adata[`lsaddr_addrE], chk1_adata[`lsaddr_addrO],
   chk2_en, chk2_addrEO, chk2_adata[`lsaddr_addrE], chk2_adata[`lsaddr_addrO],
   chk3_en, chk3_addrEO, chk3_adata[`lsaddr_addrE], chk3_adata[`lsaddr_addrO],
+  chkWB0_en, chkWB0_addrEO, chkWB0_adata[`lsaddr_addrE], chkWB0_adata[`lsaddr_addrO],
+  chkWB1_en, chkWB1_addrEO, chkWB1_adata[`lsaddr_addrE], chkWB1_adata[`lsaddr_addrO],
   upd0_en0, 
   free_en,,,,passe_en);
-//wrt is write, WLN is read
+
   stq_adata_ram ramA_mod(
   clk,
   rst,
@@ -791,27 +790,39 @@ module stq(
        {wrt2_adata,wrt0_en,wrt0_adata,wrt1_en,wrt1_adata,wrt2_enX}
   );
 
-//wrt is write, WLN is read
-  stq_adata_ram ramE_mod(
-  clk,
-  rst,
-  ~st_stall & WLN1_en,  WLN1_WQ[5:0], {WLN1_adata,WLN1_en0},
-  {wrt0_en,wrt1_en,(wrt0_en|wrt1_en)&&(wrt0_en&wrt1_en)&&^{wrt0_en,wrt1_en},  {wrt0_adata[-2+`lsaddr_WQ],{wrt1_adata[-2+`lsaddr_WQ]},wrt1_adata[`lsaddr_WQ+2]},  
-       {wrt2_adata,wrt0_en,wrt0_adata,wrt1_en,wrt1_adata,wrt2_enX}
-  );
 
   assign WLN0_en=WLN0_en0 && ret_II==WLN0_adata[`lsaddr_II+4] && 
 	  ~ret_xbreak[WLN0_adata[-6+`lsaddr_II]];
-  assign WLN1_en=WLN1_en0 && ret_II==WLN1_adata[`lsaddr_II+4] && ~ret_xbreak[WLN1_adata[-6+`lsaddr_II]];
   
   
   stq_adata bgn_mod(
   clk,
   rst,
   wrt0_en,wrt0_adata[`lsaddr_WQ],wrt0_adata[`lsaddr_bank0],
-  wrt1_en,wrt1_adata[`lsaddr_WQ],wrt1_adata[`lsaddr_bank0],
-  upd0_WQ,upd0_begin0,
-  upd1_WQ,upd1_begin0);
+  upd0_WQ,upd0_begin0);
+
+  stq_adata_wb adataWB_mod(
+  clk,
+  rst,
+  wbADDR0,chk0_adata,chk0_adata[`lsaddr_flag] && chk0_en,
+  wbADDR1,chk1_adata,chk1_adata[`lsaddr_flag] && chk1_en,
+  wbADDR2,chk2_adata,chk2_adata[`lsaddr_flag] && chk2_en,
+  wbADDR3,chk3_adata,chk3_adata[`lsaddr_flag] && chk3_en,
+  wbRADDR0,chkWB0_adata,chkWB0_en_input,chkWB0_en,
+  wbRADDR1,chkWB1_adata,chkWB1_en_input,chkWB1_en);
+
+  stq_adata_wb #(20) adataWBWQ_mod(
+  clk,
+  rst,
+  wbADDR0,{chk0_LSQ,pse0_LSQ},chk0_adata[`lsaddr_flag] && chk0_en,
+  wbADDR1,{chk1_LSQ,pse0_LSQ},chk0_adata[`lsaddr_flag] && chk1_en,
+  wbADDR2,{chk2_LSQ,pse0_LSQ},chk0_adata[`lsaddr_flag] && chk2_en,
+  wbADDR3,{chk3_LSQ,pse0_LSQ},chk0_adata[`lsaddr_flag] && chk3_en,
+  wbRADDR0,chkWB0_LSQdata,chkWB0_en_input,,
+  wbRADDR1,chkWB1_LSQdata,chkWB1_en_input,);
+
+  assign chkWB0_en_input=chkWB0_en && ~chkWB0_conflict && LSQDET(chkWB0_LSQdata,chkWB0_match);
+  assign chkWB1_en_input=chkWB0_en_input && chkWB1_en && ~chkWB1_conflict && LSQDET(chkWB1_LSQdata,chkWB1_match); 
 
   adder_inc #(6) inc_pseA_mod(pse1_WQ,pse1_WQ_inc,1'b1,);
   adder_inc #(5) inc_pseB_mod(pse1_WQ[5:1],pse1_WQ_inc2[5:1],1'b1,);
