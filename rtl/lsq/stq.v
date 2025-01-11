@@ -39,6 +39,7 @@ module stq(
   chk2_adata,chk2_en,chk2_enD,
   chk3_adata,chk3_en,chk3_enD,
   chk_rdy,
+  chk_LSQ,chk_LSQu,
   LSQ_shr_data, 
   wrt0_adata,wrt0_en,wrt0_LSQ,
   confl,confl_SMP,confl_X,
@@ -91,6 +92,9 @@ module stq(
   input [1:0] chk3_enD;
 
   input chk_rdy;
+
+  input [5:0] chk_LSQ;
+  input [5:0] chk_LSQu;
 
   input [`lsqshare_width-1:0] LSQ_shr_data;
   
@@ -155,6 +159,8 @@ module stq(
   reg [5:0] chk_wb1_reg2;
   reg  chk_wb1_has_reg;
   reg  chk_wb1_has_reg2;
+
+  wire puffy_baff;
   
   wire [7:0] chk0_subBNK;
   wire [7:0] chk1_subBNK;
@@ -664,6 +670,9 @@ module stq(
   assign wb0_chk=chk_wb0;
   assign wb1_chk=chk_wb1;
 
+  //puffy_bafff=how many clocks to wait for first load-store forwarding
+  assign puffy_bafff=(chk_LSQ-chk_LSQu)>31 ? 32+(chk_LSQ-chk_LSQu) : 32+(chk_LSQu-chk_LSQ);
+
   assign W_NL0_odd=W_NL0_adata[`lsaddr_odd];
   assign W_NL1_odd=W_NL1_adata[`lsaddr_odd];
   assign chk0_odd=chk0_adata[`lsaddr_odd];
@@ -785,9 +794,9 @@ module stq(
   stq_adata_ram ramA_mod(
   clk,
   rst,
-  ~st_stall & WLN0_en,  WLN0_WQ[5:0], {WLN0_adata,WLN0_en0},
-  {wrt0_en,wrt1_en,(wrt0_en|wrt1_en)&&(wrt0_en&wrt1_en)&&^{wrt0_en,wrt1_en},  {wrt0_adata[-2+`lsaddr_WQ],{wrt1_adata[-2+`lsaddr_WQ]},wrt1_adata[`lsaddr_WQ+2]},  
-       {wrt2_adata,wrt0_en,wrt0_adata,wrt1_en,wrt1_adata,wrt2_enX}
+  ~st_stall & WLN0_en,  WLN0_LSQ[5:0], {WLN0_adata,WLN0_en0},//first point store; greater priority
+  ~st_stall & WLN1_en,  WLN1_LSQ[5:0], {WLN1_adata,WLN1_en0},//second point store and store finalize
+  wrt0_en,  {wrt0_adata,wrt0_en}
   );
 
 
