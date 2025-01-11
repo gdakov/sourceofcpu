@@ -1,2 +1,0 @@
-Some ideas from the store queue might have been taken from the Sonic Boom risc-v cpu.
-It is nevertheless substantially different due to different memory model and different language.
