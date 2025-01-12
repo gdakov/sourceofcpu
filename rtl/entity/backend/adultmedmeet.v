@@ -1349,7 +1349,7 @@ instr[13:8]==6'd8) begin
 	     2:pconstant[16]={-boogie_baboogie*3,boogie_baboogie*3};
 	     4:pconstant[16]={-boogie_baboogie*4,boogie_baboogie*4};
           endcase
-          if (magic[3:0]==4'b0111 && !vecmode) pconstant[16][63:32]=instr[63:32];
+	      if (magic[3:0]==4'b0111 && !vecmode) pconstant[16][63:32]+=instr[63:32];
 	  prT[16]={3'b0,instr[27],1'b0};
 	  perror[16]=2'b0;
           poperation[16][10:8]={3{instr[31]}};
