@@ -1339,9 +1339,15 @@ instr[13:8]==6'd8) begin
       if (!isPtrSec && instr[28]) begin
 	  prA[16]={3'b0,instr[27],1'b0};
 	  puseBConst[16]=1'b1;
-	  pconstant[16]=64'hffff_ffff_0000_0001;
+          case(instr[30:29])
+	     0:pconstant[16]=64'hffff_ffff_0000_0001;
+	     1:pconstant[16]=64'hffff_fffe_0000_0002;
+	     2:pconstant[16]=64'hffff_fffd_0000_0003;
+	     4:pconstant[16]=64'hffff_fffc_0000_0004;
+          endcase
 	  prT[16]={3'b0,instr[27],1'b0};
 	  perror[16]=2'b0;
+          poperation[16][10:8]={3{instr[31]}};
 	  //jump imm={instr[26:9],1'b0}
       end
     
