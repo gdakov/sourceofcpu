@@ -264,6 +264,8 @@ module smallInstr_decoder(
 
   wire [3:0] oddmode=instrQ[`instrQ_attr];
 
+  integer boogie_baboogie;
+
   reg [OPERATION_WIDTH-1:0] poperation[TRICNT_TOP-1:0];
   reg [REG_WIDTH-2:0] prA[TRICNT_TOP-1:0];
   reg prA_use[TRICNT_TOP-1:0];
@@ -1339,15 +1341,19 @@ instr[13:8]==6'd8) begin
       if (!isPtrSec && instr[28]) begin
 	  prA[16]={3'b0,instr[27],1'b0};
 	  puseBConst[16]=1'b1;
+          boogie_baboogie=1;
+          if (magic[3:0]==4'b0111 && !vecmode) boggie_baboogie=H*3+enc02;
           case(instr[30:29])
-	     0:pconstant[16]=64'hffff_ffff_0000_0001;
-	     1:pconstant[16]=64'hffff_fffe_0000_0002;
-	     2:pconstant[16]=64'hffff_fffd_0000_0003;
-	     4:pconstant[16]=64'hffff_fffc_0000_0004;
+	     0:pconstant[16]={-boogie_baboogie,boogie_baboogie};
+	     1:pconstant[16]={-boogie_baboogie*2,boogie_baboogie*2};
+	     2:pconstant[16]={-boogie_baboogie*3,boogie_baboogie*3};
+	     4:pconstant[16]={-boogie_baboogie*4,boogie_baboogie*4};
           endcase
+          if (magic[3:0]==4'b0111 && !vecmode) pconstant[16][63:32]=instr[63:32];
 	  prT[16]={3'b0,instr[27],1'b0};
 	  perror[16]=2'b0;
           poperation[16][10:8]={3{instr[31]}};
+          if (!opcode_main[0] && instr[31]) poperation[16][10:8]==3'd5;
 	  //jump imm={instr[26:9],1'b0}
       end
     
