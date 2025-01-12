@@ -672,6 +672,7 @@ module stq(
 
   //puffy_bafff=how many clocks to wait for first load-store forwarding
   assign puffy_bafff=(chk_LSQ-chk_LSQu)>31 ? 32+(chk_LSQ-chk_LSQu) : 32+(chk_LSQu-chk_LSQ);
+	assign puffy_bafffe=(chk_LSQ-chk_LSQu)>31 ? 30+(chk_LSQ-chk_LSQu) : 30+(chk_LSQu-chk_LSQ);
 
   assign W_NL0_odd=W_NL0_adata[`lsaddr_odd];
   assign W_NL1_odd=W_NL1_adata[`lsaddr_odd];
