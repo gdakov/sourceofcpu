@@ -1,0 +1,62 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Fri Feb  8 21:31:20 2019
+[*]
+[dumpfile] "/home/goran/heptane/test/frontend/dump.lxt"
+[dumpfile_mtime] "Fri Feb  8 21:24:24 2019"
+[dumpfile_size] 15562024
+[savefile] "/home/goran/heptane/test/frontend/dump.gtkw"
+[timestart] 0
+[size] 1853 1025
+[pos] -1 -1
+*-9.000000 1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] fr_test5.
+[treeopen] fr_test5.core_mod.
+[treeopen] fr_test5.core_mod.bck_mod.
+[sst_width] 223
+[signals_width] 198
+[sst_expanded] 1
+[sst_vpaned_height] 301
+@22
+fr_test5.core_mod.bck_mod.\FU[0][63:0]
+fr_test5.core_mod.bck_mod.\FU[1][63:0]
+fr_test5.core_mod.bck_mod.\FU[2][63:0]
+fr_test5.core_mod.bck_mod.\FU[3][63:0]
+fr_test5.core_mod.bck_mod.\FU[4][63:0]
+fr_test5.core_mod.bck_mod.\FU[5][63:0]
+fr_test5.core_mod.bck_mod.\FU[6][63:0]
+fr_test5.core_mod.bck_mod.\FU[7][63:0]
+fr_test5.core_mod.bck_mod.\FU[8][63:0]
+fr_test5.core_mod.bck_mod.\FU[9][63:0]
+fr_test5.core_mod.bck_mod.\FUreg[0][8:0]
+fr_test5.core_mod.bck_mod.\FUreg[1][8:0]
+fr_test5.core_mod.bck_mod.\FUreg[2][8:0]
+fr_test5.core_mod.bck_mod.\FUreg[3][8:0]
+fr_test5.core_mod.bck_mod.\FUreg[4][8:0]
+fr_test5.core_mod.bck_mod.\FUreg[5][8:0]
+fr_test5.core_mod.bck_mod.\FUreg[6][8:0]
+fr_test5.core_mod.bck_mod.\FUreg[7][8:0]
+fr_test5.core_mod.bck_mod.\FUreg[8][8:0]
+fr_test5.core_mod.bck_mod.\FUreg[9][8:0]
+@28
+fr_test5.core_mod.bck_mod.\FUwen[0][0]
+fr_test5.core_mod.bck_mod.\FUwen[1][0]
+fr_test5.core_mod.bck_mod.\FUwen[3][0]
+fr_test5.core_mod.bck_mod.\FUwen[4][0]
+fr_test5.core_mod.bck_mod.\FUwen[5][0]
+fr_test5.core_mod.bck_mod.\FUwen[6][0]
+fr_test5.core_mod.bck_mod.\FUwen[7][0]
+fr_test5.core_mod.bck_mod.\FUwen[8][0]
+fr_test5.core_mod.bck_mod.\FUwen[9][0]
+fr_test5.core_mod.bck_mod.\FUwen[2][0]
+fr_test5.core_mod.bck_mod.bundle_in[0]
+fr_test5.core_mod.bck_mod.doStall[0]
+fr_test5.core_mod.bck_mod.cntrl_unit_mod.doRetire_d[0]
+fr_test5.core_mod.bck_mod.cntrl_unit_mod.except_d[0]
+@22
+fr_test5.core_mod.bck_mod.cntrl_unit_mod.mem_II_bits_ret[9:0]
+fr_test5.core_mod.bck_mod.cntrl_unit_mod.mem_II_upper[5:0]
+@23
+fr_test5.core_mod.bck_mod.cntrl_unit_mod.mem_II_upper_out[5:0]
+[pattern_trace] 1
+[pattern_trace] 0

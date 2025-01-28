@@ -1,0 +1,1729 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ *
+ * Electric(tm) VLSI Design System, version 9.07
+ *
+ * File: MONISTOR_FINFET.xml
+ * MONISTOR_FINFET technology description
+ * Generated automatically from a library
+ *
+-->
+
+<technology name="MONISTOR_FINFET"
+     xmlns="http://electric.sun.com/Technology"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://electric.sun.com/Technology ../../technology/Technology.xsd">
+
+    <shortName>MONISTOR_FINFET</shortName>
+    <description></description>
+    <numMetals min="6" max="6" default="6"/>
+    <scale value="1.0" relevant="true"/>
+    <resolution value="14.0"/>
+    <defaultFoundry value="NONE"/>
+    <minResistance value="1.0"/>
+    <minCapacitance value="0.1"/>
+
+    <!-- Transparent layers -->
+    <transparentLayer transparent="1">
+        <r>255</r>
+        <g>155</g>
+        <b>192</b>
+    </transparentLayer>
+    <transparentLayer transparent="2">
+        <r>107</r>
+        <g>226</g>
+        <b>96</b>
+    </transparentLayer>
+    <transparentLayer transparent="3">
+        <r>0</r>
+        <g>150</g>
+        <b>255</b>
+    </transparentLayer>
+    <transparentLayer transparent="4">
+        <r>148</r>
+        <g>0</g>
+        <b>211</b>
+    </transparentLayer>
+    <transparentLayer transparent="5">
+        <r>255</r>
+        <g>215</g>
+        <b>0</b>
+    </transparentLayer>
+
+    <!-- **************************************** LAYERS **************************************** -->
+    <layer name="Metal-1" fun="METAL1">
+        <transparentColor transparent="3"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.7</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Metal-1"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Metal-1-Node" port="Port_Metal-1">
+            <lambda>20.0</lambda>
+            <portArc>Metal-1</portArc>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Metal-2" fun="METAL2">
+        <transparentColor transparent="4"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.65</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Metal-2"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Metal-2-Node" port="Port_Metal-2">
+            <lambda>20.0</lambda>
+            <portArc>Metal-2</portArc>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Metal-3" fun="METAL3">
+        <transparentColor transparent="5"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.6</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Metal-3"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Metal-3-Node" port="Port_Metal-3">
+            <lambda>40.0</lambda>
+            <portArc>Metal-3</portArc>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Metal-4" fun="METAL4">
+        <opaqueColor r="132" g="112" b="255"/>
+        <patternedOnDisplay>true</patternedOnDisplay>
+        <patternedOnPrinter>true</patternedOnPrinter>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>                </pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>                </pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>                </pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>                </pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>                </pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>                </pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>                </pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.55</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Metal-4"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Metal-4-Node" port="Port_Metal-4">
+            <lambda>40.0</lambda>
+            <portArc>Metal-4</portArc>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Metal-5" fun="METAL5">
+        <opaqueColor r="255" g="160" b="122"/>
+        <patternedOnDisplay>true</patternedOnDisplay>
+        <patternedOnPrinter>true</patternedOnPrinter>
+        <pattern>X   X   X   X   </pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern>  X   X   X   X </pattern>
+        <pattern> X   X   X   X  </pattern>
+        <pattern>X   X   X   X   </pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern>  X   X   X   X </pattern>
+        <pattern> X   X   X   X  </pattern>
+        <pattern>X   X   X   X   </pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern>  X   X   X   X </pattern>
+        <pattern> X   X   X   X  </pattern>
+        <pattern>X   X   X   X   </pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern>  X   X   X   X </pattern>
+        <pattern> X   X   X   X  </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.5</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Metal-5"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Metal-5-Node" port="Port_Metal-5">
+            <lambda>100.0</lambda>
+            <portArc>Metal-5</portArc>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Metal-6" fun="METAL6">
+        <opaqueColor r="34" g="139" b="34"/>
+        <patternedOnDisplay>true</patternedOnDisplay>
+        <patternedOnPrinter>true</patternedOnPrinter>
+        <pattern>   X   X   X   X</pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern> X X X X X X X X</pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern> X X X X X X X X</pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern> X X X X X X X X</pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern>XXXXXXXXXXXXXXXX</pattern>
+        <pattern>   X   X   X   X</pattern>
+        <pattern> X X X X X X X X</pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.45</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Metal-6"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Metal-6-Node" port="Port_Metal-6">
+            <lambda>200.0</lambda>
+            <portArc>Metal-6</portArc>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Via-1" fun="CONTACT2" extraFun="connects-metal">
+        <opaqueColor r="205" g="205" b="205"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.7</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Via-1"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Via-1-Node" port="Port_Via-1">
+            <lambda>16.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Via-2" fun="CONTACT3" extraFun="connects-metal">
+        <opaqueColor r="205" g="205" b="205"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.7</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Via-2"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Via-2-Node" port="Port_Via-2">
+            <lambda>14.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Via-3" fun="CONTACT4" extraFun="connects-metal">
+        <opaqueColor r="205" g="205" b="205"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.7</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Via-3"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Via-3-Node" port="Port_Via-3">
+            <lambda>28.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Via-4" fun="CONTACT5" extraFun="connects-metal">
+        <opaqueColor r="205" g="205" b="205"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.7</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Via-4"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Via-4-Node" port="Port_Via-4">
+            <lambda>28.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Via-5" fun="CONTACT6" extraFun="connects-metal">
+        <opaqueColor r="205" g="205" b="205"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.7</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Via-5"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Via-5-Node" port="Port_Via-5">
+            <lambda>70.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Poly" fun="POLY1">
+        <transparentColor transparent="1"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>1.0</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Poly"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Poly-Node" port="Port_Poly">
+            <lambda>14.0</lambda>
+            <portArc>Poly</portArc>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="PolyGate" fun="GATE">
+        <transparentColor transparent="1"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>1.0</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="PolyGate"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="PolyGate-Node" port="Port_PolyGate">
+            <lambda>14.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Poly-Cut" fun="CONTACT1" extraFun="connects-poly">
+        <opaqueColor r="100" g="100" b="100"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.5</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Poly-Cut"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Poly-Cut-Node" port="Port_Poly-Cut">
+            <lambda>14.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="Diff-Cut" fun="CONTACT1" extraFun="connects-diff">
+        <opaqueColor r="100" g="100" b="100"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.5</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="Diff-Cut"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="Diff-Cut-Node" port="Port_Diff-Cut">
+            <lambda>14.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="N-Diff" fun="DIFFN">
+        <transparentColor transparent="2"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>1.0</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="N-Diff"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="N-Diff-Node" port="Port_N-Diff">
+            <lambda>28.0</lambda>
+            <portArc>N-Diff</portArc>
+            <portArc>N-Well</portArc>
+            <portArc>S-N-Well</portArc>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="P-Diff" fun="DIFFP">
+        <transparentColor transparent="2"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>1.0</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="P-Diff"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="P-Diff-Node" port="Port_P-Diff">
+            <lambda>28.0</lambda>
+            <portArc>P-Diff</portArc>
+            <portArc>P-Well</portArc>
+            <portArc>S-P-Well</portArc>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="NPlus" fun="IMPLANTN">
+        <opaqueColor r="224" g="238" b="224"/>
+        <patternedOnDisplay>true</patternedOnDisplay>
+        <patternedOnPrinter>true</patternedOnPrinter>
+        <pattern>   X       X    </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern> X       X      </pattern>
+        <pattern>X       X       </pattern>
+        <pattern>       X       X</pattern>
+        <pattern>      X       X </pattern>
+        <pattern>     X       X  </pattern>
+        <pattern>    X       X   </pattern>
+        <pattern>   X       X    </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern> X       X      </pattern>
+        <pattern>X       X       </pattern>
+        <pattern>       X       X</pattern>
+        <pattern>      X       X </pattern>
+        <pattern>     X       X  </pattern>
+        <pattern>    X       X   </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>1.0</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="NPlus"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="NPlus-Node" port="Port_NPlus">
+            <lambda>360.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="PPlus" fun="IMPLANTP">
+        <opaqueColor r="224" g="224" b="120"/>
+        <patternedOnDisplay>true</patternedOnDisplay>
+        <patternedOnPrinter>true</patternedOnPrinter>
+        <pattern>      X       X </pattern>
+        <pattern>                </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>                </pattern>
+        <pattern>      X       X </pattern>
+        <pattern>                </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>                </pattern>
+        <pattern>      X       X </pattern>
+        <pattern>                </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>                </pattern>
+        <pattern>      X       X </pattern>
+        <pattern>                </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>1.0</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="PPlus"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="PPlus-Node" port="Port_PPlus">
+            <lambda>120.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="N-Well" fun="WELLN">
+        <opaqueColor r="140" g="140" b="140"/>
+        <patternedOnDisplay>true</patternedOnDisplay>
+        <patternedOnPrinter>true</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>                </pattern>
+        <pattern>      X       X </pattern>
+        <pattern>                </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>                </pattern>
+        <pattern>      X       X </pattern>
+        <pattern>                </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>                </pattern>
+        <pattern>      X       X </pattern>
+        <pattern>                </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>                </pattern>
+        <pattern>      X       X </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>1.0</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="N-Well"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="N-Well-Node" port="Port_N-Well">
+            <lambda>120.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="P-Well" fun="WELLP">
+        <opaqueColor r="140" g="140" b="140"/>
+        <patternedOnDisplay>true</patternedOnDisplay>
+        <patternedOnPrinter>true</patternedOnPrinter>
+        <pattern>      X       X </pattern>
+        <pattern>       X       X</pattern>
+        <pattern>X       X       </pattern>
+        <pattern> X       X      </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>   X       X    </pattern>
+        <pattern>    X       X   </pattern>
+        <pattern>     X       X  </pattern>
+        <pattern>      X       X </pattern>
+        <pattern>       X       X</pattern>
+        <pattern>X       X       </pattern>
+        <pattern> X       X      </pattern>
+        <pattern>  X       X     </pattern>
+        <pattern>   X       X    </pattern>
+        <pattern>    X       X   </pattern>
+        <pattern>     X       X  </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>1.0</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="P-Well"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="P-Well-Node" port="Port_P-Well">
+            <lambda>120.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <layer name="DeviceMark" fun="CONTROL">
+        <opaqueColor r="255" g="0" b="0"/>
+        <patternedOnDisplay>false</patternedOnDisplay>
+        <patternedOnPrinter>false</patternedOnPrinter>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <pattern>                </pattern>
+        <outlined>NOPAT</outlined>
+        <opacity>0.4</opacity>
+        <foreground>true</foreground>
+        <display3D thick="1.0" height="1.0" mode="NONE" factor="1.0"/>
+        <cifLayer cif="Not set"/>
+        <skillLayer skill="DeviceMark"/>
+        <parasitics resistance="1.0" capacitance="0.0" edgeCapacitance="0.0"/>
+        <pureLayerNode name="DeviceMark-Node" port="Port_DeviceMark">
+            <lambda>360.0</lambda>
+        </pureLayerNode>
+    </layer>
+
+    <!-- ******************** ARCS ******************** -->
+    <arcProto name="Metal-1" fun="METAL1">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <antennaRatio>200.0</antennaRatio>
+        <arcLayer layer="Metal-1" style="FILLED">
+            <lambda>10.0</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="Metal-2" fun="METAL2">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <antennaRatio>200.0</antennaRatio>
+        <arcLayer layer="Metal-2" style="FILLED">
+            <lambda>10.0</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="Metal-3" fun="METAL3">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <antennaRatio>200.0</antennaRatio>
+        <arcLayer layer="Metal-3" style="FILLED">
+            <lambda>20.0</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="Metal-4" fun="METAL4">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <antennaRatio>200.0</antennaRatio>
+        <arcLayer layer="Metal-4" style="FILLED">
+            <lambda>20.0</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="Metal-5" fun="METAL5">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <antennaRatio>200.0</antennaRatio>
+        <arcLayer layer="Metal-5" style="FILLED">
+            <lambda>50.0</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="Metal-6" fun="METAL6">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <antennaRatio>200.0</antennaRatio>
+        <arcLayer layer="Metal-6" style="FILLED">
+            <lambda>100.0</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="Poly" fun="POLY1">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <antennaRatio>200.0</antennaRatio>
+        <arcLayer layer="Poly" style="FILLED">
+            <lambda>7.0</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="P-Diff" fun="DIFFP">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <arcLayer layer="P-Diff" style="FILLED">
+            <lambda>14.0</lambda>
+        </arcLayer>
+        <arcLayer layer="PPlus" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+        <arcLayer layer="N-Well" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="N-Diff" fun="DIFFN">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <arcLayer layer="N-Diff" style="FILLED">
+            <lambda>14.0</lambda>
+        </arcLayer>
+        <arcLayer layer="NPlus" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+        <arcLayer layer="P-Well" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="P-Well" fun="WELL">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <arcLayer layer="P-Diff" style="FILLED">
+            <lambda>14.0</lambda>
+        </arcLayer>
+        <arcLayer layer="PPlus" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+        <arcLayer layer="P-Well" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="S-P-Well" fun="WELL">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <arcLayer layer="P-Well" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="N-Well" fun="WELL">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <arcLayer layer="N-Diff" style="FILLED">
+            <lambda>14.0</lambda>
+        </arcLayer>
+        <arcLayer layer="NPlus" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+        <arcLayer layer="N-Well" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <arcProto name="S-N-Well" fun="WELL">
+        <wipable/>
+        <extended>true</extended>
+        <fixedAngle>true</fixedAngle>
+        <angleIncrement>90</angleIncrement>
+        <arcLayer layer="N-Well" style="FILLED">
+            <lambda>21.5</lambda>
+        </arcLayer>
+    </arcProto>
+
+    <!-- ******************** NODES ******************** -->
+    <primitiveNode name="F-N-Diff-Con" fun="CONTACT">
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Diff-Cut" style="FILLED">
+            <multicutbox sizex="14.0" sizey="14.0" sep1d="16.0" sep2d="14.0">
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </multicutbox>
+        </nodeLayer>
+        <nodeLayer layer="Metal-1" style="FILLED">
+            <box>
+                <lambdaBox klx="-12.0" khx="12.0" kly="-12.0" khy="12.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="N-Diff" style="FILLED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="NPlus" style="FILLED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Well" style="FILLED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="f-n-diff">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>N-Diff</portArc>
+            <portArc>Metal-1</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="F-N-Well-Con" fun="SUBSTRATE">
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Diff-Cut" style="FILLED">
+            <multicutbox sizex="14.0" sizey="14.0" sep1d="16.0" sep2d="14.0">
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </multicutbox>
+        </nodeLayer>
+        <nodeLayer layer="Metal-1" style="FILLED">
+            <box>
+                <lambdaBox klx="-12.0" khx="12.0" kly="-12.0" khy="12.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="N-Diff" style="FILLED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="N-Well" style="FILLED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="NPlus" style="FILLED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="f-n-well">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>N-Well</portArc>
+            <portArc>Metal-1</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="F-P-Diff-Con" fun="CONTACT">
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Diff-Cut" style="FILLED">
+            <multicutbox sizex="14.0" sizey="14.0" sep1d="16.0" sep2d="14.0">
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </multicutbox>
+        </nodeLayer>
+        <nodeLayer layer="Metal-1" style="FILLED">
+            <box>
+                <lambdaBox klx="-12.0" khx="12.0" kly="-12.0" khy="12.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="N-Well" style="FILLED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Diff" style="FILLED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="PPlus" style="FILLED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="f-p-diff">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>P-Diff</portArc>
+            <portArc>Metal-1</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="F-P-Well-Con" fun="WELL">
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Diff-Cut" style="FILLED">
+            <multicutbox sizex="14.0" sizey="14.0" sep1d="16.0" sep2d="14.0">
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </multicutbox>
+        </nodeLayer>
+        <nodeLayer layer="Metal-1" style="FILLED">
+            <box>
+                <lambdaBox klx="-12.0" khx="12.0" kly="-12.0" khy="12.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Diff" style="FILLED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Well" style="FILLED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="PPlus" style="FILLED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="f-p-well">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>P-Well</portArc>
+            <portArc>Metal-1</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="Metal-1-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-10.0" khx="10.0" kly="-10.0" khy="10.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Metal-1" style="CROSSED">
+            <box>
+                <lambdaBox klx="-10.0" khx="10.0" kly="-10.0" khy="10.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="metal-1">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Metal-1</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="Metal-2-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-10.0" khx="10.0" kly="-10.0" khy="10.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Metal-2" style="CROSSED">
+            <box>
+                <lambdaBox klx="-10.0" khx="10.0" kly="-10.0" khy="10.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="metal-2">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Metal-2</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="Metal-3-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-20.0" khx="20.0" kly="-20.0" khy="20.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Metal-3" style="CROSSED">
+            <box>
+                <lambdaBox klx="-20.0" khx="20.0" kly="-20.0" khy="20.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="metal-3">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Metal-3</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="Metal-4-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-20.0" khx="20.0" kly="-20.0" khy="20.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Metal-4" style="CROSSED">
+            <box>
+                <lambdaBox klx="-20.0" khx="20.0" kly="-20.0" khy="20.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="metal-4">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Metal-4</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="Metal-5-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-50.0" khx="50.0" kly="-50.0" khy="50.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Metal-5" style="CROSSED">
+            <box>
+                <lambdaBox klx="-50.0" khx="50.0" kly="-50.0" khy="50.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="metal-5">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Metal-5</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="Metal-6-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-100.0" khx="100.0" kly="-100.0" khy="100.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Metal-6" style="CROSSED">
+            <box>
+                <lambdaBox klx="-100.0" khx="100.0" kly="-100.0" khy="100.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="metal-6">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Metal-6</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="N-Diff-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="N-Diff" style="CROSSED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="NPlus" style="CROSSED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Well" style="CROSSED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="n-diff">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>N-Diff</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="N-Transistor" fun="TRANMOS">
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="N-Diff" style="FILLED" portNum="-1" electrical="false">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-33.0" khy="33.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="N-Diff" style="FILLED" portNum="3" electrical="true">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-33.0" khy="0.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="N-Diff" style="FILLED" portNum="1" electrical="true">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="0.0" khy="33.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="NPlus" style="FILLED">
+            <box>
+                <lambdaBox klx="-45.0" khx="45.0" kly="-48.0" khy="48.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Well" style="FILLED">
+            <box>
+                <lambdaBox klx="-45.0" khx="45.0" kly="-48.0" khy="48.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="Poly" style="FILLED" electrical="true">
+            <box>
+                <lambdaBox klx="-30.0" khx="-14.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="Poly" style="FILLED" portNum="2" electrical="true">
+            <box>
+                <lambdaBox klx="14.0" khx="30.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="Poly" style="FILLED" portNum="-1" electrical="false">
+            <box>
+                <lambdaBox klx="-30.0" khx="30.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="PolyGate" style="FILLED" portNum="-1" electrical="true">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="poly-left">
+            <portAngle primary="180" range="90"/>
+            <portTopology>0</portTopology>
+            <box khx="-1.0">
+                <lambdaBox klx="-30.0" khx="-30.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Poly</portArc>
+        </primitivePort>
+        <primitivePort name="diff-top">
+            <portAngle primary="90" range="90"/>
+            <portTopology>1</portTopology>
+            <box kly="1.0">
+                <lambdaBox klx="0.0" khx="0.0" kly="14.0" khy="14.0"/>
+            </box>
+            <portArc>N-Diff</portArc>
+        </primitivePort>
+        <primitivePort name="poly-right">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box klx="1.0">
+                <lambdaBox klx="30.0" khx="30.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Poly</portArc>
+        </primitivePort>
+        <primitivePort name="diff-bottom">
+            <portAngle primary="270" range="90"/>
+            <portTopology>2</portTopology>
+            <box khy="-1.0">
+                <lambdaBox klx="0.0" khx="0.0" kly="-14.0" khy="-14.0"/>
+            </box>
+            <portArc>N-Diff</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="N-Well-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="N-Diff" style="CROSSED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="N-Well" style="CROSSED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="NPlus" style="CROSSED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="n-well">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>N-Well</portArc>
+            <portArc>S-N-Well</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="P-Diff-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="N-Well" style="CROSSED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Diff" style="CROSSED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="PPlus" style="CROSSED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="p-diff">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>P-Diff</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="P-Transistor" fun="TRAPMOS">
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="N-Well" style="FILLED">
+            <box>
+                <lambdaBox klx="-45.0" khx="45.0" kly="-48.0" khy="48.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Diff" style="FILLED" portNum="-1" electrical="false">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-33.0" khy="33.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Diff" style="FILLED" portNum="3" electrical="true">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-33.0" khy="0.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Diff" style="FILLED" portNum="1" electrical="true">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="0.0" khy="33.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="PPlus" style="FILLED">
+            <box>
+                <lambdaBox klx="-45.0" khx="45.0" kly="-48.0" khy="48.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="Poly" style="FILLED" electrical="true">
+            <box>
+                <lambdaBox klx="-30.0" khx="-14.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="Poly" style="FILLED" portNum="2" electrical="true">
+            <box>
+                <lambdaBox klx="14.0" khx="30.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="Poly" style="FILLED" portNum="-1" electrical="false">
+            <box>
+                <lambdaBox klx="-30.0" khx="30.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="PolyGate" style="FILLED" portNum="-1" electrical="true">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="poly-left">
+            <portAngle primary="180" range="90"/>
+            <portTopology>0</portTopology>
+            <box khx="-1.0">
+                <lambdaBox klx="-30.0" khx="-30.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Poly</portArc>
+        </primitivePort>
+        <primitivePort name="diff-top">
+            <portAngle primary="90" range="90"/>
+            <portTopology>1</portTopology>
+            <box kly="1.0">
+                <lambdaBox klx="0.0" khx="0.0" kly="14.0" khy="14.0"/>
+            </box>
+            <portArc>P-Diff</portArc>
+        </primitivePort>
+        <primitivePort name="poly-right">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box klx="1.0">
+                <lambdaBox klx="30.0" khx="30.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Poly</portArc>
+        </primitivePort>
+        <primitivePort name="diff-bottom">
+            <portAngle primary="270" range="90"/>
+            <portTopology>2</portTopology>
+            <box khy="-1.0">
+                <lambdaBox klx="0.0" khx="0.0" kly="-14.0" khy="-14.0"/>
+            </box>
+            <portArc>P-Diff</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="P-Well-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="P-Diff" style="CROSSED">
+            <box>
+                <lambdaBox klx="-14.0" khx="14.0" kly="-14.0" khy="14.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="P-Well" style="CROSSED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="PPlus" style="CROSSED">
+            <box>
+                <lambdaBox klx="-29.0" khx="29.0" kly="-29.0" khy="29.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="p-well">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>P-Well</portArc>
+            <portArc>S-P-Well</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="Poly-Con" fun="CONTACT">
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-9.0" khx="9.0" kly="-9.0" khy="9.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Metal-1" style="FILLED">
+            <box>
+                <lambdaBox klx="-9.0" khx="9.0" kly="-9.0" khy="9.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="Poly" style="FILLED">
+            <box>
+                <lambdaBox klx="-7.0" khx="7.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <nodeLayer layer="Poly-Cut" style="FILLED">
+            <multicutbox sizex="14.0" sizey="14.0" sep1d="16.0" sep2d="14.0">
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </multicutbox>
+        </nodeLayer>
+        <primitivePort name="poly">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Poly</portArc>
+            <portArc>Metal-1</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <primitiveNode name="Poly-Pin" fun="PIN">
+        <shrinkArcs/>
+        <nodeBase>
+            <box>
+                <lambdaBox klx="-7.0" khx="7.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeBase>
+        <nodeLayer layer="Poly" style="CROSSED">
+            <box>
+                <lambdaBox klx="-7.0" khx="7.0" kly="-7.0" khy="7.0"/>
+            </box>
+        </nodeLayer>
+        <primitivePort name="poly">
+            <portAngle primary="0" range="180"/>
+            <portTopology>0</portTopology>
+            <box>
+                <lambdaBox klx="0.0" khx="0.0" kly="0.0" khy="0.0"/>
+            </box>
+            <portArc>Poly</portArc>
+        </primitivePort>
+    </primitiveNode>
+
+    <menuPalette numColumns="3">
+
+        <menuBox/>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox/>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>P-Diff</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>N-Diff</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>P-Well</menuArc>
+            <menuArc>S-P-Well</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>N-Well</menuArc>
+            <menuArc>S-N-Well</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>Poly</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>Metal-1</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>Metal-2</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>Metal-3</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>Metal-4</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>Metal-5</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuArc>Metal-6</menuArc>
+        </menuBox>
+        <menuBox/>
+        <menuBox/>
+
+        <menuBox>
+            <menuText>Pure</menuText>
+        </menuBox>
+        <menuBox>
+            <menuText>Misc.</menuText>
+        </menuBox>
+        <menuBox>
+            <menuText>Cell</menuText>
+        </menuBox>
+
+    </menuPalette>
+
+    <Foundry name="NONE">
+
+
+        <LayerRule ruleName="" layerName="P-Diff" type="MINWID" when="ALL" value="28.0"/>
+        <LayersRule ruleName="" layerNames="{P-Diff,P-Diff}" type="SPACING" when="ALL" value="32.0"/>
+        <LayerRule ruleName="" layerName="N-Diff" type="MINWID" when="ALL" value="28.0"/>
+        <LayersRule ruleName="" layerNames="{N-Diff,N-Diff}" type="SPACING" when="ALL" value="32.0"/>
+        <LayerRule ruleName="" layerName="PPlus" type="MINWID" when="ALL" value="120.0"/>
+        <LayersRule ruleName="" layerNames="{PPlus,P-Diff}" type="SURROUND" when="ALL" value="15.0"/>
+        <LayersRule ruleName="" layerNames="{PPlus,PPlus}" type="SPACING" when="ALL" value="0.0"/>
+        <LayerRule ruleName="" layerName="NPlus" type="MINWID" when="ALL" value="360.0"/>
+        <LayersRule ruleName="" layerNames="{NPlus,N-Diff}" type="SURROUND" when="ALL" value="15.0"/>
+        <LayersRule ruleName="" layerNames="{NPlus,NPlus}" type="SPACING" when="ALL" value="0.0"/>
+        <LayerRule ruleName="" layerName="P-Well" type="MINWID" when="ALL" value="120.0"/>
+        <LayersRule ruleName="" layerNames="{P-Well,P-Diff}" type="SURROUND" when="ALL" value="15.0"/>
+        <LayersRule ruleName="" layerNames="{P-Well,N-Diff}" type="SURROUND" when="ALL" value="15.0"/>
+        <LayersRule ruleName="" layerNames="{P-Well,P-Well}" type="SPACING" when="ALL" value="0.0"/>
+        <LayerRule ruleName="" layerName="N-Well" type="MINWID" when="ALL" value="120.0"/>
+        <LayersRule ruleName="" layerNames="{N-Well,P-Diff}" type="SURROUND" when="ALL" value="15.0"/>
+        <LayersRule ruleName="" layerNames="{N-Well,N-Diff}" type="SURROUND" when="ALL" value="15.0"/>
+        <LayersRule ruleName="" layerNames="{N-Well,N-Well}" type="SPACING" when="ALL" value="0.0"/>
+        <LayerRule ruleName="" layerName="Poly" type="MINWID" when="ALL" value="14.0"/>
+        <LayersRule ruleName="" layerNames="{Poly,Poly}" type="SPACING" when="ALL" value="16.0"/>
+        <LayerRule ruleName="" layerName="PolyGate" type="MINWID" when="ALL" value="14.0"/>
+        <LayersRule ruleName="" layerNames="{PolyGate,PolyGate}" type="SPACING" when="ALL" value="16.0"/>
+        <LayersRule ruleName="" layerNames="{Diff-Cut,PolyGate}" type="SPACING" when="ALL" value="0.0"/>
+        <LayersRule ruleName="" layerNames="{Poly-Cut,PolyGate}" type="SPACING" when="ALL" value="0.0"/>
+        <LayerRule ruleName="" layerName="Metal-1" type="MINWID" when="ALL" value="20.0"/>
+        <LayersRule ruleName="" layerNames="{Metal-1,Metal-1}" type="SPACING" when="ALL" value="60.0"/>
+        <LayerRule ruleName="" layerName="Via-1" type="MINWID" when="ALL" value="16.0"/>
+        <LayersRule ruleName="" layerNames="{Via-1,Via-1}" type="SPACING" when="ALL" value="14.0"/>
+        <LayerRule ruleName="" layerName="Metal-2" type="MINWID" when="ALL" value="20.0"/>
+        <LayersRule ruleName="" layerNames="{Metal-2,Metal-2}" type="SPACING" when="ALL" value="20.0"/>
+        <LayerRule ruleName="" layerName="Via-2" type="MINWID" when="ALL" value="14.0"/>
+        <LayersRule ruleName="" layerNames="{Via-2,Via-2}" type="SPACING" when="ALL" value="16.0"/>
+        <LayerRule ruleName="" layerName="Metal-3" type="MINWID" when="ALL" value="40.0"/>
+        <LayersRule ruleName="" layerNames="{Metal-3,Metal-3}" type="SPACING" when="ALL" value="40.0"/>
+        <LayerRule ruleName="" layerName="Via-3" type="MINWID" when="ALL" value="28.0"/>
+        <LayersRule ruleName="" layerNames="{Via-3,Via-3}" type="SPACING" when="ALL" value="32.0"/>
+        <LayerRule ruleName="" layerName="Metal-4" type="MINWID" when="ALL" value="40.0"/>
+        <LayersRule ruleName="" layerNames="{Metal-4,Metal-4}" type="SPACING" when="ALL" value="40.0"/>
+        <LayerRule ruleName="" layerName="Via-4" type="MINWID" when="ALL" value="28.0"/>
+        <LayersRule ruleName="" layerNames="{Via-4,Via-4}" type="SPACING" when="ALL" value="32.0"/>
+        <LayerRule ruleName="" layerName="Metal-5" type="MINWID" when="ALL" value="100.0"/>
+        <LayersRule ruleName="" layerNames="{Metal-5,Metal-5}" type="SPACING" when="ALL" value="100.0"/>
+        <LayerRule ruleName="" layerName="Via-5" type="MINWID" when="ALL" value="70.0"/>
+        <LayersRule ruleName="" layerNames="{Via-5,Via-5}" type="SPACING" when="ALL" value="80.0"/>
+        <LayerRule ruleName="" layerName="Metal-6" type="MINWID" when="ALL" value="200.0"/>
+        <LayersRule ruleName="" layerNames="{Metal-6,Metal-6}" type="SPACING" when="ALL" value="200.0"/>
+    </Foundry>
+</technology>

@@ -1,0 +1,7 @@
+0-11 TB=MEMORY
+12-12 TB devices
+13-13 TB ROM (actual size is less)
+
+BOOT address beginning of the ROM area
+Device ACPI table at BOOT address + 32 bytes 
+

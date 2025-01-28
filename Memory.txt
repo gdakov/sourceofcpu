@@ -1,0 +1,1 @@
+Please note that maximum off chip memory speed is ddr4 5333 aka marketed as 3200 ecc udimm

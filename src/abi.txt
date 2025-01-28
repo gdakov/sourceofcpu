@@ -1,0 +1,3 @@
+recommended number of registers passed to a function is 5. this will allow passing up to 7 arguments if they dont need e.g. pointer load and the jump is not indirect.
+in one clock.
+recommended to use link/jump and not auto save of return value on stack so that small functions can run in less clocks.
