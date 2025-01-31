@@ -109,7 +109,88 @@ module foreign_imul(
         end 
     end
   end
-  assign res={11'b0,{3'b0,res0_reg[30]}+{3'b0,res0_reg[44]}+{res0_reg[43]&~res0_reg[42]&res0_reg[44],1'b0,res0_reg[43]&res0_reg[42]&res0_reg[44]},
+  assign res={11'b0,4'b1+{3'b0,res0_reg[30]}+{3'b0,res0_reg[44]}+{res0_reg[43]&~res0_reg[42]&res0_reg[44],1'b0,res0_reg[43]&res0_reg[42]&res0_reg[44]},
     res0_reg[29:28]==2'b0 && res0_reg[31] ? 3'b100 : 
     res0_reg[29],1'b0,res0_reg[28],~opind,res0_reg};
+endmodule
+
+module fastpath_ram(
+    clk,
+    rst,
+    read_addr,read_data,
+    write_addr,write_data,write_wen);
+
+    input clk;
+    input rst;
+    input [4:0][11:0] read_addr;
+    output [7:0] read_data;
+    input [11:0] write_addr;
+    input [7:0] write_data;
+    input write_wen;
+
+    reg [7:0] optab[4095:0];
+
+    integer p;
+    always @(posedge clk) begin
+        for(p=0;p<5;p=p+1) begin
+            read_data[p]=optab[read_addr[p]];
+        end
+        if (write_wen) optab[write_addr]<=write_data;
+    end
+endmodule
+
+module transl_dah_bundelaya(
+    clk,
+    rst,
+    data_in,
+    data_in_en,
+    data_in_en_to_follow,
+    data_out,
+    data_out_en,
+    data_out_error);
+
+    input clk;
+    input rst;
+    input [511:0] data_in;
+    input data_in_en;
+    output data_in_en_to_follow;
+    output [511:0] data_out;
+    output data_out_en;
+    output data_out_error;
+
+    wire [63:0] pfres[15:0];
+    generate
+      genvar pfoff;
+      for(pfoff=0;pfoff<64;pfoff++) begin : sizedeker
+          foreign_imul(
+          clk,
+          rst,
+          dataEn,
+          subreg_dataEn,
+          data_in_reg[pfoff*8+:64],data_in_reg[pfoff*8+64+:64],pfres[pfoff]);
+      end
+    endgenerate
+    assign pfoffset[0]=off_in;
+    assign pfoffset[1]=pfres_reg[off_in][`pfoff_size]+off_in;
+    assign pfoffset[2]=pfres_reg[pfoffset[1]][`pfoff_size]+pfoffset[1];
+    assign pfoffset[3]=pfres_reg[pfoffset[2]][`pfoff_size]+pfoffset[2];
+    assign pfoffset[4]=pfres_reg[pfoffset[3]][`pfoff_size]+pfoffset[3];
+    always @(posedge clk) begin
+        off_in<=pfoffset[4];
+        off_in_reg<=off_in;
+        if (off_in<off_in_reg) begin
+            data_in_reg={data_in[511:0],data_in_reg[511:256]};
+            if (!data_in_en) upper_invalid<=1;
+            if (upper_invalid) bndl_invalid<=1;
+        end
+    end
+
+    assign data_in_en_to_follow=upper_invalid;
+
+    fastpath_ram optab_mod(
+    clk,
+    rst,
+    optab_addr,optab_data,
+    write_optab_addr,write_optab_data,write_optab_wen);
+
 endmodule

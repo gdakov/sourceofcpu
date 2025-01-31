@@ -199,11 +199,11 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   
   assign nDataAlt2=nDataAlt && doJmp2 | ~cond[4];
   assign valRes=(add_en||shift_en&~NOSHIFT||(operation[7:0]==`op_cax && NOSHIFT)||~nDataAlt)&~(~doJmp2|~cond[4]) ? 
-    66'bz : {^{nDataAlt & ~nDataAlt2 ? val1[1][64]&~operation[9] : is_ptr,valRes2},
-    {nDataAlt & ~nDataAlt2 ? val1[1][64]&~operation[9] : is_ptr,valRes2}};
+    66'bz : {^{nDataAlt & ~nDataAlt2 ? val1[1][64]&~|operation[10:9] : is_ptr,valRes2},
+    {nDataAlt & ~nDataAlt2 ? val1[1][64]&~|operation[10:9] : is_ptr,valRes2}};
 //4 phase offset for the ecc bit
   assign valRes2[63:0]=(operation[11] || ~nDataAlt) ? 64'b0: 64'bz;
-  assign valRes2[63:0]=nDataAlt & ~nDataAlt2 ? (operation[9] ? {63'b0,operation[10]} : val1[1][63:0]) : 64'bz;
+  assign valRes2[63:0]=nDataAlt & ~nDataAlt2 ? (|operation[10:9] ? {{63{~operation[9]}},operation[10]} : val1[1][63:0]) : 64'bz;
   assign valRes2[63:0]=(~add8_en & ~sahf_en && nDataAlt2) ? valRes1 : 64'bz;
   assign valRes2[63:8]=(add8_en|sahf_en && nDataAlt2) ? 56'b0 : 56'bz;
   assign valRes2[7:0]=(add8_en|sahf_en && nDataAlt2) ? valRes8 : 8'bz;
@@ -483,9 +483,9 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
           isFlags_reg<=isFlags || {opcode[7:1],1'b0}==`op_cloop_even;
           retOp<=operation;
 
-          carryAdd64_reg<=(carryAdd64 && valS[0]|(calu[3:0]!=4'he)) & ~calu[4]|doJmp2;
-          carryAdd44_reg<=(carryAdd44) & ~calu[4]|doJmp2;
-          carryAdd32_reg<=(carryAdd32) & ~calu[4]|doJmp2;
+          carryAdd64_reg<=(carryAdd64 && valS[0]|(calu[3:0]!=4'he)) & ~calu[4]|doJmp2 | calu[4]&~doJmp2&~operation[10]&operation[9];
+          carryAdd44_reg<=(carryAdd44) & ~calu[4]|doJmp2| calu[4]&~doJmp2&~operation[10]&operation[9];
+          carryAdd32_reg<=(carryAdd32) & ~calu[4]|doJmp2| calu[4]&~doJmp2&~operation[10]&operation[9];
           carryAdd16_reg<=(carryAdd16) & ~calu[4]|doJmp2;
           carryAdd4LL_reg <=(carryAdd4LL) & ~calu[4]|doJmp2 ;
           carryAdd8LL_reg <=(carryAdd8LL) & ~calu[4]|doJmp2;
