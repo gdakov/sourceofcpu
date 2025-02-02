@@ -14,3 +14,5 @@ SELF REVIEW
 
 1. if using one extra bit per 16 rather than 64, which still leaves enough room for ECC with 2048 bit cacheline for memory block with 2 bit ECC per byte, it is possible to return bounds checking of 2 bit significant, and 6 bit exponent, which allows for some spectre flaw protection but not necesarily for ROP return and or out-out-bounds access as out of bound access protection will have average wastage of 12.5%. On the other hand, if the user desires the bounds checking quite a lot, it is possible. NOTE: the large wastage only applies to small objects; large objects can be padded with unallocated pages
 2. Transparent in-ram paging has to be implemented for one or two mappings per page, to eliminate random access page fault for brain emulation as that would considerably slow it down.
+review 2
+6 out of 7 lol 1 gold signals can be sent. 21 lol 2 gold and 35 level 3 gold for 3 copies of each ram bit gives about 41 bits given the 3 instead of 2 cells. core split 27 ways with two copies offset by 6 phases very low radiation and 54 vector with 50 simultaneous insert from ram and enough store recycle.
