@@ -1,0 +1,1 @@
+note that the in instruction stop bits were copied from russian very old designs im not sure which one but possibly elbrus 1. They were later implemented by p2 cache but were not in the ISA.
