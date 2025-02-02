@@ -367,7 +367,7 @@ alu(clk,rst,except,except_thread,thread,operation,cond,sub,dataEn,nDataAlt,retDa
   assign flags_COASZP=((retOp[7:0]==`op_add64) && ~(retOp[2]&operation_reg[8]) && isFlags_reg) ? 
       {carryAdd64_reg&~is_ptr_reg,flagAdd64_OF_reg&~is_ptr_reg,carryAdd4LL_reg&~is_ptr_reg,valRes_reg[63],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
   assign flags_COASZP=((retOp[7:0]==`op_add32 || retOp[7:0]==`op_sub32) && isFlags_reg) ? {carryAdd32_reg,flagAdd32_OF_reg,carryAdd4LL_reg,valRes_reg[31],flag32_ZF_reg,valRes_reg[0]} : 6'bz;
-  assign flags_COASZP=((retOp[7:1]==7'd23) && isFlags_reg) ? {(flag64_SF_reg^flag64_OF_reg)&&~&valRes_reg[51:44]||~doJmp_reg,flag64_OF_reg,1'b0,valRes_reg[63],valRes_reg[63:44]==20'b0,valRes_reg[0]} : 6'bz;
+  assign flags_COASZP=((retOp[7:1]==7'd23) && isFlags_reg) ? {(flag64_SF_reg^flag64_OF_reg)&&~&valRes_reg[51:47]||~doJmp_reg,flag64_OF_reg,1'b0,valRes_reg[63],valRes_reg[63:47]==17'b0,valRes_reg[0]} : 6'bz;
   
   assign flags_COASZP=((retOp[7:0]==`op_sub64) && isFlags_reg && is_ptr_sub) ? {carryAdd44_reg,flagSub44_OF_reg,~carryAdd4LL_reg,valRes_reg[43],flag64_ZF_reg,valRes_reg[0]} : 6'bz;
   assign flags_COASZP=((retOp[7:0]==`op_sub64) && isFlags_reg && ~is_ptr_sub) ? {carryAdd64_reg & ~is_ptr_reg,flagSub64_OF_reg&~is_ptr_reg,~carryAdd4LL_reg&~is_ptr_reg,valRes_reg[63],flag64_ZF_reg,valRes_reg[0]} : 6'bz;

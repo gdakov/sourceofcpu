@@ -264,7 +264,7 @@ module smallInstr_decoder(
 
   wire [3:0] oddmode=instrQ[`instrQ_attr];
 
-  signed reg [43:0] boogie_baboogie;
+  signed reg [46:0] boogie_baboogie;
 
   reg [OPERATION_WIDTH-1:0] poperation[TRICNT_TOP-1:0];
   reg [REG_WIDTH-2:0] prA[TRICNT_TOP-1:0];
@@ -1347,12 +1347,14 @@ instr[13:8]==6'd8) begin
           boogie_baboogie=1;
           if (!vecmode) boggie_baboogie=H*3+enc02;
           case(instr[30:29])
+          //verilator lint_off WIDTH
 	     0:pconstant[16]={-boogie_baboogie<<~vecmode,boogie_baboogie<<instr[22:21]};
 	     1:pconstant[16]={-boogie_baboogie*2<<~vecmode,boogie_baboogie*2<<instr[22:21]};
 	     2:pconstant[16]={-boogie_baboogie*3<<~vecmode,boogie_baboogie*3<<instr[22:21]};
 	     4:pconstant[16]={-boogie_baboogie*4<<~vecmode,boogie_baboogie*4<<instr[22:21]};
+         //verilator lint_on WIDTH
           endcase
-          if (magic[3:0]==4'b0111 && !vecmode) pconstant[16][63:32]=instr[63:32];
+          if (magic[2:0]==3'b011 && !vecmode) pconstant[16][63:47]={1'b0,instr[47:32]};
 	  prT[16]={3'b0,instr[27],1'b0};
 	  perror[16]=2'b0;
           poperation[16][10:8]={3{instr[31]}};
