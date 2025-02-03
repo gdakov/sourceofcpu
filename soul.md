@@ -16,3 +16,8 @@ SELF REVIEW
 2. Transparent in-ram paging has to be implemented for one or two mappings per page, to eliminate random access page fault for brain emulation as that would considerably slow it down.
 review 2
 6 out of 7 lol 1 gold signals can be sent. 21 lol 2 gold and 35 level 3 gold for 3 copies of each ram bit gives about 41 bits given the 3 instead of 2 cells. core split 27 ways with two copies offset by 6 phases very low radiation and 54 vector with 50 simultaneous insert from ram and enough store recycle.
+SELF REVIEW
+NEURONS will have to be together with dendrites about 25 trillion due to close to firing field of 300000 rather than comfortably not firing filed of 100000, which makes them about 3 microns in size given 300 i/o.
+This assumes that the 60mv potential of nerves is not fabricated.
+Therefore 10 chips rather than 3 are required. They can be connected by drill through rods or capacitive coupling or coil coupling.
+

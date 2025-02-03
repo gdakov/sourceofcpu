@@ -161,23 +161,30 @@ module transl_dah_bundelaya(
     wire [63:0] pfres[15:0];
     generate
       genvar pfoff;
-      for(pfoff=0;pfoff<64;pfoff++) begin : sizedeker
+      for(pfoff=0;pfoff<32;pfoff++) begin : sizedeker
           foreign_imul(
           clk,
           rst,
           dataEn,
           subreg_dataEn,
           data_in_reg[pfoff*8+:64],data_in_reg[pfoff*8+64+:64],pfres[pfoff]);
+          assign pfoffset[pfoff][0]=pfoff;
+          assign pfoffset[pfoff][1]=pfres_reg[off_in][`pfoff_size]+pfoff;
+          assign pfoffset[pfoff][2]=pfres_reg[pfoffset[1]][`pfoff_size]+pfoffset[1];
+          assign pfoffset[pfoff][3]=pfres_reg[pfoffset[2]][`pfoff_size]+pfoffset[2];
       end
     endgenerate
-    assign pfoffset[0]=off_in;
-    assign pfoffset[1]=pfres_reg[off_in][`pfoff_size]+off_in;
-    assign pfoffset[2]=pfres_reg[pfoffset[1]][`pfoff_size]+pfoffset[1];
-    assign pfoffset[3]=pfres_reg[pfoffset[2]][`pfoff_size]+pfoffset[2];
-    assign pfoffset[4]=pfres_reg[pfoffset[3]][`pfoff_size]+pfoffset[3];
+    assign pfoffset2[0]=0;
+    assign pfoffset2[1]=pfres_reg2[0][`pfoff_size2]+0;
+    assign pfoffset2[2]=pfres_reg2[pfoffset2[1]][`pfoff_size2]+pfoffset2[1];
+    assign pfoffset2[3]=pfres_reg2[pfoffset2[2]][`pfoff_size2]+pfoffset2[2];
+    assign pfoffset2[4]=pfres_reg2[pfoffset2[3]][`pfoff_size2]+pfoffset2[3];
     always @(posedge clk) begin
         off_in<=pfoffset[4];
         off_in_reg<=off_in;
+        pfres_reg<=pfres;
+        pfres_reg2<=pfres_reg;
+        for(k=0;k<32;k=k+1) pfres_reg2[k][63:59]<=pfoffset[k][3][`pfoff_size];
         if (off_in<off_in_reg) begin
             data_in_reg={data_in[511:0],data_in_reg[511:256]};
             if (!data_in_en) upper_invalid<=1;
