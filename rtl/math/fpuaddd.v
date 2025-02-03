@@ -373,7 +373,7 @@ module fadd(
   assign raise[`csrfpu_inexact_excpt]=!|xpon[3:2]; 
   assign raise[`csrfpu_inexact_ieee_excpt]=!|xpon[3:2]; 
   assign raise[`csrfpu_denor_consume_excpt]=1'b0;
-  assign raise[`csrfpu_denor_produce_excpt]=pook_excpt;
+  assign raise[`csrfpu_denor_produce_excpt]=1'b0;
 
   assign X_xpon=Smain_simple ? {res_rnbit,res_tail,2'b00} : 4'bz;
   assign X_xpon=Smain_round ? {res_rnbit,res_tail,2'b00} : 4'bz;
