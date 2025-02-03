@@ -73,6 +73,10 @@ module fadd(
   wire [67:0] res_X;
   wire [15:0] res_X_hi;
 
+  wire [51:0] mskS;
+  wire [51:0] mskSC;
+  wire [51:0] mskSL;
+
   wire pook_excpt;
   
   assign pook_excpt=pook_op_bit && isDBL ? ~|opB[52:0] : ~|opB[62:0];
@@ -391,14 +395,18 @@ module fadd(
   assign xpon=~isDBL_reg & ~renor_simple & ~renor_any  ? X_xpon : 4'bz;
   assign xpon=renor_simple | renor_round ? {renor_round,3'b001} : 4'bz;
    
-  assign resX[51:0]=Smain_simple ? resM1[51:0] : 52'bz;
-  assign resX[51:0]=Smain_round ? resMR1[51:0] : 52'bz;
-  assign resX[51:0]=Smain_simpleC ? resM1[52:1] : 52'bz;
-  assign resX[51:0]=Smain_roundC ? resM2[52:1] : 52'bz;
-  assign resX[51:0]=Smain_simpleRC ? resMR1[52:1] : 52'bz;
-  assign resX[51:0]=Smain_simpleL ? {resM1[50:0],res_rnbit^Smain_subroundL} : 52'bz;
-  assign resX[51:0]=Smain_roundL ? {resMR1[50:0],1'b0} : 52'bz;
-  
+  assign resX[51:0]=Smain_simple ? resM1[51:0]&mskS : 52'bz;
+  assign resX[51:0]=Smain_round ? resMR1[51:0]&mskS : 52'bz;
+  assign resX[51:0]=Smain_simpleC ? resM1[52:1]&mskSC : 52'bz;
+  assign resX[51:0]=Smain_roundC ? resM2[52:1]&mskSC : 52'bz;
+  assign resX[51:0]=Smain_simpleRC ? resMR1[52:1]&mskSC : 52'bz;
+  assign resX[51:0]=Smain_simpleL ? {resM1[50:0],res_rnbit^Smain_subroundL}&mskSL : 52'bz;
+  assign resX[51:0]=Smain_roundL ? {resMR1[50:0],1'b0}&mskSL : 52'bz;
+
+  assign mskS=52'hfffffffffffff<<{opA_exp_reg[15,opA_exp_reg[1:0]]}-12'h401
+  assign mskSC=52'hfffffffffffff<<{opA_exp_reg[15,opA_exp_reg[1:0]]}-12'h400
+  assign mskSL=52'hfffffffffffff<<{opA_exp_reg[15,opA_exp_reg[1:0]]}-12'h402
+
   assign {resX[62],resX[64],resX[61:52]}=Smain_simple ? {opA_exp_reg[15],opA_exp_reg[10:0]} : 12'bz;
   assign {resX[62],resX[64],resX[61:52]}=Smain_round ? {opA_exp_reg[15],opA_exp_reg[10:0]} : 12'bz;
   assign {resX[62],resX[64],resX[61:52]}=Smain_simpleC ? {opA_exp_inc[15],opA_exp_inc[10:0]} : 12'bz;

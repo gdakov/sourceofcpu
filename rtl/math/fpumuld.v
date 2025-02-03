@@ -109,6 +109,8 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   
   wire B_zero,B_infty,B_nan;
 
+  wire [52:0] mskS;
+
   wire spec_zero,spec_infty,spec_nan,spec_snan,spec_qnan,spec_A;
   reg spec_zero_reg,spec_infty_reg,spec_snan_reg,spec_qnan_reg,spec_A_reg;
   reg spec_zero_reg2,spec_infty_reg2,spec_snan_reg2,spec_qnan_reg2,spec_A_reg2;
@@ -129,11 +131,7 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   fpucadd_compress compr_mod(clk,A[63:0],B[63:0],part0,part1,or1,and1);
   adder #(128) prodAdd_mod(part0,part1,prod,1'b0,1'b1,,,,);
 
-  adder2oi #(64) resAddE_mod(enbit_ext,prod_reg[126:63],rndbit_ext,{res[63:33],res[31:0],dummy1_1},{dummy1_2,res[63:33],res[31:0]},1'b0,
-      prod_reg[127] & EXT_rnd1 & ~spec_any & en_reg ||
-      ~prod_reg[127] & EXT_rnd0 & EXT_rnflip0 & ~isDBL_reg & ~spec_any & en_reg,
-      ~prod_reg[127] & EXT_rnd0 & ~EXT_rnflip0 & ~isDBL_reg & ~spec_any & en_reg,,,,);
-  adder2oi #(53) resAddD_mod(enbit_dbl,prod_reg[104:52],rndbit_dbl,{res[52:33],res[31:0],dummy1_3},{dummy1_4,res[52:33],res[31:0]},1'b0,
+  adder2oi #(53) resAddD_mod(enbit_dbl,prod_reg[104:52]&mskS[51:0],rndbit_dbl&mskS[-1],{res[52:33],res[31:0],dummy1_3},{dummy1_4,res[52:33],res[31:0]},1'b0,
       prod_reg[105] & DBL_rnd1 & isDBL_reg & ~spec_any & en_reg ||
       ~prod_reg[105] & DBL_rnd0 & DBL_rnflip0 & isDBL_reg & ~spec_any & en_reg,
       ~prod_reg[105] & DBL_rnd0 & ~DBL_rnflip0 & isDBL_reg & ~spec_any & en_reg,,,,);
@@ -164,6 +162,9 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   get_carry #(17) cmp3_mod(exp_max_IEEE,~(exp_exp1^17'h10000),1'b1,exp1_oor_IEEE);
   get_carry #(17) cmp4_mod(~exp_denor_IEEE,(exp_exp^17'h10000),1'b1,exp_non_denor_IEEE);
   get_carry #(17) cmp5_mod(~exp_denor_IEEE,(exp_exp1^17'h10000),1'b1,exp_non_denor_IEEE);
+
+
+  assign mskS=16'h1fffffffffffff<<(exp_exp_reg-exp_denor_IEEE+1);
 
   assign exp_exp_d=exp_oor & ~fpcsr[`csrfpu_clip_IEEE] ? exp_max : 17'b0;
   assign exp_exp_d=exp_oor_IEEE & fpcsr[`csrfpu_clip_IEEE] ? exp_max_IEEE : 17'bz;
