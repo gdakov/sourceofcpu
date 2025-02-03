@@ -170,8 +170,17 @@ module transl_dah_bundelaya(
           data_in_reg[pfoff*8+:64],data_in_reg[pfoff*8+64+:64],pfres[pfoff]);
           assign pfoffset[pfoff][0]=pfoff;
           assign pfoffset[pfoff][1]=pfres_reg[off_in][`pfoff_size]+pfoff;
-          assign pfoffset[pfoff][2]=pfres_reg[pfoffset[1]][`pfoff_size]+pfoffset[1];
-          assign pfoffset[pfoff][3]=pfres_reg[pfoffset[2]][`pfoff_size]+pfoffset[2];
+          assign pfoffset[pfoff][2]=pfres_reg[pfoffset[1][4:0]][`pfoff_size]+pfoffset[1][4:0];
+          assign pfoffset[pfoff][3]=pfres_reg[pfoffset[2][4:0]][`pfoff_size]+pfoffset[2][4:0];
+          bit_find_fist_bit #(3) first_mod({pfoffset[pfoff][3][5],pfoffset[pfoff][2][5],pfoffset[pfoff][1][5],pfoffset[pfoff][0][5]},pffirst[pfoff],pfhas[pfoff]);
+          assign pfshift[pfoff]=pffirst[pfoff][0] ? {data_in,data_in_reg}>>(8*(pfoff+0)) : 'z;
+          assign pfshift[pfoff]=pffirst[pfoff][1] ? {data_in,data_in_reg}>>(8*(pfoff+1)) : 'z;
+          assign pfshift[pfoff]=pffirst[pfoff][2] ? {data_in,data_in_reg}>>(8*(pfoff+2)) : 'z;
+          assign pfshift[pfoff]=pffirst[pfoff][3] ? {data_in,data_in_reg}>>(8*(pfoff+3)) : 'z;
+          assign pfshitf2=pff_first[0] ? pfshift_reg[pfoffset[1]] : 'z;
+          assign pfshitf2=pff_first[1] ? pfshift_reg[pfoffset[2]] : 'z;
+          assign pfshitf2=pff_first[2] ? pfshift_reg[pfoffset[3]] : 'z;
+          assign pfshitf2=pff_first[3] ? pfshift_reg[pfoffset[4]] : 'z;
       end
     endgenerate
     assign pfoffset2[0]=0;
@@ -179,6 +188,7 @@ module transl_dah_bundelaya(
     assign pfoffset2[2]=pfres_reg2[pfoffset2[1]][`pfoff_size2]+pfoffset2[1];
     assign pfoffset2[3]=pfres_reg2[pfoffset2[2]][`pfoff_size2]+pfoffset2[2];
     assign pfoffset2[4]=pfres_reg2[pfoffset2[3]][`pfoff_size2]+pfoffset2[3];
+    bit_find_first_bit #(4) first_mod({pfhas[pfoffset[3]],pfhas[pfoffset[2]],pfhas[pfoffset[1]],pfhas[0]},pff_first,pff_has);
     always @(posedge clk) begin
         off_in<=pfoffset[4];
         off_in_reg<=off_in;
