@@ -853,43 +853,36 @@ instr[13:8]==6'd8) begin
        trien[4]=~magic[0] & subIsFPUD;
        puseRs[4]=1'b1;
        prAlloc[4]=1'b1;
-       poperation[4][12]=1'b0;//opcode_sub[5:1]!=5'b11100;
+       poperation[4][12]=1'b0;
        poperation[4][8]=opcode_sub[0];
        poperation[4][9]=opcode_sub[0];
-       if (~prevSpecLoad || {1'b0,instr[15:12]}==5'd15) begin
-           prA[4]={instr[7],instr[11:8]};
-           prT[4]={instr[7],instr[11:8]};
-           prB[4]={instr[6],instr[15:12]};
+       if (~prevSpecLoad & ~prevClsFma) begin
+           prA[4]={1'b0,instr[11:8]};
+           prT[4]={1'b0,instr[11:8]};
+           prB[4]={1'b0,instr[15:12]};
        end else begin
-           prB[4]=5'd15; //not a mistake; fpu spec instr is 15 rather than 16
-           prA[4]={instr[6],instr[11:8]};
-           prT[4]={instr[7],instr[15:12]};
+           prB[4]=5'd16;
+           prA[4]={1'b0,instr[11:8]};
+           prT[4]={1'b0',instr[15:12]};
        end
        prA_useF[4]=1'b1;
        prB_useF[4]=1'b1;
        prT_useF[4]=1'b1;
        if (opcode_sub[5:1]==5'b11100) begin
-           pport[4]=~instr[7] ? PORT_FMUL : PORT_FADD;
+           pport[4]=instr[6] ? PORT_FMUL : PORT_FADD;
            poperation[4][7:0]=instr[6] ? `fop_mulDH : `fop_mulDL;
        end else begin
-	   pport[4]=~instr[7] ? PORT_FMUL : PORT_FADD;
+	   pport[4]=instr[6] ? PORT_FMUL : PORT_FADD;
            if (opcode_sub[1]) begin
                poperation[4][7:0]=instr[6] ? `fop_subDH : `fop_subDL;
            end else begin
                poperation[4][7:0]=instr[6] ? `fop_addDH : `fop_addDL;
            end
-           if (class[`iclass_FMA] && prevClsFma) begin
+           if (class[`iclass_FMA] && instr[7]) begin
                poperation[4][10]=1'b1;
-               prB[4]=5'd15;
-               prA[4]=instr[12:8]&{{2{~instr[13]}},2'b11};
-               ptAE[4]=instr[13];
-               prT[4]=5'd15;
-           end else if (prevClsFma) begin
-               prB[4]=5'd15;
-               prA[4]=instr_prev[12:8]&{{2{~instr_prev[13]}},2'b11};
-               ptAE[4]=instr_prev[13];
-               prT[4]=instr[12:8]&{{2{~instr[13]}},2'b11};
-               ptTE[4]=instr[13];
+               prT[4]=5'd16;
+           end else if (prevClsFma && instr[7]) begin
+               prB[4]=5'd16;
            end
        end
        
@@ -899,40 +892,33 @@ instr[13:8]==6'd8) begin
        poperation[5][12]=opcode_sub[5:1]!=5'b11101 && opcode_sub[0] && opcode_main[6];
        poperation[5][8]=opcode_sub[0];
        poperation[5][9]=opcode_main[6];
-       if (~prevSpecLoad || {1'b0,instr[15:12]}==5'd15) begin
-           prA[5]={instr[7],instr[11:8]};
-           prT[5]={instr[7],instr[11:8]};
-           prB[5]={instr[7],instr[15:12]};
+       if (~prevSpecLoad &~prevClsFma) begin
+           prA[5]={1'b0,instr[11:8]};
+           prT[5]={1'b0,instr[11:8]};
+           prB[5]={1'b0',instr[15:12]};
        end else begin
-           prB[5]=5'd15; 
-           prA[5]={instr[7],instr[11:8]};
-           prT[5]={instr[7],instr[15:12]};
+           prB[5]=5'd16;
+           prA[5]={1'b0,instr[11:8]};
+           prT[5]={1'b0',instr[15:12]};
        end
        prA_useF[5]=1'b1;
        prB_useF[5]=1'b1;
        prT_useF[5]=1'b1;
        if (opcode_sub[5:1]==5'b11101) begin
-           pport[5]=~instr[7] ? PORT_FADD : PORT_FMUL;
+           pport[5]=PORT_FANY;
            poperation[5][7:0]=`fop_mulDP;
        end else begin
-           pport[5]=~instr[7] ? PORT_FADD : PORT_FMUL;
+           pport[5]=PORT_FMANY;
            if (opcode_sub[1]) begin
                poperation[5][7:0]=`fop_subDP;
            end else begin
                poperation[5][7:0]=poperation[5][12] ? `fop_addsubDP : `fop_addDP;
            end
-           if (class[`iclass_FMA] && prevClsFma) begin
+           if (class[`iclass_FMA] && instr[7]) begin
                poperation[5][10]=1'b1;
-               prB[5]=5'd15;
-               prA[5]=instr[12:8]&{{2{~instr[13]}},2'b11};
-               ptAE[5]=instr[13];
-               prT[5]=5'd15;
+               prT[5]=5'd16;
            end else if (prevClsFma) begin
-               prB[5]=5'd15;
-               prA[5]=instr_prev[12:8]&{{2{~instr_prev[13]}},2'b11};
-               ptAE[5]=instr_prev[13];
-               prT[5]=instr[12:8]&{{2{~instr[13]}},2'b11};
-               ptTE[5]=instr[13];
+               prB[5]=5'd16;
            end
        end
        
@@ -945,7 +931,7 @@ instr[13:8]==6'd8) begin
            prT[6]={1'b0,instr[11:8]};
            prB[6]={1'b0,instr[15:12]};
        end else begin
-           prB[6]=5'd15;
+           prB[6]=5'd16;
            prA[6]={1'b0,instr[11:8]};
            prT[6]={1'b0,instr[15:12]};
        end
@@ -968,12 +954,12 @@ instr[13:8]==6'd8) begin
        trien[7]=~magic[0] & subIsFPUSngl;
        puseRs[7]=1'b1;
        prAlloc[7]=1'b1;
-       if (~prevSpecLoad || instr[15:12]==4'd15) begin
+       if (~prevSpecLoad begin
            prA[7]={1'b0,instr[11:8]};
            prT[7]={1'b0,instr[11:8]};
            prB[7]={1'b0,instr[15:12]};
        end else begin
-           prB[7]=5'd15; 
+           prB[7]=5'd16;
            prA[7]={1'b0,instr[11:8]};
            prT[7]={1'b0,instr[15:12]};
        end
@@ -983,23 +969,16 @@ instr[13:8]==6'd8) begin
        //verilator lint_off CASEINCOMPLETE
        case({opcode_main[3],opcode_main[7:6]})
      3'd0: begin pport[7]=PORT_FADD; poperation[7]=`fop_mulS; end
-     3'd1: begin pport[7]=PORT_FADD; poperation[7]=`fop_addS; poperation[7][10]=class[`iclass_FMA]; end
-     3'd2: begin pport[7]=PORT_FADD; poperation[7]=`fop_subS; poperation[7][10]=class[`iclass_FMA]; end
-     3'd4: begin pport[7]=PORT_FADD; poperation[7]=`fop_mulSP; end
-     3'd5: begin pport[7]=PORT_FADD; poperation[7]=`fop_addSP; poperation[7][10]=class[`iclass_FMA]; end
-     3'd6: begin pport[7]=PORT_FADD; poperation[7]=`fop_subSP; poperation[7][10]=class[`iclass_FMA]; end
+     3'd1: begin pport[7]=PORT_FADD; poperation[7]=`fop_addS; poperation[7][10]=prevClsFma; end
+     3'd2: begin pport[7]=PORT_FADD; poperation[7]=`fop_subS; poperation[7][10]=prevClsFma; end
+     3'd4: begin pport[7]=PORT_FMUL; poperation[7]=`fop_mulS; end
+     3'd5: begin pport[7]=PORT_FANY; poperation[7]=`fop_addSP; poperation[7][10]=prevClsFma; end
+     3'd6: begin pport[7]=PORT_FANY; poperation[7]=`fop_subSP; poperation[7][10]=prevClsFma; end
        endcase
-       if (class[`iclass_FMA] & prevClsFma) begin
-               prB[7]=5'd15;
-               prA[7]=instr[12:8]&{{2{~instr[13]}},2'b11};
-               ptAE[7]=instr[13];
-               prT[7]=5'd15;
+       if (class[`iclass_FMA] ) begin
+               prT[7]=5'd16;
        end else if (prevClsFma) begin
-               prB[7]=5'd15;
-               prA[7]=instr_prev[12:8]&{{2{~instr_prev[13]}},2'b11};
-               ptAE[7]=instr_prev[13];
-               prT[7]=instr[12:8]&{{2{~instr[13]}},2'b11};
-               ptTE[7]=instr[13];
+               prB[7]=5'd16;
        end
        //verilator lint_on CASEINCOMPLETE
        trien[8]=~magic[0] & subIsLinkRet;
@@ -1137,11 +1116,16 @@ instr[13:8]==6'd8) begin
        prB_useF[11]=1'b1;
        prT_useF[11]=1'b1;
        case(opcode_main[7:6])
-     2'd0: begin pport[11]=PORT_FADD; poperation[11]=`fop_mulEE; end
-     2'd1: begin pport[11]=PORT_FADD; poperation[11]=`fop_addEE; end
-     2'd2: begin pport[11]=PORT_FADD; poperation[11]=`fop_subEE; end
-     2'd3: begin pport[11]=PORT_FADD; poperation[11]=`fop_subEE; end
+     2'd0: begin pport[11]=PORT_FADD; poperation[11]=`fop_mulS; poperation[11][10]=1'b1; end
+     2'd1: begin pport[11]=PORT_FMUL; poperation[11]=`fop_mulS; poperation[11][10]=1'b1; end
+     2'd2: begin pport[11]=PORT_FMUL; poperation[11]=`fop_addS; poperation[11][10]=prevClsFma; end
+     2'd3: begin pport[11]=PORT_FMUL; poperation[11]=`fop_subS; poperation[11][10]=prevClsFma; end
        endcase
+       if (class[`iclass_FMA] ) begin
+               prT[11]=5'd16;
+       end else if (prevClsFma) begin
+               prB[11]=5'd16;
+       end
 
       trien[12]=magic[0] & isBaseLoadStore;
       poperation[12][5:0]=(opcode_main[5:2]==4'b1010) ? 6'h22 : opcode_main[5:0];

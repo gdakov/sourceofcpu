@@ -236,13 +236,11 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   opcode_main==8'hff && ~instr[15] && ~instr[13] && magic[0]
   };
 
-  assign clsFMA=|{
-  instr[31:27]==5'd16 && isBasicFPUScalarB && (instr[13:8]==6'd18) | (instr[13:8]==6'd21) | (instr[13:9]==5'd8) | (instr[13:8]==6'd19) | (instr[13:8]==6'd20) | 
-    (instr[13:9]==5'd11) | (instr[13:8]==6'd24),
-  instr[31:27]==5'd16 && isBasicFPUScalarA && (instr[13:10]==4'b0) | (instr [13:9]==5'd3) | (instr[13:10]==6'd9) |(instr[13:9]==5'd2) | (instr[13:8]==6'd8),
-  subIsFPUD && opcode_sub== && prev_FMA_mul,
-  subIsFPUPD && opcode_sub== && prev_FMA_mul,
-  subIsFPUSngl && opcode_sub== && prev_FMA_mul
+  assign clsFMA=|{,
+  FMA_mul,
+  subIsFPUD && instr[7],
+  subIsFPUPD && instr[7],
+  subIsFPUE && ~instr[7]
   };
 
   assign FMA_mul={instr[31:27]==5'd16 && isBasicFPUScalarB && (instr[13:8]==6'd18) | (instr[13:8]==6'd21) | (instr[13:8]==6'd24),
@@ -260,9 +258,10 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   isBasicAddNoFl,
   isCmov,
   isShlAddMulLike,
-  isSimdInt & ~instr[16],subIsFPUD & !(opcode_sub[5:1]==5'b11100),
-  subIsFPUPD & !(opcode_sub[5:1]==5'b11101), subIsFPUSngl & !(opcode_main[7:6]==2'b0),
-  subIsFPUE & !(opcode_main[7:6]==2'b0),
+  isSimdInt & ~instr[16],
+  subIsFPUD,
+  subIsFPUPD, subIsFPUSngl,
+  subIsFPUE,
   subIsSIMD,
   isSimdInt && ((instr[13:9]==5'd0 && ~instr[16]) || (instr[13:9]==5'd5 && ~instr[16]) || (instr[13:8]==6'b11 && instr[16])),
   subIsBasicALU & ~subIsBasicXOR,subIsCmpTest,subIsLinkRet,
@@ -283,12 +282,15 @@ module predecoder_class(instr,magic,flag,FMA_mul,prev_FMA_mul,thread,class_,isLN
   
   assign clsShift=isBasicShift & ~isBasicShiftExcept || subIsBasicShift || subIsFPUD & (opcode_sub[5:1]==5'b11100) ||
     isCexALU & ~instr[12] & instr[10] ||
-    subIsFPUPD & (opcode_sub[5:1]==5'b11101) || subIsFPUSngl &(opcode_main[7:6]==2'b0)
-    || subIsFPUE &(opcode_main[7:6]==2'b0) || isSimdInt & instr[16] ||
+    subIsFPUPD & prev_FMA_mul || subIsFPUSngl & prev_FMA_mul
+    || subIsFPUE & prev_FMA_mul || isSimdInt & instr[16] ||
     (isSimdInt && ~((instr[13:9]==5'd0 && ~instr[16]) || (instr[13:9]==5'd5 && ~instr[16]) ||
      (instr[13:8]==6'b11 && instr[16]))) || 
     isBasicALU & ~isBasicALUExcept & isBasicXOR ||
     subIsBasicALU & subIsBasicXOR ||
+    instr[31:27]==5'd16 && prev_FMA_mul && isBasicFPUScalarB && (instr[13:8]==6'd19) | (instr[13:8]==6'd20) |
+    (instr[13:9]==5'd11) ||
+    instr[31:27]==5'd16 && prev_FMA_mul && isBasicFPUScalarA && (instr[13:10]==4'b0) | (instr [13:9]==5'd3) | (instr[13:10]==6'd9) ||
     (isBasicFPUScalarA && ~(instr[13:9]!=5'd2 && instr[13:8]!=6'd8)) ||
     (isBasicFPUScalarB && ~(instr[13:8]!=6'd18 && instr[13:8]!=6'd21));
   

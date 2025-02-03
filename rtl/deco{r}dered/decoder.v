@@ -404,6 +404,7 @@ module decoder_reorder_mux(
   avail,
   enable,
   sel,mulsel,
+  pwn_fma,
   isMul5,isMul8,isMul5_twinreg,
   store,
   storeL,
@@ -500,7 +501,8 @@ module decoder_reorder_mux(
   
   input [9:0] sel;
   input [2:0][9:0]mulsel;
-  
+  input [9:0] pwn_fma;
+
   input isMul5;
   input isMul8;
 
@@ -632,7 +634,12 @@ module decoder_reorder_mux(
   assign rB=storeL ? rB2 : rB1;
   assign rA=storeL ? rA2 : rA1;
 
-  shmuph_decr #(6) rT_mod(sel,dec0_rT,rT);
+  wire [5:0] rTx;
+
+  shmuph_decr #(6) rT_mod(sel,dec0_rT,rT0);
+  shmuph_decr #(6) rTx_mod(sel,{6'h39,6'h38,6'h37,6'h36,6'h35,6'h34,6'h33,6'h32,6'h31,6'h30},rTx);
+  assign rT=pwn_fma & sel ? rTx : rT;
+
   shmuph_decr #(1) rA_isV_mod(sel&{10{~storeL}},dec0_rA_isV,rA_isV);
   assign rA_isV=(storeL) ? 1'b0 : 1'bz;
 
@@ -675,8 +682,8 @@ module decoder_reorder_mux(
   shmuph_decr #(1) useBConst_mod(sel,dec0_useBConst&avail,useBConst);  
   shmuph_decr #(1) useRs_mod(sel,(dec0_useRs&avail&{10{~isMul5}})|{10{&sel[1:0] & storeL}},useRs);
   shmuph_decr #(1) afterTaken_mod(sel,dec_afterTaken&avail,afterTaken);    
-  shmuph_decr #(1) alloc_mod(sel&({10{isMul5_twinreg}}&mulsel[INDEX%3]),dec_alloc&avail,alloc);    
-  shmuph_decr #(1) allocF_mod(sel&({10{isMul5_twinreg}}&mulsel[INDEX%3]),dec_allocF&avail,allocF);    
+  shmuph_decr #(1) alloc_mod(sel&({10{isMul5_twinreg}}&mulsel[INDEX%3]),dec_alloc&avail,alloc);
+  shmuph_decr #(1) allocF_mod(sel&({10{isMul5_twinreg}}&mulsel[INDEX%3]&~pwn_fma),dec_allocF&avail,allocF);
   shmuph_decr #(1) rAlloc_mod(sel&({10{isMul5_twinreg}}&mulsel[INDEX%3]),dec_rAlloc&avail,rAlloc);    
   shmuph_decr #(1) lastFl_mod(sel,dec_lastFl&avail,lastFl);    
   shmuph_decr #(1) flWr_mod(sel,dec_flWr&avail,flWr);    
