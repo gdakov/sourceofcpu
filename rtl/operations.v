@@ -32,13 +32,13 @@ limitations under the License.
 
 `define op_and64 8
 `define op_and32 9
-`define op_csand 10
-`define op_csandn  11
+`define op_and16 10
+`define op_and8  11
 
 `define op_or64 12
 `define op_or32 13
-`define op_csor 14
-`define op_csor_n  15 
+`define op_or16 14
+`define op_or8  15
 
 `define op_xor64 16
 `define op_xor32 17
