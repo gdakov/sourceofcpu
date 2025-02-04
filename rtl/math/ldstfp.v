@@ -23,8 +23,8 @@ module ldD2nativeD(
   en,
   to_dbl,to_ext,
   res);
-  input [63:0] A;
-  input [63:0] Ax;
+  input [64:0] A;
+  input [64:0] Ax;
   input en;
   input to_dbl;
   input to_ext;
@@ -149,7 +149,7 @@ module stNativeD2D(A,en,from_dbl,from_ext,res);
   input en; 
   input from_dbl;
   input from_ext;
-  output [63:0] res;
+  output [64:0] res;
 
   wire [15:0] expA=from_dbl ? {A[62],A[64],{4{~A[64]}},A[61:52]} : {A[79],A[64],A[78:65]};
   wire [15:0] expOff;

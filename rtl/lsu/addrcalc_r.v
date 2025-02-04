@@ -157,7 +157,7 @@ module addrcalc_r(
   input [15:0] msrss_no;
   input msrss_en;
   input msrss_thread;
-  input [63:0] msrss_data;
+  input [64:0] msrss_data;
 
   output pageFault;
   output pageFaultX;

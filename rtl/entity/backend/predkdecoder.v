@@ -405,7 +405,7 @@ module predecoder_get(
     input rst;
     input thread;
     input [255:0] bundle;
-    input [63:0] btail;
+    input [64:0] btail;
     input [3:0] bstop;
     input bFMA_mul;
     input [127:0] bnext;

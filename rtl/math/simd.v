@@ -47,15 +47,15 @@ module simd_non_socialiste(
   reg [3:0] jump_type;
   reg[63:0] A_reg;
   reg[63:0] B_reg;
-  reg [63:0] resL;
+  reg [64:0] resL;
   reg [12:0] operation_reg;
   reg shSH_reg;
   wire shSH;
-  reg [63:0] resSH_reg;
-  wire [63:0] resSH;
+  reg [64:0] resSH_reg;
+  wire [64:0] resSH;
   reg en_reg;
   reg en_reg2;
-  wire [63:0] resh;
+  wire [64:0] resh;
 
   assign resh=out32&~outL ? resD_reg[3] : 64'bz;
   assign resh=out64&outL ? resD_reg[4] : 64'bz;

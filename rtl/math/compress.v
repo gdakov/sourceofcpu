@@ -16,8 +16,8 @@ limitations under the License.
 
 (* align_width=C,A_out/2,B_out/2 align_height=R *) module fpucadd_compress(clk,R,C,A_out,B_out,or1,and1);
   input clk;
-  input [63:0] R;
-  input [63:0] C;
+  input [64:0] R;
+  input [64:0] C;
   output [127:0] A_out;
   output [127:0] B_out;
   input or1;
@@ -10432,133 +10432,133 @@ limitations under the License.
   (* register *) wire HA_cout_558;
   (* register *) wire HA_cout_559;
   (* register *) wire HA_cout_560;
-  (* register *) wire [63:0] inp_0;
+  (* register *) wire [64:0] inp_0;
 
-  (* register *) wire [63:0] inp_1;
+  (* register *) wire [64:0] inp_1;
 
-  (* register *) wire [63:0] inp_2;
+  (* register *) wire [64:0] inp_2;
 
-  (* register *) wire [63:0] inp_3;
+  (* register *) wire [64:0] inp_3;
 
-  (* register *) wire [63:0] inp_4;
+  (* register *) wire [64:0] inp_4;
 
-  (* register *) wire [63:0] inp_5;
+  (* register *) wire [64:0] inp_5;
 
-  (* register *) wire [63:0] inp_6;
+  (* register *) wire [64:0] inp_6;
 
-  (* register *) wire [63:0] inp_7;
+  (* register *) wire [64:0] inp_7;
 
-  (* register *) wire [63:0] inp_8;
+  (* register *) wire [64:0] inp_8;
 
-  (* register *) wire [63:0] inp_9;
+  (* register *) wire [64:0] inp_9;
 
-  (* register *) wire [63:0] inp_10;
+  (* register *) wire [64:0] inp_10;
 
-  (* register *) wire [63:0] inp_11;
+  (* register *) wire [64:0] inp_11;
 
-  (* register *) wire [63:0] inp_12;
+  (* register *) wire [64:0] inp_12;
 
-  (* register *) wire [63:0] inp_13;
+  (* register *) wire [64:0] inp_13;
 
-  (* register *) wire [63:0] inp_14;
+  (* register *) wire [64:0] inp_14;
 
-  (* register *) wire [63:0] inp_15;
+  (* register *) wire [64:0] inp_15;
 
-  (* register *) wire [63:0] inp_16;
+  (* register *) wire [64:0] inp_16;
 
-  (* register *) wire [63:0] inp_17;
+  (* register *) wire [64:0] inp_17;
 
-  (* register *) wire [63:0] inp_18;
+  (* register *) wire [64:0] inp_18;
 
-  (* register *) wire [63:0] inp_19;
+  (* register *) wire [64:0] inp_19;
 
-  (* register *) wire [63:0] inp_20;
+  (* register *) wire [64:0] inp_20;
 
-  (* register *) wire [63:0] inp_21;
+  (* register *) wire [64:0] inp_21;
 
-  (* register *) wire [63:0] inp_22;
+  (* register *) wire [64:0] inp_22;
 
-  (* register *) wire [63:0] inp_23;
+  (* register *) wire [64:0] inp_23;
 
-  (* register *) wire [63:0] inp_24;
+  (* register *) wire [64:0] inp_24;
 
-  (* register *) wire [63:0] inp_25;
+  (* register *) wire [64:0] inp_25;
 
-  (* register *) wire [63:0] inp_26;
+  (* register *) wire [64:0] inp_26;
 
-  (* register *) wire [63:0] inp_27;
+  (* register *) wire [64:0] inp_27;
 
-  (* register *) wire [63:0] inp_28;
+  (* register *) wire [64:0] inp_28;
 
-  (* register *) wire [63:0] inp_29;
+  (* register *) wire [64:0] inp_29;
 
-  (* register *) wire [63:0] inp_30;
+  (* register *) wire [64:0] inp_30;
 
-  (* register *) wire [63:0] inp_31;
+  (* register *) wire [64:0] inp_31;
 
-  (* register *) wire [63:0] inp_32;
+  (* register *) wire [64:0] inp_32;
 
-  (* register *) wire [63:0] inp_33;
+  (* register *) wire [64:0] inp_33;
 
-  (* register *) wire [63:0] inp_34;
+  (* register *) wire [64:0] inp_34;
 
-  (* register *) wire [63:0] inp_35;
+  (* register *) wire [64:0] inp_35;
 
-  (* register *) wire [63:0] inp_36;
+  (* register *) wire [64:0] inp_36;
 
-  (* register *) wire [63:0] inp_37;
+  (* register *) wire [64:0] inp_37;
 
-  (* register *) wire [63:0] inp_38;
+  (* register *) wire [64:0] inp_38;
 
-  (* register *) wire [63:0] inp_39;
+  (* register *) wire [64:0] inp_39;
 
-  (* register *) wire [63:0] inp_40;
+  (* register *) wire [64:0] inp_40;
 
-  (* register *) wire [63:0] inp_41;
+  (* register *) wire [64:0] inp_41;
 
-  (* register *) wire [63:0] inp_42;
+  (* register *) wire [64:0] inp_42;
 
-  (* register *) wire [63:0] inp_43;
+  (* register *) wire [64:0] inp_43;
 
-  (* register *) wire [63:0] inp_44;
+  (* register *) wire [64:0] inp_44;
 
-  (* register *) wire [63:0] inp_45;
+  (* register *) wire [64:0] inp_45;
 
-  (* register *) wire [63:0] inp_46;
+  (* register *) wire [64:0] inp_46;
 
-  (* register *) wire [63:0] inp_47;
+  (* register *) wire [64:0] inp_47;
 
-  (* register *) wire [63:0] inp_48;
+  (* register *) wire [64:0] inp_48;
 
-  (* register *) wire [63:0] inp_49;
+  (* register *) wire [64:0] inp_49;
 
-  (* register *) wire [63:0] inp_50;
+  (* register *) wire [64:0] inp_50;
 
-  (* register *) wire [63:0] inp_51;
+  (* register *) wire [64:0] inp_51;
 
-  (* register *) wire [63:0] inp_52;
+  (* register *) wire [64:0] inp_52;
 
-  (* register *) wire [63:0] inp_53;
+  (* register *) wire [64:0] inp_53;
 
-  (* register *) wire [63:0] inp_54;
+  (* register *) wire [64:0] inp_54;
 
-  (* register *) wire [63:0] inp_55;
+  (* register *) wire [64:0] inp_55;
 
-  (* register *) wire [63:0] inp_56;
+  (* register *) wire [64:0] inp_56;
 
-  (* register *) wire [63:0] inp_57;
+  (* register *) wire [64:0] inp_57;
 
-  (* register *) wire [63:0] inp_58;
+  (* register *) wire [64:0] inp_58;
 
-  (* register *) wire [63:0] inp_59;
+  (* register *) wire [64:0] inp_59;
 
-  (* register *) wire [63:0] inp_60;
+  (* register *) wire [64:0] inp_60;
 
-  (* register *) wire [63:0] inp_61;
+  (* register *) wire [64:0] inp_61;
 
-  (* register *) wire [63:0] inp_62;
+  (* register *) wire [64:0] inp_62;
 
-  (* register *) wire [63:0] inp_63;
+  (* register *) wire [64:0] inp_63;
 
   assign inp_0[51:0]=C[51:0] & {52{R[0]}};
   assign inp_0[52]=(C[52]|or1) && (R[0]);

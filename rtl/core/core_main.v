@@ -771,10 +771,10 @@ module heptane_core_single(
   reg dc2_io_en_reg3;
   reg dc2_io_en_reg4;
   reg dc2_io_en_reg5;
-  wire [63:0] dc2_dataIO;
-  reg [63:0] dc2_dataIO_reg;
-  reg [63:0] dc2_dataIO_reg2;
-  reg [63:0] dc2_dataIO_reg3;
+  wire [64:0] dc2_dataIO;
+  reg [64:0] dc2_dataIO_reg;
+  reg [64:0] dc2_dataIO_reg2;
+  reg [64:0] dc2_dataIO_reg3;
   wire dc2_rdEn;
   reg dc2_rdEn_reg;
   reg dc2_rdEn_reg2;
@@ -941,10 +941,10 @@ module heptane_core_single(
 
   wire wrStall;
 //  reg ret_ebx_en;
-//  reg [63:0] ret_ebx_data;
+//  reg [64:0] ret_ebx_data;
   
 //  reg ret_r8d_en;
-//  reg [63:0] ret_r8d_data;
+//  reg [64:0] ret_r8d_data;
   
 //  assign bus_mlb_data_d[`cmlbData_user]=1'b1;
 //  assign bus_mlb_data_d[`cmlbData_na]=1'b0;

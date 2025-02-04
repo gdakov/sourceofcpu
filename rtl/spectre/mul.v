@@ -17,10 +17,10 @@ limitations under the License.
 module addrcalcsec_mul(
   A,B,attr,res);
 
-  input [63:0] A;
+  input [64:0] A;
   input [11:0] B;
   input [3:0] attr;
-  output [63:0] res;
+  output [64:0] res;
 
   wire [7:0] low;
   wire C;

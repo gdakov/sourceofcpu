@@ -25,7 +25,7 @@ module sdupmass(
   A_1011,
   A_1101,
   A_1111);
-  input [63:0] A;
+  input [64:0] A;
   output [67:0] A_11;
   output [67:0] A_101;
   output [67:0] A_1001;

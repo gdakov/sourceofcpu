@@ -259,7 +259,7 @@ module addrcalc_block(
 
   input msrss_en;
   input [15:0] msrss_addr;
-  input [63:0] msrss_data;
+  input [64:0] msrss_data;
 
   input [30:0] req_addr;
   input [3:0] req_mlbAttr;
@@ -387,19 +387,19 @@ module addrcalc_block(
   wire [3:0] rec_attr;
   wire [1:0] rec_pbit;
 
-  wire [63:0] p0_cmplxAddr_d;
-  wire [63:0] p1_cmplxAddr_d;
-  wire [63:0] p2_cmplxAddr_d;
-  wire [63:0] p3_cmplxAddr_d;
-  wire [63:0] p4_cmplxAddr_d;
-  wire [63:0] p5_cmplxAddr_d;
+  wire [64:0] p0_cmplxAddr_d;
+  wire [64:0] p1_cmplxAddr_d;
+  wire [64:0] p2_cmplxAddr_d;
+  wire [64:0] p3_cmplxAddr_d;
+  wire [64:0] p4_cmplxAddr_d;
+  wire [64:0] p5_cmplxAddr_d;
 
-  reg [63:0] p0_cmplxAddr;
-  reg [63:0] p1_cmplxAddr;
-  reg [63:0] p2_cmplxAddr;
-  reg [63:0] p3_cmplxAddr;
-  reg [63:0] p4_cmplxAddr;
-  reg [63:0] p5_cmplxAddr;
+  reg [64:0] p0_cmplxAddr;
+  reg [64:0] p1_cmplxAddr;
+  reg [64:0] p2_cmplxAddr;
+  reg [64:0] p3_cmplxAddr;
+  reg [64:0] p4_cmplxAddr;
+  reg [64:0] p5_cmplxAddr;
   
   reg alt_bus_hold_reg;
   reg alt_bus_hold_reg2;
@@ -563,7 +563,7 @@ module addrcalc_block(
   reg [9:0]  u1_II_no_reg;
   reg [5:0]  u1_WQ_no_reg;
   reg        u1_lsflag_reg;
-  reg [63:0] u1_const_reg;
+  reg [64:0] u1_const_reg;
   reg [3:0]  u1_attr_reg;
 
   reg        u2_clkEn_reg;
@@ -575,7 +575,7 @@ module addrcalc_block(
   reg [9:0]  u2_II_no_reg;
   reg [5:0]  u2_WQ_no_reg;
   reg        u2_lsflag_reg;
-  reg [63:0] u2_const_reg;
+  reg [64:0] u2_const_reg;
   reg [3:0]  u2_attr_reg;
   
   reg        u3_clkEn_reg;
@@ -587,7 +587,7 @@ module addrcalc_block(
   reg [9:0]  u3_II_no_reg;
   reg [5:0]  u3_WQ_no_reg;
   reg        u3_lsflag_reg;
-  reg [63:0] u3_const_reg;
+  reg [64:0] u3_const_reg;
   reg [3:0]  u3_attr_reg;
   
   reg        u4_clkEn_reg;
@@ -599,7 +599,7 @@ module addrcalc_block(
   reg [9:0]  u4_II_no_reg;
   reg [5:0]  u4_WQ_no_reg;
   reg        u4_lsflag_reg;
-  reg [63:0] u4_const_reg;
+  reg [64:0] u4_const_reg;
   reg [3:0]  u4_attr_reg;
   
   reg        u5_clkEn_reg;
@@ -611,7 +611,7 @@ module addrcalc_block(
   reg [9:0]  u5_II_no_reg;
   reg [5:0]  u5_WQ_no_reg;
   reg        u5_lsflag_reg;
-  reg [63:0] u5_const_reg;
+  reg [64:0] u5_const_reg;
   reg [3:0]  u5_attr_reg;
   
   reg        u1_clkEn_reg2;

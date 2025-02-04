@@ -179,7 +179,7 @@ module fun_fpu_BOTH(
   
   input fxFRT_alten_reg3;
   output daltX;
-  output [63:0] FUCVT1;
+  output [64:0] FUCVT1;
   input [135:0] fork_in;
   output [135:0] fork_out;  
 

@@ -172,7 +172,7 @@ module fun_fpuL(
   output [67:0] XI_dataT;
   input fxFRT_alten_reg3;
   output daltX;
-  output [63:0] FUCVT1;
+  output [64:0] FUCVT1;
 
   wire [15+70:0] XI_dataD;
   reg [3:0] u5_en_reg;

@@ -40,15 +40,15 @@ module cvt_FP_I_mod(
   input isSNG;
   input is32b;
   input verbatim;
-  output [63:0] res;
+  output [64:0] res;
   output alt;
 
   wire [15:0] shift;
-  wire [63:0] bits;
-  wire [63:0] bits2;
+  wire [64:0] bits;
+  wire [64:0] bits2;
   wire [71:0] val_imm;
   reg [71:0] val_imm_reg;
-  wire [63:0] val;
+  wire [64:0] val;
   reg [15:0] shift_reg;
   wire sign;
   reg sign_reg;

@@ -102,8 +102,8 @@ module fcmpd(clk,rst,
   assign vres1=cmod==2 ? flags_other[1] : 1'bz;
   assign vres1=cmod==3 ? ~flags_other[1] : 1'bz;
   assign vres[1]=paired ? vres1 : 1'bz;
-  function [63:0] fracxfrm;
-    input [63:0] d_in;
+  function [64:0] fracxfrm;
+    input [64:0] d_in;
     input sngl;
     input dbl;
     input ext;

@@ -85,7 +85,7 @@ module fadds(
   wire [23:0] opBs;
   reg [23:0] opBs1_reg;
   reg [23:0] opA_reg;
-//  reg [63:0] opB_reg;
+//  reg [64:0] opB_reg;
   wire [24:0] partM0;
   wire [24:0] partM1;
   wire [24:0] partMs0;

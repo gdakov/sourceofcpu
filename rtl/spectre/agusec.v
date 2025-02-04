@@ -17,7 +17,7 @@ limitations under the License.
 `include "../struct.sv"
 
 module addrcalcsec_check_upper3(
-  input [63:0] ptr,
+  input [64:0] ptr,
   input [32:0] A,
   input [32:0] B,
   output [3:0] pos_ack,
@@ -131,7 +131,7 @@ module addrcalcsec_check_upper3(
 endmodule
 
 module addrcalcsec_range(
-  input [63:0] ptr,
+  input [64:0] ptr,
   input cin_secq,
   input diff,
   output cout_secq);

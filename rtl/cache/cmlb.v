@@ -234,7 +234,7 @@ module cmlb(
   input write_wen;
   input msrss_en;
   input [15:0] msrss_addr;
-  input [63:0] msrss_data;
+  input [64:0] msrss_data;
   
   wire [3:0][2:0] newLRU;
   wire [3:0][2:0] oldLRU;

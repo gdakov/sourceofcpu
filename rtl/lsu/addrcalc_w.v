@@ -111,7 +111,7 @@ module saddrcalc(
   input [5:0] valS;
   input thread;
   input lsflag;
-  input [63:0] cmplxAddr;
+  input [64:0] cmplxAddr;
   input cin_secq;
   input ptrdiff;
   input error;
@@ -144,7 +144,7 @@ module saddrcalc(
   input [15:0] msrss_no;
   input msrss_en;
   input msrss_thr;
-  input [63:0] msrss_data;
+  input [64:0] msrss_data;
   output mlb_clkEn;
   output cout_secq;
   output [TLB_IP_WIDTH-1:0] addrTlb;
@@ -267,7 +267,7 @@ module saddrcalc(
   wire [4:0] lastSz;
 
   reg [1:0][63:0] mflags;
-  wire [63:0] mflags0;
+  wire [64:0] mflags0;
   reg [1:0][23:0] pproc;  
   reg [23:0] sproc;  
   reg [23:0] proc;

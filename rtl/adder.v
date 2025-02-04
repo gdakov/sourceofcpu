@@ -707,7 +707,7 @@ endmodule
   wire [WIDTH-1:0] bitEn;
 
   wire [39:0] unptr;
-  wire [63:0] ptr;
+  wire [64:0] ptr;
   wire [3:0] pos_ack;
   wire [3:0] neg_ack;
   wire [2:0] pos_flip;
@@ -1264,9 +1264,9 @@ endmodule
   parameter WIDTH=44;
   parameter PTRBIT=0;
   input [64:0] a;//base
-  input [63:0] b;
+  input [64:0] b;
   input [64:0] c; //index
-  //output [63:0] ptr;
+  //output [64:0] ptr;
   output [63+PTRBIT:0] out;
   output cout_sec;
   output ndiff;
@@ -1296,7 +1296,7 @@ endmodule
   wire [43:0] c_s;
 
   wire [63+PTRBIT:0] ptr=(c[64] & shift==4'b1) ? c[63+PTRBIT:0] : a[63+PTRBIT:0]|{c[63+PTRBIT:44]&~{21{swppr}},44'b0};
-  wire [63:0] unptr=(c[64] & shift==4'b1) ? a[63:0] : {32'b0,c[31:0]};
+  wire [64:0] unptr=(c[64] & shift==4'b1) ? a[63:0] : {32'b0,c[31:0]};
 
   genvar k;
   

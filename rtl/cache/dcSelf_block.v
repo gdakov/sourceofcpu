@@ -1024,9 +1024,9 @@ module dcache1(
   output expun_en;
   input msrss_en;
   input [15:0] msrss_addr;
-  input [63:0] msrss_data;
+  input [64:0] msrss_data;
   //embedded segment register
-  reg [63:0] emsr;
+  reg [64:0] emsr;
 
   wire [1023:0] write_data;
   wire [1023:0] write_dataM;

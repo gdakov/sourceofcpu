@@ -69,7 +69,7 @@ module jump_decoder(
   input [11:0] class_;
   input _splitinsn;
   
-  output reg [63:0] constant;
+  output reg [64:0] constant;
 
   output reg [1:0] cleave;
   output reg [2:0] cleaveoff; 

@@ -115,7 +115,7 @@ module addrcalc(
   input [5:0] WQ_no;
   input thread;
   input lsflag;
-  input [63:0] cmplxAddr;
+  input [64:0] cmplxAddr;
   input cin_secq;
   input ptrdiff;
   input error;
@@ -156,7 +156,7 @@ module addrcalc(
   input [15:0] msrss_no;
   input msrss_en;
   input msrss_thr;
-  input [63:0] msrss_data;
+  input [64:0] msrss_data;
   output mlb_clkEn;
   output cout_secq;
   output  [TLB_IP_WIDTH-1:0] addrTlb;
@@ -239,7 +239,7 @@ module addrcalc(
   //reg [23:0] proc_reg;
   //reg [23:0] proc_reg2;
   reg [1:0][63:0] mflags;
-  wire [63:0] mflags0; 
+  wire [64:0] mflags0; 
   integer i;
   
 //  reg [ADDR_WIDTH-1:48] cmplxAddr_reg;

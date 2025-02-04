@@ -99,7 +99,7 @@ module smallInstr_decoder(
   localparam REOR_WIDTH=24; 
   localparam TRICNT_TOP=40;//really 38; 2 redundant
   parameter [5:0] INDEX=0;
-  parameter [63:0] H=64'd0;//range 0-15
+  parameter [64:0] H=64'd0;//range 0-15
   parameter [0:0] LARGE_CORE=1;
 
 
@@ -252,7 +252,7 @@ module smallInstr_decoder(
   
   reg keep2instr;
   
-  wire [63:0] constantDef;
+  wire [64:0] constantDef;
 
   wire [12:0] class_;
 
@@ -282,7 +282,7 @@ module smallInstr_decoder(
   reg [2:0] rndmode[TRICNT_TOP-1:0];
   reg puseBConst[TRICNT_TOP-1:0];
 //  output reg useBSmall;//small constant use; used for call/pop/push
-  reg [63:0] pconstant[TRICNT_TOP-1:0];
+  reg [64:0] pconstant[TRICNT_TOP-1:0];
 //  output reg [3:0] smallConst; //signed
   reg [REG_WIDTH-2:0] prT[TRICNT_TOP-1:0];
   reg prT_use[TRICNT_TOP-1:0];
@@ -362,7 +362,7 @@ module smallInstr_decoder(
   assign reor_en_out=isFPUreor&&~reor_error;
   assign reor_val_out=instr[31:8];
  // assign thisSpecLoad=isBaseSpecLoad || isBaseIndexSpecLoad || ({instr[11],instr[15:12]}==5'd16 && 
- //     opcode_main[7:0]==8'b10110000 && !instr[10]) || ({instr[1],instr[15:12]}==5'd15 &&                      
+ //     opcode_main[7:0]==8'b10110000 && !instr[10]) || ({instr[1],instr[15:12]}==5'd16 &&
  //     opcode_main[7:2]==6'd15 && !instr[0]);
   assign subIsBasicALU=opcode_sub[5:4]==2'b0 || opcode_sub[5:2]==4'b0100;
   assign subIsBasicXOR=opcode_sub[5:2]==4'b0100;//not a separate class
@@ -1361,7 +1361,7 @@ instr[13:8]==6'd8) begin
       puseRs[17]=1'b1;
       prAlloc[17]=1'b0;
       puseBConst[17]=1'b0;
-      prT[17]=opcode_main[7]|opcode_main[0] ? 5'd16 : 5'd15;
+      prT[17]=opcode_main[7]|opcode_main[0] ? 5'd16 : 5'd16;
       prC[17]={1'b1,INDEX[3:0]+4'd1};
       prC_use[17]=prT_use[17];
       prC_useF[17]=prT_useF[17];
@@ -1669,7 +1669,7 @@ instr[13:8]==6'd8) begin
 	  poperation[28][7:0]=`op_add64;
 	  poperation[28][12]=1'b1;
 	  prT[28]={4'h7,instr[8]};
-          prA[28]=5'd15;
+          prA[28]=5'd16;
           poperation[28][12]=1'b1;
           pconstant[28]={{28{instr[31]}},instr[31:9],14'b0};
           pIPRel[28]=1'b1;

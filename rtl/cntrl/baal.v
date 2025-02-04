@@ -129,7 +129,7 @@ module cntrl_get_IP(
   wire [62:0] nextIP0;
   wire [4:0] par0;
   wire [4:0] par1;
-  wire [63:0] val2;
+  wire [64:0] val2;
   wire cout_sec;
   wire ndiff;
   wire mgt;
@@ -763,7 +763,7 @@ module cntrl_find_outcome(
   wire [9:0] rvec;
   wire [9:0] last_instr;
 
-  wire [63:0] base_add;
+  wire [64:0] base_add;
   wire is_after_spec;
   wire [9:0] rd_after_spec;
   reg [62:0] baseIP;

@@ -60,30 +60,30 @@ module imul(
   reg is_swp_reg,is_swp_reg2;
   reg is_swp_reg3;
   reg [1:0] is_swp;
-  reg [63:0] sec_res_reg;
-  reg [63:0] sec_res_reg2;
-  reg [63:0] swp_res_reg;
-  reg [63:0] swp_res_reg2;
+  reg [64:0] sec_res_reg;
+  reg [64:0] sec_res_reg2;
+  reg [64:0] swp_res_reg;
+  reg [64:0] swp_res_reg2;
 
   reg ptr_reg,ptr_reg2;
-  wire [63:0] swp_res;
-  wire [63:0] sec_res;
+  wire [64:0] swp_res;
+  wire [64:0] sec_res;
   wire [127:0] A_out;
   wire [127:0] B_out;
   reg [127:0] A_out_reg;
   reg [127:0] B_out_reg;
-  wire [63:0] dummy;
-  wire [63:0] dummy2;
-  reg [63:0] Res_reg;
-  reg [63:0] dummy2_reg;
-  reg [63:0] dummy_reg;
+  wire [64:0] dummy;
+  wire [64:0] dummy2;
+  reg [64:0] Res_reg;
+  reg [64:0] dummy2_reg;
+  reg [64:0] dummy_reg;
   //reg [7:0] dummy8_reg;
   wire resz;
   wire resp;
   wire [31:0] resx;
   reg [31:0] resx_reg;
-  wire [63:0] sec_res;
-  //wire [63:0] resB;
+  wire [64:0] sec_res;
+  //wire [64:0] resB;
   //reg bnd,bnd_reg,bnd_reg2,bnd_reg3;
 
   reg do16_reg;
@@ -104,7 +104,7 @@ module imul(
     ~|resx_reg&~Res_reg[31]),1'b0,Res_reg[31],resz,resp} : 6'bz;
 
 
-  wire [63:0] Cix;
+  wire [64:0] Cix;
 
   assign Cix=and1 & !sm_sig ? C>>32 : C;
 

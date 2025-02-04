@@ -188,7 +188,7 @@ module decoder_aux_const(
   input fpE_en;
   input fpE_thr;
   input altEn;
-  input [63:0] altData;
+  input [64:0] altData;
   input altThr2;
   input altEn2;
   input [16:0] altData2;
@@ -603,7 +603,7 @@ module decoder_reorder_mux(
   input [9:0] dec_afterTaken;
 
   wire [64:0] constantA;
-  wire [63:0] constantB;
+  wire [64:0] constantB;
   wire [REG_WIDTH-1:0] rA1;
   wire [REG_WIDTH-1:0] rA2;
   wire [REG_WIDTH-1:0] rA3;
@@ -1608,7 +1608,7 @@ module decoder(
     end
   endfunction
   wire [9:0] msrss_retIP_en;
-  wire [63:0] msrss_retIP_data;
+  wire [64:0] msrss_retIP_data;
   reg  [9:0] msrss_retIP_en_reg;
 
   reg last_trce;

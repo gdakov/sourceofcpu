@@ -64,22 +64,22 @@ module alu_shift(
   input [2:0] rmode;
   
   wire is_shift;
-  wire [63:0] en;
+  wire [64:0] en;
   wire is_8H;
   wire doJmp;
-  wire [63:0] valres0;
+  wire [64:0] valres0;
   wire [7:0] valres1;  
   reg is_shift_reg;
   reg [3:0] coutL_reg;
   reg coutR_reg;
-  reg [63:0] valres0_reg;
+  reg [64:0] valres0_reg;
   reg dir_reg;
   wire coutR;
   wire [3:0] coutL;
   wire [5:0] flags_COASZP;
   reg [3:0] sz_reg;
 
-  wire [63:0] valX;
+  wire [64:0] valX;
 
   assign valX[31:0]=val2[11] ? val1[31:0] : 32'b0;
   assign valX[63:32]=32'b0;

@@ -216,18 +216,18 @@ module stq(
   wire [31:0] chk5_banks2;
   wire [31:0] W_NL0_banks2;
   wire [31:0] W_NL1_banks2;
-  wire [63:0] WLN0_match;
-  wire [63:0] WLN1_match;
-  wire [63:0] W_NL0_en0;
-  wire [63:0] W_NL1_en0;
-  wire [63:0] wrt0_en0;
-  wire [63:0] wrt1_en0;
-  wire [63:0] upd0_en0;
-  wire [63:0] upd1_en0;
-  wire [63:0] passe_en;
-  wire [63:0] passe;
-  wire [63:0] free;
-  wire [63:0] upd;
+  wire [64:0] WLN0_match;
+  wire [64:0] WLN1_match;
+  wire [64:0] W_NL0_en0;
+  wire [64:0] W_NL1_en0;
+  wire [64:0] wrt0_en0;
+  wire [64:0] wrt1_en0;
+  wire [64:0] upd0_en0;
+  wire [64:0] upd1_en0;
+  wire [64:0] passe_en;
+  wire [64:0] passe;
+  wire [64:0] free;
+  wire [64:0] upd;
 
   
   wire [5:0][139:0] chk_data;
@@ -382,8 +382,8 @@ module stq(
   wire [3:0] chk4_hasB;
   wire [3:0] chk5_hasB;
 
-  wire [63:0] free_en;
-  wire [63:0] free;
+  wire [64:0] free_en;
+  wire [64:0] free;
 
   assign wrt2_LSQu=pse0_en ? wrt0_LSQ : wrt1_LSQ;
 
@@ -394,9 +394,9 @@ module stq(
   wire [5:0] chk_wb1;
   wire chk_wb0_has,chk_wb1_has,chk_wb2_has;
   reg [5:0] chk_mask;
-  reg [63:0] mask;
-  reg [63:0] nmask;
-  reg [63:0] mask2;
+  reg [64:0] mask;
+  reg [64:0] nmask;
+  reg [64:0] mask2;
   
   function [31:0] lowt;
       input [31:0] data;

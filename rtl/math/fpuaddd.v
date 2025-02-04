@@ -84,8 +84,8 @@ module fadd(
   assign res=res_X;
   assign res_hi=res_X_hi;
 
-  function [63:0] fracxfrm0;
-      input [63:0] op;
+  function [64:0] fracxfrm0;
+      input [64:0] op;
       input dbl;
       
       begin
@@ -97,8 +97,8 @@ module fadd(
       end
   endfunction
 
-  function [63:0] fracxfrm1;
-      input [63:0] op;
+  function [64:0] fracxfrm1;
+      input [64:0] op;
       input dbl;
       
       begin
@@ -113,26 +113,26 @@ module fadd(
   wire sxor;
   reg sxor_reg;
   wire a_more;
-  wire [63:0] opA;
-  wire [63:0] opB;
+  wire [64:0] opA;
+  wire [64:0] opB;
   wire moreAD,moreAE;
   wire [15:0] expdiffA;
   wire [15:0] expdiffB;
   wire [15:0] expdiff;
   reg  [15:0] expdiff_reg;
-  wire [63:0] opBs1;
-  wire [63:0] opBs;
-  reg [63:0] opBs1_reg;
-  reg [63:0] opA_reg;
-//  reg [63:0] opB_reg;
+  wire [64:0] opBs1;
+  wire [64:0] opBs;
+  reg [64:0] opBs1_reg;
+  reg [64:0] opA_reg;
+//  reg [64:0] opB_reg;
   wire [64:0] partM0;
   wire [64:0] partM1;
   wire [64:0] partMs0;
   wire [64:0] partMs1;
-  wire [63:0] resS1;
-  wire [63:0] resSR1;
-  reg [63:0] resS1_reg;
-  reg [63:0] resSR1_reg;
+  wire [64:0] resS1;
+  wire [64:0] resSR1;
+  reg [64:0] resS1_reg;
+  reg [64:0] resSR1_reg;
   wire resS_rnbit;
   wire res_rnbit,res_tail,res_andtail;
   wire res_rnbitC,res_tailC,res_andtailC;
@@ -149,9 +149,9 @@ module fadd(
   wire Smain_simple,Smain_round;
   wire Smain_simpleC,Smain_roundC,Smain_simpleRC;
   wire Smain_simpleL,Smain_roundL,Smain_subroundL;
-  wire [63:0] renorS;
+  wire [64:0] renorS;
   wire [15:0] renorE;
-  wire [63:0] renorSR;
+  wire [64:0] renorSR;
   wire [15:0] renorER;
   wire [7:0] andtailBs1;
   wire [7:0] andtailBs;
@@ -172,10 +172,10 @@ module fadd(
   reg tailBs1_c_reg;
   reg tailBs1_L_reg;
   reg isDBL_reg;
-  wire [63:0] resM1;
-  wire [63:0] resMR1;
-  wire [63:0] resM2;
-  wire [63:0] resMR2;
+  wire [64:0] resM1;
+  wire [64:0] resMR1;
+  wire [64:0] resM2;
+  wire [64:0] resMR2;
   wire cout64_M1_ns,cout64_MR1_ns,cout53_M1_ns,cout53_MR1_ns;
   wire cout64_M2_ns,cout64_MR2_ns,cout53_M2_ns,cout53_MR2_ns;
   wire cout64_SZ1,cout64_SZR1,cout53_SZ1,cout53_SZR1;
@@ -661,17 +661,17 @@ module fpuadd_renor(
   A_out,exp_out
   );
 
-  input [63:0] A;
+  input [64:0] A;
   input [15:0] exp;
   input Ax;
-  output [63:0] A_out;
+  output [64:0] A_out;
   output [15:0] exp_out;
 
-  wire [63:0] A_first;
+  wire [64:0] A_first;
   wire [7:0] A_first8;
   wire A_has,A_has8;
-  wire [63:0] A_medE;
-  wire [63:0] A_outE;
+  wire [64:0] A_medE;
+  wire [64:0] A_outE;
   wire [2:0] xadde1_c;
   wire [2:0] xadde1_nc;
   wire xaddeCO_c;

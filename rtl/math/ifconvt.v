@@ -38,7 +38,7 @@ module ifconv_mod(
   input rst;
   input en;
   input clkEn;
-  input [63:0] A;
+  input [64:0] A;
   input toDBL,toEXT,toSNG;
   input isS;
   output [81:0] res;
@@ -46,14 +46,14 @@ module ifconv_mod(
   output reg alt;
   wire [15:0] valE2;
   wire [71:-8] medBits;
-  wire [63:0] endBits;
-  reg [63:0] A_reg;
+  wire [64:0] endBits;
+  reg [64:0] A_reg;
   reg [71:-8] medBits_reg;
-//  reg [63:0] A_reg2;
+//  reg [64:0] A_reg2;
   wire sgn;
   reg sgn_reg;
   reg sgn_reg2;
-  wire [63:0] A_last;
+  wire [64:0] A_last;
   wire A_has;
   wire [8:-7] A_bank;
   reg A_has_reg;
@@ -67,7 +67,7 @@ module ifconv_mod(
   reg [7:0] medb_reg;
   reg [3:0] medbin_reg;
 
-  wire [63:0] A_d;
+  wire [64:0] A_d;
 
   bit_find_last_bit #(64) upper_mod(A_reg,A_last,A_has);
   bit_find_last_bit #(8) ubank_mod({|A_reg[63:56],

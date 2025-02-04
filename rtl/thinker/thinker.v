@@ -92,7 +92,7 @@ module pager(
   input [15:0] msrss_no;
   input msrss_thread;
   input msrss_en;
-  input [63:0] msrss_data;
+  input [64:0] msrss_data;
   output [REG_WIDTH-1:0] mOp_register;
   output [8:0] mOp_LSQ;
   output [9:0] mOp_II;
@@ -125,18 +125,18 @@ module pager(
   //reg [1:0] pg;
   //reg [1:0] vm;
   //reg [1:0] codeInVm;
-  reg [63:0] mflags;
-  reg [63:0] PTR[1:0];
-  reg [63:0] VPTR[1:0];
-  reg [63:0] CPTR;
-  reg [63:0] CMSK;
-  reg [63:0] IPTR;
-  reg [63:0] IMSK;
-  reg[2:0] [63:0] ptr;
-  reg[2:0] [63:0] ptr2;
-  reg[2:0] [63:0] ptrB;
+  reg [64:0] mflags;
+  reg [64:0] PTR[1:0];
+  reg [64:0] VPTR[1:0];
+  reg [64:0] CPTR;
+  reg [64:0] CMSK;
+  reg [64:0] IPTR;
+  reg [64:0] IMSK;
+  reg[2:0] [64:0] ptr;
+  reg[2:0] [64:0] ptr2;
+  reg[2:0] [64:0] ptrB;
   reg[2:0] do_ptr2;
-  reg [63:0] SPTR;
+  reg [64:0] SPTR;
   reg [20:0] sptr;
   reg[2:0] [11:0] stageA;
   reg[2:0] [7:0] stageB;
@@ -175,7 +175,7 @@ module pager(
   reg[2:0] ready;
   reg[2:0] [PERM_WIDTH-1:0] permReq;
   wire[2:0] all_shr;
-  reg [63:0] data_in_reg;
+  reg [64:0] data_in_reg;
   reg[2:0] new_inv_reg;
 
   integer k;

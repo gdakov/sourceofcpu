@@ -39,7 +39,7 @@ module fprnd(
   input toSNG;
   output [79:0] B;
 
-  wire [63:0] Ax;
+  wire [64:0] Ax;
   wire do_rnd;
   wire cout;
 

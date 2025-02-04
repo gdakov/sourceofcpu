@@ -1545,11 +1545,11 @@ module msrss_watch(
   msrss_en,
   data_out);
   parameter [15:0] ADDR=16'b0;
-  parameter [63:0] INITVAL=64'b0;
+  parameter [64:0] INITVAL=64'b0;
   input clk;
   input rst;
   input [15:0] msrss_addr;
-  input [63:0] msrss_data;
+  input [64:0] msrss_data;
   input msrss_en;
   output reg [1:0][63:0] data_out;
 

@@ -364,7 +364,7 @@ module ww(
   localparam PHYS_WIDTH=44;
   localparam VIRT_WIDTH=64;
   localparam IP_WIDTH=64;
-  localparam [63:0] INIT_IP=64'hf80ff00000000000;
+  localparam [64:0] INIT_IP=64'hf80ff00000000000;
   localparam [3:0] INIT_ATTR=4'b0;
   localparam BUS_BANK=32;
   localparam BUS_WIDTH=BUS_BANK*16;

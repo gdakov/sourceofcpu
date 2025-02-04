@@ -178,7 +178,7 @@ module fu_alu(
 
   output [83:0] fcvtout;
   output [1:0] DataAlt;
-  input [63:0] FUCVTIN;
+  input [64:0] FUCVTIN;
   input [15:0] msrss_addr;
   input [64:0] msrss_data;
   input msrss_en;
