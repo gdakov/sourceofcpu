@@ -310,7 +310,7 @@ module saddrcalc(
   
   assign all_banks=banks0;
 
-  except_jump_cmp(valS,calu[4] ? 4'hf : calu[3:0],doJmp);
+  except_jump_cmp cmp_mod(valS,calu[4] ? 4'hf : calu[3:0],doJmp);
 
 
   assign attr2=mex_en ? mex_attr : attr;  
@@ -326,7 +326,7 @@ module saddrcalc(
   assign mlb_data=mlb_data0;
   assign mlb_data_next=mlb_data1;
 
-  assign mOp_type={mlb_data[`dmlbData_semaphore],mlb_data[`dmlbData_type]};
+  assign mOp_type={mlb_data[`dmlbData_semaphore_area],mlb_data[`dmlbData_type]};
   
   assign mOp_addrEven[43:13]=(addrMain[7] & addrNext[14]) ? mlb_data_next[`dmlbData_phys] : mlb_data[`dmlbData_phys];
   assign mOp_addrOdd[43:13]=(~(~addrMain[7] & addrNext[14])) ? mlb_data[`dmlbData_phys] : mlb_data_next[`dmlbData_phys];
@@ -335,9 +335,9 @@ module saddrcalc(
   assign pageFault=(pageFault_t_reg!=0) | fault_cann_reg | error_reg && read_clkEn_reg2|mex_en_reg2 && ~bus_hold_reg2;
   assign fault_cann=~cout_secq;
   assign faultNo=fault_cann_reg | (pageFault_t_reg!=0) | error_reg ? {error_reg ? 6'd63 : 6'd11,1'b0,2'd1} : {6'd0,1'b0,2'd2};
-  assign faultCode={3'b0,fault_cann_reg,is_stack_reg,is_kstack_reg,addrMain_reg[2],mflags[thread_reg][-1+`mflags_cpl]};
+  assign faultCode={3'b0,fault_cann_reg,is_stack_reg,is_kstack_reg,addrMain_reg[2],mflags[thread_reg][-1+`mflags_priv]};
 
-  assign is_kstack=&addrMain[43:41] || ~addrMain[43] && ~mflags[thread][`mflags_cpl+1]; //it is not all stack but we must disallow stealing global map pointers
+  assign is_kstack=&addrMain[43:41] || ~addrMain[43] && ~mflags[thread][`mflags_priv+1]; //it is not all stack but we must disallow stealing global map pointers
   assign is_stack=~addrMain[43] & &addrMain[42:40]; //reserved area for subsystem and /or stack
 
   assign mOp_addrMain={addrTlb[30:0],addrMain[12:0]};

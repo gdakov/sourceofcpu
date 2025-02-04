@@ -437,11 +437,11 @@ module addrcalc_r(
 
   assign faultCode={3'b0,fault_cann_reg,pageFault_t_reg[1],is_stack_reg,is_kstack_reg,mOp0_addrMain_reg[2],mOp0_attr_reg[`attr_sec]};
 
-  assign is_kstack=~mOp0_addrMain_reg[43] & ~mflags[mOp0_thread_reg][`mflags_cpl+1] || &mOp0_addrMain_reg[43:41]; //it is not all stack but we must disallow stealing global map pointers
+  assign is_kstack=~mOp0_addrMain_reg[43] & ~mflags[mOp0_thread_reg][`mflags_priv+1] || &mOp0_addrMain_reg[43:41]; //it is not all stack but we must disallow stealing global map pointers
   assign is_stack=~mOp0_addrMain_reg[43] & &mOp0_addrMain_reg[42:40]; //reserved area for subsystem and /or stack
 
-  assign fault_tlb={mflags[`mflags_cpl+1] & tlb_data[`dtlbData_sys] , ~tlb_data[`dtlbData_na]}; 
-  assign fault_tlb_next={mflags[`mflags_cpl+1] & tlb_data_next[`dtlbData_sys],  ~tlb_data_next[`dtlbData_na]}; 
+  assign fault_tlb={mflags[`mflags_priv+1] & tlb_data[`dmlbData_sys] , ~tlb_data[`dmlbData_na]};
+  assign fault_tlb_next={mflags[`mflags_priv+1] & tlb_data_next[`dmlbData_sys],  ~tlb_data_next[`dmlbData_na]};
 
   assign addrTlb=addrMain_mlb;
 
@@ -640,7 +640,7 @@ module addrcalc_r(
 		  proc<=vproc;
 		  sproc<=pproc^1;
 	      end
-	      mflags[`mflags_cpl]<={mOp0_attr[`attr_um],mOp0_attr[`attr_sec]};//muha-srankk
+	      mflags[`mflags_priv]<={mOp0_attr[`attr_um],mOp0_attr[`attr_sec]};//muha-srankk
               is_kstack_reg<=is_kstack &!|req_bus;
               is_stack_reg<=is_stack &!|req_bus;
           end else if (!rsStall) begin
