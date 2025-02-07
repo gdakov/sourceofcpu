@@ -1041,8 +1041,8 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   assign btb_attr=btb_in_ret & ~(p_invoke&thread) ? rstack_dataR[67:64] : 4'bz;
   assign btb_attr=(p_invoke&thread) ? mflags[`mflags_pinvoke_priv] : 4'bz;
 
-  assign p_invoke=~halted ? msrss_en && msrss_addr[14:0]==15'd22 & ~p_inv_stored[2] : p_inv_stored[2];
-  assign p_address=~halted ? {20'b0,msrss_data[43:0]} : {20'b0,p_inv_st_data[2]};
+  assign p_invoke=~halted ? msrss_en && msrss_addr[14:0]==15'd22 & ~p_inv_stored[4] : p_inv_stored[4];
+  assign p_address=~halted ? {20'b0,msrss_data[43:0]} : {20'b0,p_inv_st_data[4]};
 
   assign btbx_tgt=btb_tgt;
   assign btbx_tgt0=btb_tgt0;
@@ -1663,16 +1663,20 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           end
       end
       if (rst) begin
-         p_inv_stored=3'b0;
+         p_inv_stored=5'b0;
          p_inv_data=0;
       end else if ((msrss_en && msrss_addr[14:0]==15'd22) | halted && thread) begin
          if (halted && p_inv_stored) begin
              p_inv_stored=p_inv_stored<<1;
+             p_inv_data[4]=p_inv_data[3];
+             p_inv_data[3]=p_inv_data[2];
              p_inv_data[2]=p_inv_data[1];
              p_inv_data[1]=p_inv_data[0];
          end
          if ((msrss_en && msrss_addr[14:0]==15'd22) && thread) begin
              p_index=2;
+             if (p_inv_stored[4]) p_index=3;
+             if (p_inv_stored[3]) p_index=2;
              if (p_inv_stored[2]) p_index=1;
              if (p_inv_stored[1]) p_index=0;
              p_inv_stored[p_index]=1'b1;

@@ -1600,11 +1600,11 @@ module decoder(
 
   function [5:0] ffx;
     input thr;
-    input [1:0] thrmode;
+    input [2:0] thrmode;
     input wr_gen_purp;
     input [5:0] reeg;
     begin
-        ffx=wr_gen_purp && reeg[4] && reg[2:0]==3'h7 ? {2'b01,thr,reg[2:0]} : { thr^(reeg[4]&thrmode[1]),reeg[4]^(~thr&reeg[5]&~reeg[4]),reeg[3]^(reeg[4]&thrmode[0]),reeg[2:0] }; 
+        ffx=&reeg[4:3] ? {thrmode+2,reg[2:0]} : reeg;
     end
   endfunction
   wire [9:0] msrss_retIP_en;

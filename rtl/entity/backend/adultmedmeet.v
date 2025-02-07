@@ -355,7 +355,7 @@ module smallInstr_decoder(
   assign constantDef=(magic==4'b1111) ? instr[79:16] : 64'bz;
   assign constantDef=(magic[1:0]==2'b11) ? {{32{instr[47]}},instr[47:16]} : 64'bz;
   assign constantDef=(magic[1:0]==2'b01) ? {{32{instr[31]}},{17{instr[31]}},instr[31],instr[31:18]} : 64'bz;
-  assign constantDef=(~magic[0]) ? {32'b0,25'b0,~instr[7] && {instr[6],instr[11:8]}==5'b0,instr[7:6],instr[11:8]} : 64'bz;
+  assign constantDef=(~magic[0]) ? {32'b0,26'b0,instr[7:6],instr[11:8]} : 64'bz;
 
   assign constantN=~constant;
  
