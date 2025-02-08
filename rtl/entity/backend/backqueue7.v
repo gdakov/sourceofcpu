@@ -16,6 +16,19 @@ limitations under the License.
 
 `include "../struct.sv"
 
+module dff_up_to_reg3(clk,rst,cond1,val,val_reg,val_reg2,val_reg3);
+  parameter WIDTH=4;
+  input clk;
+  input rst;
+  input cond1;
+  input val;
+  output logic val_reg;
+  output logic val_reg2;
+  output logic val_reg3;
+
+  always @(posedge clk) begin
+  end
+endmodule
 
 module frontendSelf(
   clk,
@@ -779,25 +792,10 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   wire btb_hold_except;
   reg read_set_flag,read_set_flag_reg;
   
-  reg [3:0] btbx_attr0_reg;
-  reg [3:0] btbx_attr1_reg;
-  reg [3:0] btbx_attr2_reg;
-  reg [3:0] btbx_attr3_reg;
-  reg [3:0] btbx_attr0_reg2;
-  reg [3:0] btbx_attr1_reg2;
-  reg [3:0] btbx_attr2_reg2;
-  reg [3:0] btbx_attr3_reg2;
-  reg [3:0] btbx_attr0_reg3;
-  reg [3:0] btbx_attr1_reg3;
-  reg [3:0] btbx_attr2_reg3;
-  reg [3:0] btbx_attr3_reg3;
-  reg [3:0] btbx_attr0_reg4;
-  reg [3:0] btbx_attr1_reg4;
-  reg [3:0] btbx_attr2_reg4;
-  reg [3:0] btbx_attr3_reg4;
-//  wire tr_odd_d,tr_half_d;
-//  reg tr_odd,tr_odd_reg,tr_odd_reg2;
-//  reg tr_half,tr_half_reg,tr_half_reg2;
+  reg [7:0][3:0] btbx_attr_reg;
+  reg [7:0][3:0] btbx_attr_reg2;
+  reg [7:0][3:0] btbx_attr_reg3;
+  reg [7:0][3:0] btbx_attr_reg4;
 
   wire jlnin,jlnint,jlninx;  
   
@@ -1386,10 +1384,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   .write_thread(1'b0),
   .write_cnt(btbFStall_recover_reg ? iqe_jcnD[4:0] : iqe_jcnt_reg2[4:0]),
   .write_start(startx_reg3),
-  .write_data0({jdec_clp[0],jmp_mask_reg4[0],btbx_tgt0_reg4,btbx_attr0_reg4}),
-  .write_data1({jdec_clp[1],jmp_mask_reg4[1],btbx_tgt1_reg4,btbx_attr1_reg4}),
-  .write_data2({jdec_clp[2],jmp_mask_reg4[2],btbx_tgt2_reg4,btbx_attr2_reg4}),
-  .write_data3({jdec_clp[3],jmp_mask_reg4[3],btbx_tgt3_reg4,btbx_attr3_reg4})
+  .write_data0({jdec_clp,jmp_mask_reg4,btbx_tgt_reg4,btbx_attr_reg4})
   );
     
   adder #(44) seqAdd_mod(cc_read_IP[43:0],48'd48,cc_read_IP_d[43:0],
@@ -1619,19 +1614,29 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
 
   assign kkk=pff==16'hfe47;
   
-  bit_find_first_bit #(4) tkjiA_mod({pred_sc3A[0]^pred_sh3A^kkk,
+  bit_find_first_bit #(8) tkjiA_mod({
+    pred_sc7A[0]^pred_sh7A^kkk,
+    pred_sc6A[0]^pred_sh6A^kkk,
+    pred_sc5A[0]^pred_sh5A^kkk,
+    pred_sc4A[0]^pred_sh4A^kkk,
+    pred_sc3A[0]^pred_sh3A^kkk,
     pred_sc2A[0]^pred_sh2A^kkk,
     pred_sc1A[0]^pred_sh1A^kkk,
     pred_sc0A[0]^pred_sh0A^kkk},
     takenA,);
-  bit_find_first_bit #(4) tkjiB_mod({pred_sc3B[0]^pred_sh3B^kkk,
+  bit_find_first_bit #(8) tkjiB_mod({
+    pred_sc7B[0]^pred_sh7B^kkk,
+    pred_sc6B[0]^pred_sh6B^kkk,
+    pred_sc5B[0]^pred_sh5B^kkk,
+    pred_sc4B[0]^pred_sh4B^kkk,
+    pred_sc3B[0]^pred_sh3B^kkk,
     pred_sc2B[0]^pred_sh2B^kkk,
     pred_sc1B[0]^pred_sh1B^kkk,
     pred_sc0B[0]^pred_sh0B^kkk},
     takenB,);
 
-  assign taken=btb_way ? takenB&{btb_has3,btb_has2,btb_has1,btb_has0} : 
-    takenA&{btb_has3,btb_has2,btb_has1,btb_has0};
+  assign taken=btb_way ? takenB&{btb_has7,btb_has6,btb_has5,btb_has4,,btb_has3,btb_has2,btb_has1,btb_has0} :
+    takenA&{btb_has7,btb_has6,btb_has5,btb_has4,btb_has3,btb_has2,btb_has1,btb_has0};
 
   always @* begin
       new_instrEn=instrEn;
@@ -1641,6 +1646,10 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           if (miss_recover) new_instrEn=1'b1; 
       end
   end
+
+  dff_up_to_reg3 #(40) dff_joff_mod(clk,rst,~fstall,btbx_joff,btbx_joff_reg2,btbx_joff_reg3);
+  dff_up_to_reg3 #(32) dff_jlink_mod(clk,rst,~ftall,btbx_attr,btbx_attr_reg,btbx_attr_reg2,btbx_attr_reg3);
+
   always @(posedge clk) 
   begin
       if (rst) begin
