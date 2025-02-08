@@ -550,8 +550,8 @@ module dcache1_way(
           read_bankHit[b],
           read_data[DATA_WIDTH*b+:DATA_WIDTH],
           read_data_in[DATA_WIDTH*b+:DATA_WIDTH],
-          write_addrE0_reg[6:0], write_hitEL[][0] && write_hit0,
-          write_addrO0_reg[6:0], write_hitOL[][0] && write_hit0,
+          write_addrE0_reg[6:0], write_hitEL[119:0][0] && write_hit0,
+          write_addrO0_reg[6:0], write_hitOL[119:0][0] && write_hit0,
           write_bank0[b], 
           write_begin0_reg,write_end0_reg,
           write_bBen0_reg,write_enBen0_reg,
@@ -581,8 +581,8 @@ module dcache1_way(
           read_bankHit[b],
           read_data[DATA_WIDTH*b+:DATA_WIDTH],
           read_data_in[DATA_WIDTH*b+:DATA_WIDTH],
-          write_addrE0_reg[6:0], write_hitEH[][0] && write_hit0,
-          write_addrO0_reg[6:0], write_hitOH[][0] && write_hit0,
+          write_addrE0_reg[6:0], write_hitEH[119:0][0] && write_hit0,
+          write_addrO0_reg[6:0], write_hitOH[119:0][0] && write_hit0,
           write_bank0[b], 
           write_begin0_reg,write_end0_reg,
           write_bBen0_reg,write_enBen0_reg,
@@ -1439,9 +1439,9 @@ module dcache1(
   LFSR16_6 rnd_mod(clk,rst,insert_rand);
   
   assign read_pbit0=read_pbit0P_reg2|{1'b0,|emsr && read_sz_reg[0]==5'd19};
-  assign read_pbit1=read_pbit1P_reg2{1'b0,|emsr && read_sz_reg[1]==5'd19};
+  assign read_pbit1=read_pbit1P_reg2|{1'b0,|emsr && read_sz_reg[1]==5'd19};
   assign read_pbit2=read_pbit2P_reg2|{1'b0,|emsr && read_sz_reg[2]==5'd19};
-  assign read_pbit3=read_pbit3P_reg2|{1'b0,read3_pf_reg} | {1'b0,|emsr && read_sz_reg[3]==5'd19}};
+  assign read_pbit3=read_pbit3P_reg2|{1'b0,read3_pf_reg} | {1'b0,|emsr && read_sz_reg[3]==5'd19};
   
   assign read_hitCl0Q=read_hit0_way[0] | read_hit0_way[1] | read_hit0_way[2] | 
     read_hit0_way[3] | read_hit0_way[4] | read_hit0_way[5] |  
@@ -1728,7 +1728,7 @@ module dcache1(
          5'd17: mskdata1[v]<=6'b00001;
          5'd18: mskdata1[v]<=6'b00011;
          5'd19: begin mskdata1[v]<=6'b00111; if (emsr!=64'b0) mskdata1[v]<={4'b000,emsr[0],1'b1}; pwndata[v][63:16]<=emsr[63:16]; end
-         5'd23: mskdata1[v]<=begin 6'b00111; swpdata[v]<=1'b1; end
+         5'd23: begin mskdata1[v]<=6'b00111; swpdata[v]<=1'b1; end
          5'h3:  mskdata1[v]<=6'b01111; //long double
          5'h0,5'h1,5'h2:  mskdata1[v]<=6'b11111; //int, double, single 128 bit (u)
          5'hc,5'hd,5'he:  mskdata1[v]<=6'b11111; //int, double, single 128 bit (a)
