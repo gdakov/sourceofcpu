@@ -927,7 +927,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           if (j!=11) assign pre_other[j][`instrQ_srcTick]=cc_base_tick &&//cc_read_IP_reg4[43:9]!=cc_read_IP_reg5[43:9] &&
 	     do_seq_reg5 && pre_instrEn_reg[j]&&pre_jbefore[j]&&j=={31'b0,read_data_reg[255] && cc_read_IP_reg3[4:1]==0}; 
           else assign pre_other[j][`instrQ_srcTick]=cc_base_tick &&//cc_read_IP_reg4[43:9]!=cc_read_IP_reg5[43:9] &&
-	     do_seq_reg5 && pre_instrEn_reg[j]&&pre_jbefore[j]&&j=={31'b0,read_data_reg[255] && cc_read_IP_reg3[4:1]==0}; 
+	     do_seq_reg5 && pre_instrEn_reg[j]&&pre_jbefore[j]&&j=={31'b0,read_data_reg[255] && cc_read_IP_regx3[4:1]==0};
           assign pre_other[j][`instrQ_class]=pre_class_reg[j];
           //assign pre_other[j][`instrQ_taken]=btb_hasTK_reg3 ? 1'bz : 1'b0;
           assign pre_other[j][`instrQ_taken]=(taken_reg4 & isJ) !=4'b0 && tbuf_error==4'b0;
@@ -1246,9 +1246,20 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   
   assign lnk_offIn=lnk_offIn_cc;
  
-  assign fmstall= (btb_way ? (btb_jmask&{btb_has3,btb_has2,btb_has1,btb_has0})!=
-    btb_chmaskB && btb_hit && btb_hasTK_reg|ixcept_reg && ~uxcept: 
-    (btb_jmask&{btb_has3,btb_has2,btb_has1,btb_has0})!=btb_chmaskA && btb_hit && btb_hasTK_reg|ixcept_reg && ~uxcept) || miss_now_in;
+  assign fmstall= (btb_way_reg2 ? (btb_jmask_reg2&{btb_has[3:0]})!=
+    btb_chmaskB && btb_hit[3:0] && btb_hasTK_reg2[3:0]|ixcept_reg && ~uxcept:
+    (btb_jmask_reg2&{btb_has[3:0]})!=btb_chmaskA && btb_hit[3:0] && btb_hasTK_reg[3:0]|ixcept_reg && ~uxcept) || miss_now_in;
+
+  assign tgtstall=taken_reg2[0] ? jdec_target[0]==btbx_tgt_reg3[0] && btbx_cond_reg3[0] : 1'bz;
+  assign tgtstall=taken_reg2[1] ? jdec_target[1]==btbx_tgt_reg3[1] && btbx_cond_reg3[1] : 1'bz;
+  assign tgtstall=taken_reg2[2] ? jdec_target[2]==btbx_tgt_reg3[2] && btbx_cond_reg3[2] : 1'bz;
+  assign tgtstall=taken_reg2[3] ? jdec_target[3]==btbx_tgt_reg3[3] && btbz_cond_reg3[3] : 1'bz;
+  assign tgtstall=taken_reg2[4] ? jdec_target[4]==btbx_tgt_reg3[4] && btbz_cond_reg3[4] : 1'bz;
+  assign tgtstall=taken_reg2[5] ? jdec_target[5]==btbx_tgt_reg3[5] && btbz_cond_reg3[5] : 1'bz;
+  assign tgtstall=taken_reg2[6] ? jdec_target[6]==btbx_tgt_reg3[6] && btbz_cond_reg3[6] : 1'bz;
+  assign tgtstall=taken_reg2[7] ? jdec_target[7]==btbx_tgt_reg3[7] && btbz_cond_reg3[7] : 1'bz;
+  assign tgtstall=taken_reg2==8'b0  ? 1'b0 : 1'bz;
+
   assign iqe_jbits=taken_reg[0] ? {3'b0,btbx_jmask_reg[0]} : 4'bz;
   assign iqe_jbits=taken_reg[1] ? {2'b0,btbx_jmask_reg[1:0]} : 4'bz;
   assign iqe_jbits=taken_reg[2] ? {1'b0,btbx_jmask_reg[2:0]} : 4'bz;
@@ -1434,8 +1445,9 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   .except_indir(ixcept_indir),
   .mismatch_stall(fmstall),
   .uxcept(uxcept),
-  .read_clkEn(ixcept || ~fstall & new_instrEn||
+  .read_clkEn(ixcept || ~fstall ||
      btbFStall_recover & ~iq_fstall & ~jq_fstall),
+  .write_IP(cc_read_IP_regx3),
   .nextIP({btbFStall_reg2 ? cc_read_IP_reg2[63:1] : cc_read_IP_d[63:1]}),
   .read_hit(btb_hit),
   .taken(taken&{4{btb_hit}}),
@@ -1497,10 +1509,10 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   .write_way(btb_way_reg2),
   .write_thread(1'b0),
   .write_wen(1'b0),
-  .write_insert(btbFStall_reg2 & btb_can_ins),
+  .write_insert(btbFStall_reg2 & btb_can_ins || fmstall),
   .write_can(btb_can_ins),
   .write_read_fwd(1'b0),
-  .write_read_lowIP(cc_read_IP_reg2[4:1]),
+  .write_read_lowIP(cc_read_IP_regx3[4:1]),
   .update_addr0(jupd0_baddr),.update_addr1(jupd1_baddr),
   .update_en(jupd1_en|jupd0_en), .update_taken({jupd1_tk,jupd0_tk}),
   .update_use({jupd1_en,jupd0_en})
@@ -1931,6 +1943,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           cc_read_IP_reg<=64'b0;
           cc_read_IP_reg2<=64'b0;
           cc_read_IP_reg3<=64'b0;
+          cc_read_IP_regx3<=64'b0;
           cc_read_IP_reg4<=64'b0;
           cc_read_IP_reg5<=64'b0;
           //cc_base_tick_reg<=1'b0;
@@ -2196,7 +2209,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           //ixcept_reg<=1'b0;
           //ixceptLDConfl_reg<=1'b0;
           read_set_flag<=1'b0;
-	  read_set_flag_reg<=read_set_flag;
+	      read_set_flag_reg<=read_set_flag;
           cc_read_IP<=cc_read_IP_d;
           cc_attr<=cc_attr_d;
           if (instrEn_reg3 && !|tbuf_error) begin read_data_reg<=read_data; cc_err_reg<=cc_err; end
@@ -2211,10 +2224,10 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
               miss_slot<=3'b0;
               miss_seq<=1'b1;
               instrEn<=1'b0;
-	      instrEn_reg<=1'b0;
-	      instrEn_reg2<=1'b0;
-	      instrEn_reg3<=1'b0;
-	      if (~btbFStall_recover_reg2) instrFed_reg<=1'b0;
+	          instrEn_reg<=1'b0;
+	          instrEn_reg2<=1'b0;
+	          instrEn_reg3<=1'b0;
+	          if (~btbFStall_recover_reg2) instrFed_reg<=1'b0;
               bus_match0_reg<=1'b0;
               bus_match0_reg2<=1'b0;
               bus_match0_reg3<=1'b0;
@@ -2291,6 +2304,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           cc_read_IP_reg<=cc_read_IP;
           cc_read_IP_reg2<=cc_read_IP_reg;
           cc_read_IP_reg3<=cc_read_IP_reg2;
+          cc_read_IP_regx3<=cc_read_IP_reg2;
           cc_read_IP_reg4<=cc_read_IP_reg3;
           cc_read_IP_reg5<=cc_read_IP_reg4;
          // cc_base_tick_reg<=cc_base_tick;
@@ -2316,7 +2330,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           end
           pre_instrEn_reg<={1'b0,pre_instrEn};
           pre_instr0_reg<=pre_instr0;
-	  pre__splitinsn_reg<=pre__splitinsn;
+	      pre__splitinsn_reg<=pre__splitinsn;
           for (n=0;n<12;n=n+1) begin
               pre_off_reg[n]<=pre_off[n];
               pre_magic_reg[n]<=pre_magic[n];
@@ -2331,20 +2345,20 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           btb_hit_reg<=btb_hit;
           btb_hit_reg2<=btb_hit_reg;
           btb_hit_reg3<=btb_hit_reg2;
-	  jmp_mask_reg[0]<=jmp_mask[0];
-	  jmp_mask_reg[1]<=jmp_mask[1];
-	  jmp_mask_reg[2]<=jmp_mask[2];
-	  jmp_mask_reg[3]<=jmp_mask[3];
-	  jmp_mask_reg2[0]<=jmp_mask_reg[0];
-	  jmp_mask_reg2[1]<=jmp_mask_reg[1];
-	  jmp_mask_reg2[2]<=jmp_mask_reg[2];
-	  jmp_mask_reg2[3]<=jmp_mask_reg[3];
-	  jmp_mask_reg3[0]<=jmp_mask_reg2[0];
-	  jmp_mask_reg3[1]<=jmp_mask_reg2[1];
-	  jmp_mask_reg3[2]<=jmp_mask_reg2[2];
-	  jmp_mask_reg3[3]<=jmp_mask_reg2[3];
-	  jmp_mask_reg4[0]<=jmp_mask_reg3[0];
-	  jmp_mask_reg4[1]<=jmp_mask_reg3[1];
+	      jmp_mask_reg[0]<=jmp_mask[0];
+	      jmp_mask_reg[1]<=jmp_mask[1];
+	      jmp_mask_reg[2]<=jmp_mask[2];
+	      jmp_mask_reg[3]<=jmp_mask[3];
+	      jmp_mask_reg2[0]<=jmp_mask_reg[0];
+	      jmp_mask_reg2[1]<=jmp_mask_reg[1];
+	      jmp_mask_reg2[2]<=jmp_mask_reg[2];
+	      jmp_mask_reg2[3]<=jmp_mask_reg[3];
+	      jmp_mask_reg3[0]<=jmp_mask_reg2[0];
+	      jmp_mask_reg3[1]<=jmp_mask_reg2[1];
+	      jmp_mask_reg3[2]<=jmp_mask_reg2[2];
+          jmp_mask_reg3[3]<=jmp_mask_reg2[3];
+	      jmp_mask_reg4[0]<=jmp_mask_reg3[0];
+          jmp_mask_reg4[1]<=jmp_mask_reg3[1];
 	  jmp_mask_reg4[2]<=jmp_mask_reg3[2];
 	  jmp_mask_reg4[3]<=jmp_mask_reg3[3];
           btbx_tgt0_reg<=btbx_tgt0;
@@ -2461,6 +2475,8 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
               instrEn_reg2<=1'b0;
           end
           tbuf_error_reg<=tbuf_error;
+      end else if (fmstall) begin
+                cc_read_IP_regx3<=cc_read_IP_reg3;
       end else if (btbFStall_recover && ~iq_fstall && ~jq_fstall && ~fmstall) begin
           pre_instrEn_reg<={1'b0,pre_instrEn};
           pre_instr0_reg<=pre_instr0;
