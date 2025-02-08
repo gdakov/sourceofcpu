@@ -164,7 +164,7 @@ module fpucadd(clk,rst,A,A_alt,B,pook_in,and1,or1,copyA,en,rmode,res,res_hi,xtra
   get_carry #(17) cmp5_mod(~exp_denor_IEEE,(exp_exp1^17'h10000),1'b1,exp_non_denor_IEEE);
 
 
-  assign mskS=16'h1fffffffffffff<<(exp_exp_reg-exp_denor_IEEE+1);
+  assign mskS=53'h1fffffffffffff<<(exp_exp_reg-exp_denor_IEEE+1);
 
   assign exp_exp_d=exp_oor & ~fpcsr[`csrfpu_clip_IEEE] ? exp_max : 17'b0;
   assign exp_exp_d=exp_oor_IEEE & fpcsr[`csrfpu_clip_IEEE] ? exp_max_IEEE : 17'bz;

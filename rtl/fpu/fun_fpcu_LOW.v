@@ -274,7 +274,7 @@ module fun_fpuL(
   `ifndef swapedge
   always @(posedge clk) begin
   `else
-  always @(endedge clk) begin
+  always @(negedge clk) begin
   `endif
       u5_en_reg<=u5_en;
       u5_op_reg<=u5_op;

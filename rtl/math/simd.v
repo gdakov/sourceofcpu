@@ -70,9 +70,9 @@ module simd_non_socialiste(
               sub_sat #(8) 
 add32_mod(A_reg[d*8+:8],B_reg[d*8+:8],resD[3][d*8+:8],is_sign,is_sat,is_min,is_max,
 	        is_sub,is_simpl,is_subcmp,is_cmp,jump_type);
-              signed wire [7:0] A_op;
-              signed wire [7:0] B_op;
-              signed wire [15:0] C_op;
+              wire signed [7:0] A_op;
+              wire signed [7:0] B_op;
+              wire signed [15:0] C_op;
               assign C_op=A_op*B_op;
               assign A_op=A_reg[d*8+:8];
               assign B_op=B_reg[d*8+:8];

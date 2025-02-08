@@ -108,10 +108,10 @@ module imul(
 
   assign Cix=and1 & !sm_sig ? C>>32 : C;
 
-  icompr cmp_mod(clk,clkEn,R[63:0],{is_sig ? {32{Cix[31]}} :32'b0,Cix[31:0]},A_out,B_out,1'b1,is_sig|(and1&!sm_sig)),sig|(and1&!sm_sig),sm_sig);
+  icompr cmp_mod(clk,clkEn,R[63:0],{is_sig ? {32{Cix[31]}} :32'b0,Cix[31:0]},A_out,B_out,1'b1,is_sig|(and1&!sm_sig),sig|(and1&!sm_sig),sm_sig);
   adderoM #(64) add_mod(A_out_reg[63:0],B_out_reg[63:0],Res0[63:0], 1'b0,~is_sec_reg&~alt_jxcross_reg,short_reg&~alt_jxcross_reg,,,,);
-  adder #(16) add16A_mod(A_out_reg[15:0],B_out_reg[15:0],Res[15:0]},1'b0,do16_reg2,,,,);
-  adder #(16) add16B_mod(A_out_reg[15:0],B_out_reg[15:0],Res16[15:0]},1'b0,1'b1,,,,);
+  adder #(16) add16A_mod(A_out_reg[15:0],B_out_reg[15:0],Res[15:0],1'b0,do16_reg2,,,,);
+  adder #(16) add16B_mod(A_out_reg[15:0],B_out_reg[15:0],Res16[15:0],1'b0,1'b1,,,,);
 
   assign Res[63:0]=and1_reg & !sm_sig_Reg ? Res0[63:0]<<32 : Res0[63:0];
   assign Res[64]=Res0[64];

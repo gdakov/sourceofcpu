@@ -132,4 +132,4 @@ limitations under the License.
 `define op_cvtD 13
 `define op_cvtS 14
 
-`define op_dec (15|`op_muticlk)
+`define op_dec (15|`op_multiclk)
