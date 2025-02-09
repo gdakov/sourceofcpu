@@ -98,7 +98,8 @@ module cc_ram(
   input readB_clkEn;
   input [ADDR_WIDTH-1:0] readB_addr;
   output [DATA_WIDTH-1:0] readB_data;
-  input [ADDR_WIDTH-1:0] write_addr;
+  input [ADDR_WIDTH-1:0] write_addrE;
+  input [ADDR_WIDTH-1:0] write_addrO;
   input [DATA_WIDTH-1:0] write_data;
   input [1:0] write_wen;
   input [3:0] write_ben;
@@ -147,16 +148,9 @@ module cc_ram_block(
   write_xdata,
   write_wen,
   write_wen_noins,
-  write_addrE0, write_hitE0,
-  write_addrO0, write_hitO0,
-  write_bankEn0, write_odd0,
-  write_begin0,write_end0,
-  write_bBen0,write_enBen0,
-  write_addrE1, write_hitE1,
-  write_addrO1, write_hitO1,
-  write_bankEn1,write_odd1,
-  write_begin1,write_end1,
-  write_bBen1,write_enBen1,
+  write_addrE0, write_addrEZ,
+  write_addrO0, write_addrOZ,
+  write_odd0
   );
 
   parameter INDEX=0;
@@ -178,32 +172,10 @@ module cc_ram_block(
   input write_wen;
   input write_wen_noins;
   input [ADDR_WIDTH-1:0] write_addrE0;
-  input write_hitE0; //+1 cycle
   input [ADDR_WIDTH-1:0] write_addrO0;
-  input write_hitO0; //+1 cycle
-  input write_bankEn0;
-  input write_odd0;
-  input [4:0] write_begin0;
-  input [4:0] write_end0;
-  input [3:0] write_bBen0;
-  input [3:0] write_enBen0;
-  input [ADDR_WIDTH-1:0] write_addrE1;
-  input write_hitE1; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO1;
-  input write_hitO1; //+1 cycle
-  input write_bankEn1;
-  input write_odd1;
-  input [4:0] write_begin1;
-  input [4:0] write_end1;
-  input [3:0] write_bBen1;
-  input [3:0] write_enBen1;
+  input [ADDR_WIDTH-1:0] write_addrEZ;
+  input [ADDR_WIDTH-1:0] write_addrOZ;
 
-  wire [15:0][3:0] write_ben;
-  assign write_addrE=write_wen ? write_addr[6:1] : write_bankEn0 ? write_addrE0 : write_addrE1;
-  assign write_addrO=write_wen ? write_addr[6:1] : write_bankEn0 ? write_addrO0 : write_addrO1;
-  assign write_addrEZ=write_wen ? write_addr[6:1]-~write_addr[0] : write_bankEn0 ? write_addrE0-~write_odd0 : write_addrE1-~write_odd1;
-  assign write_addrOZ=write_wen ? write_addr[6:1]-write_addr[0] : write_bankEn0 ? write_addrO0-write_odd0 : write_addrO1-write_odd1;
-  assign write_bankEn=write_bankEn0 | write_bankEn1;
  
 
   generate
@@ -222,9 +194,7 @@ module cc_ram_block(
         write_addrE,
         write_addrO,
         write_data[36*t+:36],
-        {2{write_wen}}|{((write_end0<write_begin0 && ~t[3] || write_odd0) && write_hitO0)|((write_end1<write_begin1 && ~t[3] || write_odd1) && write_hitO1),
-                       ((write_end0<write_begin0 && ~t[3] || ~write_odd0) && write_hitE0)|((write_end1<write_begin1 && ~t[3] || ~write_odd1) && write_hitE1)},
-        write_ben[t]
+        {2{write_wen}}&{~write_odd0,write_odd0}
         );
         else
         cc_ram ramB_mod(
@@ -236,22 +206,11 @@ module cc_ram_block(
         readB_clkEn,
         readB_addr,
         readBZ_data[36*(t-16)+:36],
-        write_addrEZ,
-        write_addrOZ,
+        t>=16 ? write_addrEZ : write_addrE0,
+        t>=16 ? write_addrOZ : write_addrO0,
         INDEX ? write_xdata[35:0] : write_data[36*(t-16)+:36],
-        {2{write_wen}}|{((write_end0<write_begin0 || write_odd0) && write_hitO0)|((write_end1<write_begin1  || write_odd1) && write_hitO1),
-                       ((write_end0<write_begin0  || ~write_odd0) && write_hitE0)|((write_end1<write_begin1 || ~write_odd1) && write_hitE1)},
-        write_ben[(t-16)]
+        {2{write_wen}}&{~write_odd0,write_odd0}^{2{t>=16}}
         );
-        if (t<16) begin
-            assign write_ben[t]=(write_bankEn0 && write_begin0=={INDEX[0],t[3:0]} && ~init) ? write_bBen0 : 4'bz;
-            assign write_ben[t]=(write_bankEn0 && write_end0=={INDEX[0],t[3:0]} && ~init) ?   write_enBen0 : 4'bz;
-            assign write_ben[t]=((write_bankEn0 && write_begin0!={INDEX[0],t[3:0]} && write_end0!={INDEX[0],t[3:0]}) || init) ? 4'b1111 : 4'bz;
-            assign write_ben[t]=(write_bankEn1 && write_begin1=={INDEX[0],t[3:0]} && ~init) ? write_bBen1 : 4'bz;
-            assign write_ben[t]=(write_bankEn1 && write_end1=={INDEX[0],t[3:0]} && ~init) ?   write_enBen1 : 4'bz;
-            assign write_ben[t]=(write_bankEn1 && write_begin1!={INDEX[0],t[3:0]} && write_end1!={INDEX[0],t[3:0]} && ~init) ? 4'b1111 : 4'bz;
-            assign write_ben[t]=(~write_bankEn1 && ~write_bankEn0 && ~init) ? 4'b0 : 4'bz;
-        end
     end
   endgenerate
 endmodule
@@ -330,16 +289,16 @@ module ccX_ram(
   input readA_clkEn;
   input [ADDR_WIDTH-1:0] readA_addr;
   output [DATA_WIDTH-1:0] readA_data;
-  output [4:0] readAZ_data;
+  output [7:0] readAZ_data;
   input readB_clkEn;
   input [ADDR_WIDTH-1:0] readB_addr;
   output [DATA_WIDTH-1:0] readB_data;
-  output [4:0] readBZ_data;
+  output [7:0] readBZ_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
+  input [4:0] write_addrZ;
   input write_wen;
-  write_addr,
-  write_data,
+
   ccX_ram ramX_mod(
   clk,
   rst,
@@ -353,7 +312,7 @@ module ccX_ram(
   write_data,
   write_wen
   );
-  ccX_ram #(5) ramXX_mod(
+  ccX_ram #(8) ramXX_mod(
   clk,
   rst,
   readA_clkEn,
@@ -363,7 +322,7 @@ module ccX_ram(
   readB_addr,
   readBZ_data,
   write_addrZ,
-  write_data[4:0],
+  write_data[7:0],
   write_wen
   );
 endmodule

@@ -412,9 +412,9 @@ module dmlb(
 	assign hitLru=read_hitL_way[k][0] ? lru_way[k] : 3'bz;
 	assign hitLruW=3'd7;
         if (k<6) begin
-            assign read_data0[k]=~read_hitL[0] ? pmm_data0[k*2+(&addr0[29:26]] : 'z;
-            assign read_data1[k]=~read_hitL[k] ? pmm_data1[k*2+(&addr0[29:26]] : 'z;
-            assign read_data2[k]=~read_hitL[k] ? pmm_data2[k*2+(&addr0[29:26]] : 'z;
+            assign read_data0[k]=~read_hitL[0] ? pmm_data0[k*2+&addr0[29:26]] : 'z;
+            assign read_data1[k]=~read_hitL[k] ? pmm_data1[k*2+&addr0[29:26]] : 'z;
+            assign read_data2[k]=~read_hitL[k] ? pmm_data2[k*2+&addr0[29:26]] : 'z;
             
             assign pmm_data0[k*2+0][`dmlbData_phys]=addr0[k][29:0];
             assign pmm_data0[k*2+1][`dmlbData_phys]=addr0[k][29:0];
@@ -436,10 +436,10 @@ module dmlb(
             assign pmm_data0[k*2+1][`dmlbData_glo]=1'b1;
             assign pmm_data0[k*2+0][`dmlbData_type]=2'b0;
             assign pmm_data0[k*2+1][`dmlbData_type]=2'b11;//texture
-            assign pmm_data0[k*2+0][`dmlbData_acc]=1'b1;
-            assign pmm_data0[k*2+1][`dmlbData_acc]=1'b1;
-            assign pmm_data0[k*2+0][`dmlbData_wrt]=1'b1;
-            assign pmm_data0[k*2+1][`dmlbData_wrt]=1'b1;
+            //assign pmm_data0[k*2+0][`dmlbData_acc]=1'b1;
+            //assign pmm_data0[k*2+1][`dmlbData_acc]=1'b1;
+            //assign pmm_data0[k*2+0][`dmlbData_wrt]=1'b1;
+            //assign pmm_data0[k*2+1][`dmlbData_wrt]=1'b1;
             assign pmm_data0[k*2+0][`dmlbData_subpage]=1'b0;
             assign pmm_data0[k*2+1][`dmlbData_subpage]=1'b0;
 
@@ -455,10 +455,10 @@ module dmlb(
             assign pmm_data1[k*2+1][`dmlbData_glo]=1'b1;
             assign pmm_data1[k*2+0][`dmlbData_type]=2'b0;
             assign pmm_data1[k*2+1][`dmlbData_type]=2'b11;//texture
-            assign pmm_data1[k*2+0][`dmlbData_acc]=1'b1;
-            assign pmm_data1[k*2+1][`dmlbData_acc]=1'b1;
-            assign pmm_data1[k*2+0][`dmlbData_wrt]=1'b1;
-            assign pmm_data1[k*2+1][`dmlbData_wrt]=1'b1;
+            //assign pmm_data1[k*2+0][`dmlbData_acc]=1'b1;
+            //assign pmm_data1[k*2+1][`dmlbData_acc]=1'b1;
+            //assign pmm_data1[k*2+0][`dmlbData_wrt]=1'b1;
+            //assign pmm_data1[k*2+1][`dmlbData_wrt]=1'b1;
             assign pmm_data1[k*2+0][`dmlbData_subpage]=1'b0;
             assign pmm_data1[k*2+1][`dmlbData_subpage]=1'b0;
 
@@ -474,10 +474,10 @@ module dmlb(
             assign pmm_data2[k*2+1][`dmlbData_glo]=1'b1;
             assign pmm_data2[k*2+0][`dmlbData_type]=2'b0;
             assign pmm_data2[k*2+1][`dmlbData_type]=2'b11;//texture
-            assign pmm_data2[k*2+0][`dmlbData_acc]=1'b1;
-            assign pmm_data2[k*2+1][`dmlbData_acc]=1'b1;
-            assign pmm_data2[k*2+0][`dmlbData_wrt]=1'b1;
-            assign pmm_data2[k*2+1][`dmlbData_wrt]=1'b1;
+            //assign pmm_data2[k*2+0][`dmlbData_acc]=1'b1;
+            //assign pmm_data2[k*2+1][`dmlbData_acc]=1'b1;
+            //assign pmm_data2[k*2+0][`dmlbData_wrt]=1'b1;
+            //assign pmm_data2[k*2+1][`dmlbData_wrt]=1'b1;
             assign pmm_data2[k*2+0][`dmlbData_subpage]=1'b0;
             assign pmm_data2[k*2+1][`dmlbData_subpage]=1'b0;
       end	

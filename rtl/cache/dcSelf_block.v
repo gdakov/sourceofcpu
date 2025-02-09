@@ -1509,7 +1509,7 @@ module dcache1(
   assign ways_gen[0].read_pbit1P=2'b0;
   assign ways_gen[0].read_pbit2P=2'b0;
   assign ways_gen[0].read_pbit3P=2'b0;
-  assign ways_gen[0].read_errP=
+  assign ways_gen[0].read_errP='0;
   assign read_hit0P=(|read_hitCl0Q[0] | ~rdreqE0) && (read_hitCl0Q[1] | ~rdreqO0) &&
     (rdreqE0 | rdreqO0) && ~insert_en_reg2 & ~rderr1[0] & ~rderr2[0];
   assign read_hit1P=(read_hitCl1Q[0] | ~rdreqE1) && (read_hitCl1Q[1] | ~rdreqO1) &&
