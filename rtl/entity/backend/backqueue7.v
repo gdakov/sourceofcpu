@@ -1140,9 +1140,9 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   
   assign btbFStall=instrEn_reg3 & (~(cc_read_hit && btb_hit_reg3)|tgtstall|fmstall)
     & pre_has_jumps ;
-  assign fstall=iq_fstall || jq_fstall || btbFStall || btbFStall_reg
+  assign fstall=iq_fstall || jq_fstall;
+  assign fxstall=iq_fstall || jq_fstall || btbFStall || btbFStall_reg
     || btbFStall_reg2 || btbFStall_reg3 || btbFStall_recover;
-  assign fxstall=iq_fstall || jq_fstall;
 
   assign btb_hold_except=btbFStall || btbFStall_reg || btbFStall_reg2 || btbFStall_reg3;
   
@@ -1660,8 +1660,6 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
       end
   end
 
-  dff_up_to_reg3 #(40) dff_joff_mod(clk,rst,~fstall,btbx_joff,btbx_joff_reg2,btbx_joff_reg3);
-  dff_up_to_reg3 #(32) dff_jlink_mod(clk,rst,~ftall,btbx_attr,btbx_attr_reg,btbx_attr_reg2,btbx_attr_reg3);
 
   always @(posedge clk) 
   begin
@@ -1756,12 +1754,6 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
               jmp_moff_reg[t]<=4'b0;
               jdec_const_reg[t]<=64'b0;
           end
-/*          cc_read_IP_REG3<=48'b0;
-          cc_read_IP_REG4<=48'b0;
-          tr_read_IP_REG3<=48'b0;
-          tr_read_IP_REG4<=48'b0;
-          tr_read_hit_REG3<=1'b0;
-          tr_read_hit_REG4<=1'b0;*/
       end else begin
           dreq_reg<=dreq;
           dreq_reg2<=dreq_reg;
@@ -1771,8 +1763,6 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           btbFStall_reg<=btbFStall & ~btbFStall_save;
           btbFStall_reg2<=btbFStall_reg;
           btbFStall_reg3<=btbFStall_reg2;
-//          btbFStall_reg4<=btbFStall_reg3;
-//          btbFStall_reg5<=btbFStall_reg4;
           if (btbFStall_recover && ~iq_fstall && ~jq_fstall && ~fmstall) btbFStall_recover<=1'b0;
           else btbFStall_recover<=btbFStall_recover|btbFStall_reg3;
           
@@ -1786,6 +1776,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
                   GHT<=GHT_d;
                   GHT_mispred<=GHT2_D;
           end
+        if (~fxstall) begin
           lnk_link0_reg<=lnk_link0;
           lnk_off0_reg<=lnk_off0;
           lnk_isRet0_reg<=lnk_isRet0;
@@ -1823,12 +1814,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
               jmp_moff_reg[t]<=jmp_moff[t];
               jdec_const_reg[t]<=jdec_const[t];
           end
-/*          cc_read_IP_REG3<=cc_read_IP_reg2;
-          cc_read_IP_REG4<=cc_read_IP_REG3;
-          tr_read_IP_REG3<=cc_read_IP_reg2;
-          tr_read_IP_REG4<=cc_read_IP_REG3;
-          tr_read_hit_REG3<=tr_read_hit_reg2&~ixcept;
-          tr_read_hit_REG4<=tr_read_hit_REG3&~ixcept;*/
+        end
       end
       
       if (rst) begin
@@ -2204,11 +2190,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           pre_instrEn_reg<=13'b0;
           tbuf_error_reg<=4'b0;
           btb_indir_reg<=ixcept_indir;
-      end else if (halt_d && ~fstall) begin
-          //insert halt code here
       end else if (~fstall) begin
-          //ixcept_reg<=1'b0;
-          //ixceptLDConfl_reg<=1'b0;
           read_set_flag<=1'b0;
 	      read_set_flag_reg<=read_set_flag;
           cc_read_IP<=cc_read_IP_d;
@@ -2238,8 +2220,8 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
               instrEn_reg2<=instrEn_reg;
               instrEn_reg3<=instrEn_reg2;
               instrFed_reg<=instrFed;
-	  end
-          if (miss_recover) begin
+	     end
+         if (miss_recover) begin
               miss_now<=1'b0;
               mlbMiss_now<=1'b0;
               instrEn<=1'b1;
@@ -2257,7 +2239,7 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           IP_chg_reg<=IP_chg;
           IP_chg_reg2<=IP_chg_reg;
           IP_chg_reg3<=IP_chg_reg2;
-          IP_chg_reg4<=IP_chg_reg3;
+         // IP_chg_reg4<=IP_chg_reg3;
           btb_indir_reg<=|(btb_indir&taken);
           btb_jlink0_reg<=btb_jlink0;
           btb_jlnpos0_reg<=btb_jlnpos0;
@@ -2283,85 +2265,58 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           btb_jlink3_reg2<=btb_jlink3_reg;
           btb_jlnpos3_reg2<=btb_jlnpos3_reg;
           btb_jlnjpos3_reg2<=btb_jlnjpos3_reg;
-          btb_jlink0_reg3<=btb_jlink0_reg2;
-          btb_jlnpos0_reg3<=btb_jlnpos0_reg2;
-          btb_jlnjpos0_reg3<=btb_jlnjpos0_reg2;
-          btb_jlink1_reg3<=btb_jlink1_reg2;
-          btb_jlnpos1_reg3<=btb_jlnpos1_reg2;
-          btb_jlnjpos1_reg3<=btb_jlnjpos1_reg2;
-          btb_jlink2_reg3<=btb_jlink2_reg2;
-          btb_jlnpos2_reg3<=btb_jlnpos2_reg2;
-          btb_jlnjpos2_reg3<=btb_jlnjpos2_reg2;
-          btb_jlink3_reg3<=btb_jlink3_reg2;
-          btb_jlnpos3_reg3<=btb_jlnpos3_reg2;
-          btb_jlnjpos3_reg3<=btb_jlnjpos3_reg2;
+          //btb_jlink0_reg3<=btb_jlink0_reg2;
+          //btb_jlnpos0_reg3<=btb_jlnpos0_reg2;
+          //btb_jlnjpos0_reg3<=btb_jlnjpos0_reg2;
+          //btb_jlink1_reg3<=btb_jlink1_reg2;
+          //btb_jlnpos1_reg3<=btb_jlnpos1_reg2;
+          //btb_jlnjpos1_reg3<=btb_jlnjpos1_reg2;
+          //btb_jlink2_reg3<=btb_jlink2_reg2;
+          //btb_jlnpos2_reg3<=btb_jlnpos2_reg2;
+          //btb_jlnjpos2_reg3<=btb_jlnjpos2_reg2;
+          //btb_jlink3_reg3<=btb_jlink3_reg2;
+          //btb_jlnpos3_reg3<=btb_jlnpos3_reg2;
+          //btb_jlnjpos3_reg3<=btb_jlnjpos3_reg2;
           mlb_hit_reg<=mlb_hit;
           bus_data_reg<=bus_data;
           bus_match_reg<=bus_match;
           bus_mlb_match_reg<=bus_mlb_match;
           bus_mlb_match_reg2<=bus_mlb_match_reg;
-          bus_mlb_match_reg3<=bus_mlb_match_reg2;
+         // bus_mlb_match_reg3<=bus_mlb_match_reg2;
           bus_mlb_data_reg<=bus_mlb_data;
           cc_read_IP_reg<=cc_read_IP;
           cc_read_IP_reg2<=cc_read_IP_reg;
           cc_read_IP_reg3<=cc_read_IP_reg2;
           cc_read_IP_regx3<=cc_read_IP_reg2;
-          cc_read_IP_reg4<=cc_read_IP_reg3;
-          cc_read_IP_reg5<=cc_read_IP_reg4;
-         // cc_base_tick_reg<=cc_base_tick;
-         // cc_base_tick_reg2<=cc_base_tick_reg;
-         // cc_base_tick_reg3<=cc_base_tick_reg2;
-         // cc_base_tick_reg4<=cc_base_tick_reg3;
+         // cc_read_IP_reg4<=cc_read_IP_reg3;
+         // cc_read_IP_reg5<=cc_read_IP_reg4;
           mlb_hit_reg2<=mlb_hit_reg;
-          mlb_hit_reg3<=mlb_hit_reg2;
-          mlb_hit_reg4<=mlb_hit_reg3;
+         // mlb_hit_reg3<=mlb_hit_reg2;
+         // mlb_hit_reg4<=mlb_hit_reg3;
           mlb_data_reg2<=mlb_data_reg;
           mlb_phys_reg<=mlb_phys;
-          mlb_data_reg3<=mlb_data_reg2;
-          if (~miss_recover) begin
-              bus_match0_reg<=bus_match0_reg|bus_match0;
-              bus_match0_reg2<=bus_match0_reg2|bus_match0_reg;
-              bus_match0_reg3<=bus_match0_reg3|bus_match0_reg2;
-              bus_match0_reg4<=bus_match0_reg4|bus_match0_reg3;
-          end else begin
-              bus_match0_reg<=1'b0;
-              bus_match0_reg2<=1'b0;
-              bus_match0_reg3<=1'b0;
-              bus_match0_reg4<=1'b0;
-          end
+         // mlb_data_reg3<=mlb_data_reg2;
           pre_instrEn_reg<={1'b0,pre_instrEn};
           pre_instr0_reg<=pre_instr0;
 	      pre__splitinsn_reg<=pre__splitinsn;
-          for (n=0;n<12;n=n+1) begin
+          for (n=0;n<16;n=n+1) begin
               pre_off_reg[n]<=pre_off[n];
               pre_magic_reg[n]<=pre_magic[n];
               pre_class_reg[n]<=pre_class[n];
               if (n<4) btbx_joff_reg[n]<=btbx_joff[n];
               if (n<4) btbx_joff_reg2[n]<=btbx_joff_reg[n];
-              if (n<4) btbx_joff_reg3[n]<=btbx_joff_reg2[n];
-              if (n<4) btbx_joff_reg4[n]<=btbx_joff_reg3[n];
+             // if (n<4) btbx_joff_reg3[n]<=btbx_joff_reg2[n];
+             // if (n<4) btbx_joff_reg4[n]<=btbx_joff_reg3[n];
           end
           btb_way_reg<=btb_way;
           btb_way_reg2<=btb_way_reg;
           btb_hit_reg<=btb_hit;
           btb_hit_reg2<=btb_hit_reg;
-          btb_hit_reg3<=btb_hit_reg2;
-	      jmp_mask_reg[0]<=jmp_mask[0];
-	      jmp_mask_reg[1]<=jmp_mask[1];
-	      jmp_mask_reg[2]<=jmp_mask[2];
-	      jmp_mask_reg[3]<=jmp_mask[3];
-	      jmp_mask_reg2[0]<=jmp_mask_reg[0];
-	      jmp_mask_reg2[1]<=jmp_mask_reg[1];
-	      jmp_mask_reg2[2]<=jmp_mask_reg[2];
-	      jmp_mask_reg2[3]<=jmp_mask_reg[3];
-	      jmp_mask_reg3[0]<=jmp_mask_reg2[0];
-	      jmp_mask_reg3[1]<=jmp_mask_reg2[1];
-	      jmp_mask_reg3[2]<=jmp_mask_reg2[2];
-          jmp_mask_reg3[3]<=jmp_mask_reg2[3];
-	      jmp_mask_reg4[0]<=jmp_mask_reg3[0];
-          jmp_mask_reg4[1]<=jmp_mask_reg3[1];
-	  jmp_mask_reg4[2]<=jmp_mask_reg3[2];
-	  jmp_mask_reg4[3]<=jmp_mask_reg3[3];
+          //btb_hit_reg3<=btb_hit_reg2;
+	      jmp_mask_reg<=jmp_mask;
+	      jmp_mask_reg2<=jmp_mask_reg;
+	      jmp_mask_reg3<=jmp_mask_reg2;
+	     // jmp_mask_reg4<=jmp_mask_reg3;
           btbx_tgt0_reg<=btbx_tgt0;
 	  btbx_tgt1_reg<=btbx_tgt1;
 	  btbx_tgt2_reg<=btbx_tgt2;
@@ -2370,14 +2325,14 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
 	  btbx_tgt1_reg2<=btbx_tgt1_reg;
 	  btbx_tgt2_reg2<=btbx_tgt2_reg;
 	  btbx_tgt3_reg2<=btbx_tgt3_reg;
-	  btbx_tgt0_reg3<=btbx_tgt0_reg2;
-	  btbx_tgt1_reg3<=btbx_tgt1_reg2;
-	  btbx_tgt2_reg3<=btbx_tgt2_reg2;
-	  btbx_tgt3_reg3<=btbx_tgt3_reg2;
-	  btbx_tgt0_reg4<=btbx_tgt0_reg3;
-	  btbx_tgt1_reg4<=btbx_tgt1_reg3;
-	  btbx_tgt2_reg4<=btbx_tgt2_reg3;
-	  btbx_tgt3_reg4<=btbx_tgt3_reg3;
+//	  btbx_tgt0_reg3<=btbx_tgt0_reg2;
+//	  btbx_tgt1_reg3<=btbx_tgt1_reg2;
+//	  btbx_tgt2_reg3<=btbx_tgt2_reg2;
+//	  btbx_tgt3_reg3<=btbx_tgt3_reg2;
+//	  btbx_tgt0_reg4<=btbx_tgt0_reg3;
+//	  btbx_tgt1_reg4<=btbx_tgt1_reg3;
+//	  btbx_tgt2_reg4<=btbx_tgt2_reg3;
+//	  btbx_tgt3_reg4<=btbx_tgt3_reg3;
           btbx_attr0_reg<=btbx_attr0;
 	  btbx_attr1_reg<=btbx_attr1;
 	  btbx_attr2_reg<=btbx_attr2;
@@ -2387,43 +2342,43 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
 	  btbx_attr2_reg2<=btbx_attr2_reg;
 	  btbx_attr3_reg2<=btbx_attr3_reg;
 	  btbx_attr0_reg3<=btbx_attr0_reg2;
-	  btbx_attr1_reg3<=btbx_attr1_reg2;
-	  btbx_attr2_reg3<=btbx_attr2_reg2;
-	  btbx_attr3_reg3<=btbx_attr3_reg2;
-	  btbx_attr0_reg4<=btbx_attr0_reg3;
-	  btbx_attr1_reg4<=btbx_attr1_reg3;
-	  btbx_attr2_reg4<=btbx_attr2_reg3;
-	  btbx_attr3_reg4<=btbx_attr3_reg3;
+//	  btbx_attr1_reg3<=btbx_attr1_reg2;
+//	  btbx_attr2_reg3<=btbx_attr2_reg2;
+//	  btbx_attr3_reg3<=btbx_attr3_reg2;
+//	  btbx_attr0_reg4<=btbx_attr0_reg3;
+//	  btbx_attr1_reg4<=btbx_attr1_reg3;
+//	  btbx_attr2_reg4<=btbx_attr2_reg3;
+//	  btbx_attr3_reg4<=btbx_attr3_reg3;
 	  btbx_jmask_reg<=(btb_way ? btb_chmaskB : btb_chmaskA)&{4{btb_hit}};
 	  iqe_jcnt_reg<=iqe_jcnt;
 	  iqe_jcnt_reg2<=iqe_jcnt_reg;
 	  startx_reg<=startx;
 	  startx_reg2<=startx_reg;
 	  startx_reg3<=startx_reg2;
-	  startx_reg4<=startx_reg3;
+//	  startx_reg4<=startx_reg3;
           do_seq_reg<=do_seq;
           do_seq_reg2<=do_seq_reg;
           do_seq_reg3<=do_seq_reg2;
-          do_seq_reg4<=do_seq_reg3;
-          do_seq_reg5<=do_seq_reg4;
+  //        do_seq_reg4<=do_seq_reg3;
+  //        do_seq_reg5<=do_seq_reg4;
           btb_hasTK_reg<=btb_hasTK && btb_hit;
           btb_hasTK_reg2<=btb_hasTK_reg;
-          btb_hasTK_reg3<=btb_hasTK_reg2;
-          btb_hasTK_reg4<=btb_hasTK_reg3;
+//          btb_hasTK_reg3<=btb_hasTK_reg2;
+//          btb_hasTK_reg4<=btb_hasTK_reg3;
           btbxx_way_reg<=btb_way_reg2;
           GHT_mispred_reg<=GHT_mispred;
           GHT_mispred_reg2<=GHT_mispred_reg;
-          GHT_mispred_reg3<=GHT_mispred_reg2;
-          GHT_mispred_reg4<=GHT_mispred_reg3;
+//          GHT_mispred_reg3<=GHT_mispred_reg2;
+//          GHT_mispred_reg4<=GHT_mispred_reg3;
           GHT_reg<=GHT;
           GHT_reg2<=GHT_reg;
-          GHT_reg3<=GHT_reg2;
-          GHT_reg4<=GHT_reg3;
+//          GHT_reg3<=GHT_reg2;
+//          GHT_reg4<=GHT_reg3;
           taken_reg<=taken;
           taken_reg2<=taken_reg;
           taken_reg3<=taken_reg2;
-          taken_reg4<=taken_reg3;
-          taken_reg5<=taken_reg3;
+//          taken_reg4<=taken_reg3;
+//          taken_reg5<=taken_reg3;
 	  predx_sc0_reg<=predx_sc0;
 	  predx_sc1_reg<=predx_sc1;
 	  predx_sc2_reg<=predx_sc2;
@@ -2432,14 +2387,14 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
 	  predx_sc1_reg2<=predx_sc1_reg;
 	  predx_sc2_reg2<=predx_sc2_reg;
 	  predx_sc3_reg2<=predx_sc3_reg;
-	  predx_sc0_reg3<=predx_sc0_reg2;
-	  predx_sc1_reg3<=predx_sc1_reg2;
-	  predx_sc2_reg3<=predx_sc2_reg2;
-	  predx_sc3_reg3<=predx_sc3_reg2;
-	  predx_sc0_reg4<=predx_sc0_reg3;
-	  predx_sc1_reg4<=predx_sc1_reg3;
-	  predx_sc2_reg4<=predx_sc2_reg3;
-	  predx_sc3_reg4<=predx_sc3_reg3;
+//	  predx_sc0_reg3<=predx_sc0_reg2;
+//	  predx_sc1_reg3<=predx_sc1_reg2;
+//	  predx_sc2_reg3<=predx_sc2_reg2;
+//	  predx_sc3_reg3<=predx_sc3_reg2;
+//	  predx_sc0_reg4<=predx_sc0_reg3;
+//	  predx_sc1_reg4<=predx_sc1_reg3;
+//	  predx_sc2_reg4<=predx_sc2_reg3;
+//	  predx_sc3_reg4<=predx_sc3_reg3;
 	  predx_sh0_reg<=predx_sh0;
 	  predx_sh1_reg<=predx_sh1;
 	  predx_sh2_reg<=predx_sh2;
@@ -2448,22 +2403,18 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
 	  predx_sh1_reg2<=predx_sh1_reg;
 	  predx_sh2_reg2<=predx_sh2_reg;
 	  predx_sh3_reg2<=predx_sh3_reg;
-	  predx_sh0_reg3<=predx_sh0_reg2;
-	  predx_sh1_reg3<=predx_sh1_reg2;
-	  predx_sh2_reg3<=predx_sh2_reg2;
-	  predx_sh3_reg3<=predx_sh3_reg2;
-	  predx_sh0_reg4<=predx_sh0_reg3;
-	  predx_sh1_reg4<=predx_sh1_reg3;
-	  predx_sh2_reg4<=predx_sh2_reg3;
-	  predx_sh3_reg4<=predx_sh3_reg3;
-	  btb_can_ins_reg<=1'b1;
-	  btb_can_ins_reg2<=1'b1;
-	  btb_can_ins_reg3<=1'b1;
-	  btb_can_ins_reg4<=1'b1;
+//	  predx_sh0_reg3<=predx_sh0_reg2;
+//	  predx_sh1_reg3<=predx_sh1_reg2;
+//	  predx_sh2_reg3<=predx_sh2_reg2;
+//	  predx_sh3_reg3<=predx_sh3_reg2;
+//	  predx_sh0_reg4<=predx_sh0_reg3;
+//	  predx_sh1_reg4<=predx_sh1_reg3;
+//	  predx_sh2_reg4<=predx_sh2_reg3;
+//	  predx_sh3_reg4<=predx_sh3_reg3;
 	  btbx_cond_reg<=btbx_cond;
 	  btbx_cond_reg2<=btbx_cond_reg;
-	  btbx_cond_reg3<=btbx_cond_reg2;
-	  btbx_cond_reg4<=btbx_cond_reg3;
+//	  btbx_cond_reg3<=btbx_cond_reg2;
+//	  btbx_cond_reg4<=btbx_cond_reg3;
 	  if (instrFed_reg&~btbFStall_recover_reg2)  cc_base_IP<=cc_base_IP_d;
           cc_base_IP_reg<=cc_base_IP;
 	  miss_now_reg<=miss_now;
@@ -2478,69 +2429,95 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
           tbuf_error_reg<=tbuf_error;
       end else if (fmstall) begin
                 cc_read_IP_regx3<=cc_read_IP_reg3;
-      end else if (btbFStall_recover && ~iq_fstall && ~jq_fstall && ~fmstall) begin
-          pre_instrEn_reg<={1'b0,pre_instrEn};
-          pre_instr0_reg<=pre_instr0;
-          read_data_reg<=read_data;
-          cc_err_reg<=cc_err;
-	  pre__splitinsn_reg<=pre__splitinsn;
-          for (n=0;n<12;n=n+1) begin
-              pre_off_reg[n]<=pre_off[n];
-              pre_magic_reg[n]<=pre_magic[n];
-              pre_class_reg[n]<=pre_class[n];
-              if (n<4) btbx_joff_reg3[n]<=btbx_joff[n];
+      end
+          if (~miss_recover) begin
+              bus_match0_reg<=bus_match0_reg|bus_match0;
+              bus_match0_reg2<=bus_match0_reg2|bus_match0_reg;
+              bus_match0_reg3<=bus_match0_reg3|bus_match0_reg2;
+              bus_match0_reg4<=bus_match0_reg4|bus_match0_reg3;
+          end else begin
+              bus_match0_reg<=1'b0;
+              bus_match0_reg2<=1'b0;
+              bus_match0_reg3<=1'b0;
+              bus_match0_reg4<=1'b0;
           end
-          instrFed_reg<=instrFed;
-          do_seq_reg5<=do_seq_reg4;
-          btb_hasTK_reg4<=btb_hasTK;
-          taken_reg4<=taken;
-          taken_reg5<=taken_reg;
-	  predx_sc0_reg4<=predx_sc0;
-	  predx_sc1_reg4<=predx_sc1;
-	  predx_sc2_reg4<=predx_sc2;
-	  predx_sc3_reg4<=predx_sc3;
-	  predx_sh0_reg4<=predx_sh0;
-	  predx_sh1_reg4<=predx_sh1;
-	  predx_sh2_reg4<=predx_sh2;
-	  predx_sh3_reg4<=predx_sh3;
+
+      if (~fxstall) begin
+          IP_chg_reg4<=IP_chg_reg3;
+          btb_jlink0_reg3<=btb_jlink0_reg2;
+          btb_jlnpos0_reg3<=btb_jlnpos0_reg2;
+          btb_jlnjpos0_reg3<=btb_jlnjpos0_reg2;
+          btb_jlink1_reg3<=btb_jlink1_reg2;
+          btb_jlnpos1_reg3<=btb_jlnpos1_reg2;
+          btb_jlnjpos1_reg3<=btb_jlnjpos1_reg2;
+          btb_jlink2_reg3<=btb_jlink2_reg2;
+          btb_jlnpos2_reg3<=btb_jlnpos2_reg2;
+          btb_jlnjpos2_reg3<=btb_jlnjpos2_reg2;
+          btb_jlink3_reg3<=btb_jlink3_reg2;
+          btb_jlnpos3_reg3<=btb_jlnpos3_reg2;
+          btb_jlnjpos3_reg3<=btb_jlnjpos3_reg2;
+          bus_mlb_match_reg3<=bus_mlb_match_reg2;
           cc_read_IP_reg4<=cc_read_IP_reg3;
           cc_read_IP_reg5<=cc_read_IP_reg4;
-          btbxx_way_reg<=btb_way;
-          GHT_reg4<=GHT;
-          GHT_mispred_reg4<=GHT_mispred;
-	  jmp_mask_reg4[0]<=jmp_mask[0];
-	  jmp_mask_reg4[1]<=jmp_mask[1];
-	  jmp_mask_reg4[2]<=jmp_mask[2];
-	  jmp_mask_reg4[3]<=jmp_mask[3];
-          btbx_tgt0_reg4<=btbx_tgt0;
-	  btbx_tgt1_reg4<=btbx_tgt1;
-	  btbx_tgt2_reg4<=btbx_tgt2;
-	  btbx_tgt3_reg4<=btbx_tgt3;
-          btbx_attr0_reg4<=btbx_attr0;
-	  btbx_attr1_reg4<=btbx_attr1;
-	  btbx_attr2_reg4<=btbx_attr2;
-	  btbx_attr3_reg4<=btbx_attr3;
-//	  iqe_jcnt_reg2<=iqe_jcnt_reg; //reg2 here at same clock as other reg3
-	  startx_reg4<=startx;//??
-	  btb_can_ins_reg4<=btb_can_ins;
-	  btbx_cond_reg4<=btbx_cond;
-	  taken_REG<=taken;
-	  btbx_jmask_REG<=(btb_way ? btb_chmaskB : btb_chmaskA)&{4{btb_hit}};
-          if (jumpTK_btb_fstall) begin
-            //  instrEn<=1'b0;
-              instrEn_reg<=1'b0;
-              instrEn_reg2<=1'b0;
-              instrEn_reg3<=1'b0;
-              jumpTK_addr<=btbx_tgt;
-	      jumpTK_attr<=btbx_attr;
-              jumpTK_en<=1'b1;
+          mlb_hit_reg3<=mlb_hit_reg2;
+          mlb_hit_reg4<=mlb_hit_reg3;
+          mlb_data_reg3<=mlb_data_reg2;
+          for (n=0;n<16;n=n+1) begin
+              if (n<4) btbx_joff_reg3[n]<=btbx_joff_reg2[n];
+              if (n<4) btbx_joff_reg4[n]<=btbx_joff_reg3[n];
           end
+          btb_hit_reg3<=btb_hit_reg2;
+	      jmp_mask_reg4<=jmp_mask_reg3;
+	  btbx_tgt0_reg3<=btbx_tgt0_reg2;
+	  btbx_tgt1_reg3<=btbx_tgt1_reg2;
+      btbx_tgt2_reg3<=btbx_tgt2_reg2;
+	  btbx_tgt3_reg3<=btbx_tgt3_reg2;
+	  btbx_tgt0_reg4<=btbx_tgt0_reg3;
+	  btbx_tgt1_reg4<=btbx_tgt1_reg3;
+	  btbx_tgt2_reg4<=btbx_tgt2_reg3;
+	  btbx_tgt3_reg4<=btbx_tgt3_reg3;
+	  btbx_attr1_reg3<=btbx_attr1_reg2;
+	  btbx_attr2_reg3<=btbx_attr2_reg2;
+	  btbx_attr3_reg3<=btbx_attr3_reg2;
+	  btbx_attr0_reg4<=btbx_attr0_reg3;
+	  btbx_attr1_reg4<=btbx_attr1_reg3;
+	  btbx_attr2_reg4<=btbx_attr2_reg3;
+	  btbx_attr3_reg4<=btbx_attr3_reg3;
+	  startx_reg4<=startx_reg3;
+          do_seq_reg4<=do_seq_reg3;
+          do_seq_reg5<=do_seq_reg4;
+          btb_hasTK_reg3<=btb_hasTK_reg2;
+          btb_hasTK_reg4<=btb_hasTK_reg3;
+          GHT_mispred_reg3<=GHT_mispred_reg2;
+          GHT_mispred_reg4<=GHT_mispred_reg3;
+          GHT_reg3<=GHT_reg2;
+          GHT_reg4<=GHT_reg3;
+          taken_reg4<=taken_reg3;
+          taken_reg5<=taken_reg3;
+	  predx_sc0_reg3<=predx_sc0_reg2;
+	  predx_sc1_reg3<=predx_sc1_reg2;
+	  predx_sc2_reg3<=predx_sc2_reg2;
+	  predx_sc3_reg3<=predx_sc3_reg2;
+	  predx_sc0_reg4<=predx_sc0_reg3;
+	  predx_sc1_reg4<=predx_sc1_reg3;
+	  predx_sc2_reg4<=predx_sc2_reg3;
+	  predx_sc3_reg4<=predx_sc3_reg3;
+	  predx_sh0_reg3<=predx_sh0_reg2;
+	  predx_sh1_reg3<=predx_sh1_reg2;
+	  predx_sh2_reg3<=predx_sh2_reg2;
+	  predx_sh3_reg3<=predx_sh3_reg2;
+	  predx_sh0_reg4<=predx_sh0_reg3;
+	  predx_sh1_reg4<=predx_sh1_reg3;
+	  predx_sh2_reg4<=predx_sh2_reg3;
+	  predx_sh3_reg4<=predx_sh3_reg3;
+	  btbx_cond_reg3<=btbx_cond_reg2;
+	  btbx_cond_reg4<=btbx_cond_reg3;
       end else if (btbFStall_reg3) begin
           btb_hit_reg3<=1'b1;
-	  btb_can_ins_reg3<=btb_can_ins_reg2;
-      end else if (btbFStall_reg2) begin
-	  btb_can_ins_reg2<=btb_can_ins_reg;
-	  btb_can_ins_reg<=btb_can_ins;
+//	  btb_can_ins_reg3<=btb_can_ins_reg2;
+//      end else if (btbFStall_reg2) begin
+//	  btb_can_ins_reg2<=btb_can_ins_reg;
+//	  btb_can_ins_reg<=btb_can_ins;
       end
       
       if (rst) begin
