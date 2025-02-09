@@ -154,7 +154,7 @@ module cc_ram_block(
   );
 
   parameter INDEX=0;
-  localparam DATA_WIDTH=72*8;
+  localparam DATA_WIDTH=72*18;
   localparam ADDR_WIDTH=7;
   localparam ADDR_COUNT=128;
 
@@ -410,26 +410,11 @@ module ccRam_way(
 
   output ErrA,ErrB;
   input write_wen_noins;
-  input [ADDR_WIDTH-1:0] write_addrE0;
-  input write_hitE0; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO0;
-  input write_hitO0; //+1 cycle
-  input write_bankEn0;
-  input write_odd0;
-  input [4:0] write_begin0;
-  input [4:0] write_end0;
-  input [3:0] write_bBen0;
-  input [3:0] write_enBen0;
-  input [ADDR_WIDTH-1:0] write_addrE1;
-  input write_hitE1; //+1 cycle
-  input [ADDR_WIDTH-1:0] write_addrO1;
-  input write_hitO1; //+1 cycle
-  input write_bankEn1;
-  input write_odd1;
-  input [4:0] write_begin1;
-  input [4:0] write_end1;
-  input [3:0] write_bBen1;
-  input [3:0] write_enBen1;
+  input [119:0][ADDR_WIDTH-1:0] write_addrE0;
+  input [119:0]write_hitE0; //+1 cycle
+  input [119:0][ADDR_WIDTH-1:0] write_addrO0;
+  input [119:0]write_hitO0; //+1 cycle
+  input [119:0]write_odd0;
 
   reg init;
 
@@ -510,39 +495,22 @@ module ccRam_way(
   );
 
 
-  cc_ram_block #(1) ram0_mod(
-  .clk(clk),
-  .rst(rst),
-  .readA_clkEn(readA_clkEn),
-  .readA_addr(readA_IP[8:2]),
-  .readA_data(readA_data_ram[DATA_WIDTH/2-1:0]),
-  .readAZ_data(readAZ_data_ram[DATA_WIDTH/16-1:0]),
-  .readB_clkEn(readB_clkEn),
-  .readB_addr(readB_IP[8:2]),
-  .readB_data(readB_data_ram[DATA_WIDTH/2-1:0]),
-  .readBZ_data(readBZ_data_ram[DATA_WIDTH/16-1:0]),
-  .write_addr(init ? initCount : write_IP_reg[8:2]),
-  .write_addrZ(init ? initCount-7'd1 : write_IP_reg[8:2]-7'd1),
-  .write_data(write_data_reg[DATA_WIDTH/2-1:0] & {DATA_WIDTH/2{~init}}),
-  .write_datax(72'b0),
-  .write_wen(write_hit|init)
-  );
   
   cc_ram_block #(0) ram1_mod(
   .clk(clk),
   .rst(rst),
   .readA_clkEn(readA_clkEn),
   .readA_addr(readA_IP[8:2]),
-  .readA_data(readA_data_ram[DATA_WIDTH-1:DATA_WIDTH/2]),
-  .readAZ_data(readAZ_data_ram[DATA_WIDTH/8-1:DATA_WIDTH/16]),
+  .readA_data(readA_data_ram),
+  .readAZ_data(readAZ_data_ram),
   .readB_clkEn(readB_clkEn),
   .readB_addr(readB_IP[8:2]),
-  .readB_data(readB_data_ram[DATA_WIDTH-1:DATA_WIDTH/2]),
-  .readBZ_data(readBZ_data_ram[DATA_WIDTH/8-1:DATA_WIDTH/16]),
+  .readB_data(readB_data_ram),
+  .readBZ_data(readBZ_data_ram),
   .write_addr(init ? initCount : write_IP_reg[8:2]),
   .write_addrZ(init ? initCount-7'd1 : write_IP_reg[8:2]-7'd1),
-  .write_data(write_data_reg[DATA_WIDTH-1:DATA_WIDTH/2] & {DATA_WIDTH/2{~init}}),
-  .write_datax({write_data_reg[18*15+:18],write_data_reg[18*4+:18]}),
+  .write_data(write_data_reg & {DATA_WIDTH{~init}}),
+  .write_datax({write_data_reg}),
   .write_wen(write_hit|init)
   );
 
@@ -561,118 +529,28 @@ module ccRam_way(
   ccTag #(INDEX) tag_mod(
   .clk(clk),
   .rst(rst),
-  .read_clkEn(readA_clkEn),
-  .read_phys_addr(init ? {initCount} : readA_IP[38:2]),
-  .read_hit(readA_hit),
-  .read_err(ErrAx),
-  .write_phys_addr(init ? {initCount} : write_IP[38:2]),
+  .read0_clkEn(readA_clkEn),
+  .read0_phys_addr(init ? {initCount} : readA_IP[38:2]),
+  .read0_hit(readA_hit),
+  .read0_err(ErrAx),
+  .read1_clkEn(readB_clkEn),
+  .read1_phys_addr(init ? {initCount} : readB_IP[38:2]),
+  .read1_hit(readB_hit),
+  .read1_err(ErrBx),
+    .write_phys_addr(init ? {initCount} : write_IP[38:2]),
   .write_wen(write_wen),
   .invalidate(invalidate),
   .hitNRU(read_NRU),
   .hitNRU_in(read_NRU_in),
   .hitNRU_reg(read_NRU_reg),
   .write_hit(write_hit),
-  .write_expun_addr(expun_naddr),
-  .write_exp_en(expun_hit),
-  .init(init)
-  );
-  
-  ccTag #(INDEX) tagB_mod(
-  .clk(clk),
-  .rst(rst),
-  .read_clkEn(readB_clkEn),
-  .read_phys_addr(init ? {initCount} : readB_IP[38:2]),
-  .read_hit(readB_hit),
-  .read_err(ErrBx),
-  .write_phys_addr(init ? {initCount} : write_IP[38:2]),
-  .write_wen(write_wen),
-  .invalidate(invalidate),
-  .hitNRU(),
-  .hitNRU_in(),
-  .hitNRU_reg(),
-  .write_hit(write_hit),
-  .write_expun_addr(),
-  .write_exp_en(),
+  .write_expun_addr({write_addrE0,write_addrO0,bus_expun_addr}),
+  .write_exp_en({write_hitE0,write_hitO0,bus_expun_en}),
   .init(init)
   );
   
   
-  ccTag #(INDEX,1'b1) tagC_mod(
-  .clk(clk),
-  .rst(rst),
-  .read_clkEn(chkCL_clkEn),
-  .read_phys_addr(init ? {initCount} : chkCL_IP[38:2]),
-  .read_hit(read_hitC0),
-  .read_err(),
-  .write_phys_addr(init ? {initCount} : write_IP[38:2]),
-  .write_wen(write_wen),
-  .invalidate(invalidate),
-  .hitNRU(),
-  .hitNRU_in(read_NRU_in),
-  .hitNRU_reg(read_NRU_reg),
-  .write_hit(write_hit),
-  .write_expun_addr(),
-  .write_exp_en(),
-  .init(init)
-  );
-
-  ccTag #(INDEX) tagT_mod(
-  .clk(clk),
-  .rst(rst),
-  .read_clkEn(readA_clkEn),
-  .read_phys_addr(init ? {initCount} : readA_IP[38:2]),
-  .read_hit(readAT_hit),
-  .read_err(ErrAxT),
-  .write_phys_addr(init ? {initCount} : write_IP[38:2]-1),
-  .write_wen(write_wen),
-  .invalidate(invalidate),
-  .hitNRU(),
-  .hitNRU_in(),
-  .hitNRU_reg(),
-  .write_hit(write_hitT),
-  .write_expun_addr(expun_naddrT),
-  .write_exp_en(expun_hitT),
-  .init(init)
-  );
   
-  ccTag #(INDEX) tagB_mod(
-  .clk(clk),
-  .rst(rst),
-  .read_clkEn(readB_clkEn),
-  .read_phys_addr(init ? {initCount} : readB_IP[38:2]),
-  .read_hit(readB_hitT),
-  .read_err(ErrBxT),
-  .write_phys_addr(init ? {initCount} : write_IP[38:2]-1),
-  .write_wen(write_wen),
-  .invalidate(invalidate),
-  .hitNRU(),
-  .hitNRU_in(),
-  .hitNRU_reg(),
-  .write_hit(write_hitT),
-  .write_expun_addr(),
-  .write_exp_en(),
-  .init(init)
-  );
-  
-  
-  ccTag #(INDEX,1'b1) tagCT_mod(
-  .clk(clk),
-  .rst(rst),
-  .read_clkEn(chkCL_clkEn),
-  .read_phys_addr(init ? {initCount} : chkCL_IP[38:2]),
-  .read_hit(read_hitCT0),
-  .read_err(),
-  .write_phys_addr(init ? {initCount} : write_IP[38:2]-1),
-  .write_wen(write_wen),
-  .invalidate(invalidate),
-  .hitNRU(),
-  .hitNRU_in(read_NRU_in),
-  .hitNRU_reg(read_NRU_reg),
-  .write_hit(write_hit),
-  .write_expun_addr(),
-  .write_exp_en(),
-  .init(init)
-  );
 //verilator lint_on WIDTH  
   
   adder_inc #(7) initAdd_mod(initCount,initCountNext,1'b1,);
