@@ -1138,11 +1138,12 @@ jupd0_en,jupdt0_en,jupd0_ght_en,jupd0_ght2_en,jupd0_addr,jupd0_baddr,jupd0_sc,ju
   assign ixcept_jmask_en=(~except_save) ? except_jmask_en : except_jmask_en_save;
   assign ixcept_indir=(~except_save) ? 1'b0 : except_indir_save;
   
-  assign btbFStall=instrEn_reg3 & ~(cc_read_hit && btb_hit_reg3)
-    & pre_has_jumps; 
-  assign fstall=iq_fstall || jq_fstall || fmstall || btbFStall || btbFStall_reg 
+  assign btbFStall=instrEn_reg3 & (~(cc_read_hit && btb_hit_reg3)|tgtstall|fmstall)
+    & pre_has_jumps ;
+  assign fstall=iq_fstall || jq_fstall || btbFStall || btbFStall_reg
     || btbFStall_reg2 || btbFStall_reg3 || btbFStall_recover;
-  
+  assign fxstall=iq_fstall || jq_fstall;
+
   assign btb_hold_except=btbFStall || btbFStall_reg || btbFStall_reg2 || btbFStall_reg3;
   
   assign GHT_d=start[0] & predy_sc0[0] || start[1] & predy_sc1[0] ||
