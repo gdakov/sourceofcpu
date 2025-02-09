@@ -328,6 +328,7 @@ typedef struct packed {
 `define dmlbData_type 39:38
 `define dmlbData_glo 40
 `define dmlbData_semaphore_area 41
+`define dmlbData_semaphore 41
 `define dmlbData_subpage 42
 `define dmlbData_ne 43
 `define dmlbData_width 44

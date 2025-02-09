@@ -57,7 +57,7 @@ module normalizeD(
 	assign eqUP[t]=t==offset_reg[5:3];
 	assign the_mask[8*t+:8]=~eqUP[t] & coUP[t] ? 8'b0 : 8'bz;
 	assign the_mask[8*t+:8]=eqUP[t] ? submask : 8'bz;
-	assign the_mask[8*t+:8]=~coUP[t] ? 8'hff : 8'bz
+	assign the_mask[8*t+:8]=~coUP[t] ? 8'hff : 8'bz;
 	assign submask[t]=coDN[t];
     end
   endgenerate

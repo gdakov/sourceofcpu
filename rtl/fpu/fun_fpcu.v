@@ -450,7 +450,7 @@ module fun_fpu(
   .is_rndS(fxFCADD_rndS)
   );
   
-  except_jump_cmp(u1_flag_reg,u1_op_reg[16:13],do_jmp0);
+  except_jump_cmp cmp_mod(u1_flag_reg,u1_op_reg[16:13],do_jmp0);
 
   assign do_jmp=do_jmp0 | u1_op_reg[17];
 

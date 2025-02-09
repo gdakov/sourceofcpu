@@ -440,8 +440,8 @@ module addrcalc_r(
   assign is_kstack=~mOp0_addrMain_reg[43] & ~mflags[mOp0_thread_reg][`mflags_priv+1] || &mOp0_addrMain_reg[43:41]; //it is not all stack but we must disallow stealing global map pointers
   assign is_stack=~mOp0_addrMain_reg[43] & &mOp0_addrMain_reg[42:40]; //reserved area for subsystem and /or stack
 
-  assign fault_tlb={mflags[`mflags_priv+1] & tlb_data[`dmlbData_sys] , ~tlb_data[`dmlbData_na]};
-  assign fault_tlb_next={mflags[`mflags_priv+1] & tlb_data_next[`dmlbData_sys],  ~tlb_data_next[`dmlbData_na]};
+  assign fault_tlb={mflags[`mflags_priv+1] & tlb_data[`dmlbData_user] , ~tlb_data[`dmlbData_na]};
+  assign fault_tlb_next={mflags[`mflags_priv+1] & tlb_data_next[`dmlbData_user],  ~tlb_data_next[`dmlbData_na]};
 
   assign addrTlb=addrMain_mlb;
 

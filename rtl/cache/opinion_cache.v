@@ -154,7 +154,7 @@ module cc_ram_block(
   );
 
   parameter INDEX=0;
-  localparam DATA_WIDTH=72*18;
+  localparam DATA_WIDTH=72*16;
   localparam ADDR_WIDTH=7;
   localparam ADDR_COUNT=128;
 
@@ -163,12 +163,14 @@ module cc_ram_block(
   input readA_clkEn;
   input [ADDR_WIDTH-1:0] readA_addr;
   output [DATA_WIDTH-1:0] readA_data;
+  output [152:0] readAZ_data;
   input readB_clkEn;
   input [ADDR_WIDTH-1:0] readB_addr;
   output [DATA_WIDTH-1:0] readB_data;
+  output [152:0] readBZ_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
-  input [35:0] write_xdata;
+  input [152:0] write_xdata;
   input write_wen;
   input write_wen_noins;
   input [ADDR_WIDTH-1:0] write_addrE0;
@@ -180,20 +182,20 @@ module cc_ram_block(
 
   generate
     genvar t;
-    for(t=0;t<18;t=t+1) begin : ram_gen
+    for(t=0;t<19;t=t+1) begin : ram_gen
         if (t<16)
         cc_ram ram_mod(
         clk,
         rst,
         readA_clkEn,
         readA_addr,
-        readA_data[36*t+:36],
+        readA_data[72*t+:72],
         readB_clkEn,
         readB_addr,
-        readB_data[36*t+:36],
+        readB_data[72*t+:72],
         write_addrE,
         write_addrO,
-        write_data[36*t+:36],
+        write_data[72*t+:72],
         {2{write_wen}}&{~write_odd0,write_odd0}
         );
         else
@@ -202,13 +204,13 @@ module cc_ram_block(
         rst,
         readA_clkEn,
         readA_addr,
-        readAZ_data[36*(t-16)+:36],
+        readAZ_data[72*(t-16)+:72],
         readB_clkEn,
         readB_addr,
-        readBZ_data[36*(t-16)+:36],
+        readBZ_data[72*(t-16)+:72],
         t>=16 ? write_addrEZ : write_addrE0,
         t>=16 ? write_addrOZ : write_addrO0,
-        INDEX ? write_xdata[35:0] : write_data[36*(t-16)+:36],
+        writex_data[72*(t-16)+:72],
         {2{write_wen}}&{~write_odd0,write_odd0}^{2{t>=16}}
         );
     end
@@ -229,7 +231,7 @@ module ccX_ram0(
   write_wen
   );
 
-  paremeter DATA_WIDTH=60;
+  parameter DATA_WIDTH=60;
   localparam ADDR_WIDTH=7;
   localparam ADDR_COUNT=128;
 

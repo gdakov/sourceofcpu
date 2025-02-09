@@ -384,7 +384,7 @@ module addrcalc(
   assign faultCode={3'b0,fault_cann_reg,is_stack_reg,is_kstack_reg,addrMain_reg[2],attr_reg[`attr_sec]};
   assign mOp_addrMain={addrTlb[30:0],addrMain[12:0]};
 
-  assign is_kstack=&addrMain[43:41] || ~addrMain[43] && ~mflags[thread][`mflags_cpl+1]; //it is not all stack but we must disallow stealing global map pointers
+  assign is_kstack=&addrMain[43:41] || ~addrMain[43] && ~mflags[thread][`mflags_priv+1]; //it is not all stack but we must disallow stealing global map pointers
   assign is_stack=~addrMain[43] & &addrMain[42:40]; //reserved area for subsystem and /or stack
 
   assign tlbMiss=read_clkEn_reg&~tlb_hit&~fault_cann & rcn_mask[1];

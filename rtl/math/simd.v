@@ -82,9 +82,9 @@ add32_mod(A_reg[d*8+:8],B_reg[d*8+:8],resD[3][d*8+:8],is_sign,is_sat,is_min,is_m
               mul_sat #(4) 
 add64_mod(A_reg[d*4+:4],B_reg[d*4+:4],resD[4][d*4+:4],is_sign,is_sat,is_min,is_max,
 	        is_sub,is_simpl,is_subcmp,is_cmp,jump_type);
-              signed wire [3:0] A_op;
-              signed wire [3:0] B_op;
-              signed wire [7:0] C_op;
+              wire signed [3:0] A_op;
+              wire signed [3:0] B_op;
+              wire signed [7:0] C_op;
               assign C_op=A_op*B_op;
               assign A_op=A_reg[d*4+:4];
               assign B_op=B_reg[d*4+:4];

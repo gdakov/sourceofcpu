@@ -269,7 +269,7 @@ module fadd(
   assign opB=(~sxor & a_more) ?  fracxfrm0(B[63:0],isDBL) : 64'bz;
   assign opB=(~sxor & ~a_more) ?  fracxfrm0(A[63:0],isDBL) : 64'bz;
   
-  assign opA_exp=(a_more & ~isDBL) ? {A[80],A[64],,A[78:65]} : 16'bz;
+  assign opA_exp=(a_more & ~isDBL) ? {A[80],A[64],A[78:65]} : 16'bz;
   assign opA_exp=(a_more & isDBL) ? {A[80],A[64],{4{~A[64]}},A[62:52]} : 16'bz;
   assign opA_exp=(~a_more & ~isDBL) ? {B[80],B[64],B[78:65]} : 16'bz;
   assign opA_exp=(~a_more & isDBL) ? {B[80],B[64],{4{~B[64]}},B[62:52]} : 16'bz;
@@ -403,9 +403,9 @@ module fadd(
   assign resX[51:0]=Smain_simpleL ? {resM1[50:0],res_rnbit^Smain_subroundL}&mskSL : 52'bz;
   assign resX[51:0]=Smain_roundL ? {resMR1[50:0],1'b0}&mskSL : 52'bz;
 
-  assign mskS=52'hfffffffffffff<<{opA_exp_reg[15,opA_exp_reg[1:0]]}-12'h401
-  assign mskSC=52'hfffffffffffff<<{opA_exp_reg[15,opA_exp_reg[1:0]]}-12'h400
-  assign mskSL=52'hfffffffffffff<<{opA_exp_reg[15,opA_exp_reg[1:0]]}-12'h402
+  assign mskS=52'hfffffffffffff<<({opA_exp_reg[15],opA_exp_reg[10:0]}-12'h401);
+  assign mskSC=52'hfffffffffffff<<({opA_exp_reg[15],opA_exp_reg[10:0]}-12'h400);
+  assign mskSL=52'hfffffffffffff<<({opA_exp_reg[15],opA_exp_reg[10:0]}-12'h402);
 
   assign {resX[62],resX[64],resX[61:52]}=Smain_simple ? {opA_exp_reg[15],opA_exp_reg[10:0]} : 12'bz;
   assign {resX[62],resX[64],resX[61:52]}=Smain_round ? {opA_exp_reg[15],opA_exp_reg[10:0]} : 12'bz;

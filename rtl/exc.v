@@ -14,8 +14,3 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-`define exc_gpf 0
-`define exc_pf 1
-
-WARNING_INNACURATE
-
