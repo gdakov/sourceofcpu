@@ -676,33 +676,29 @@ module smallInstr_decoder(
 
   always @* begin
     stsz_out=5'h17;
-    if (subIsBasicALU) begin
-        stsz_out={1'b1,3'b11,!instr[1]);
-    end else if (subIsBasicShift) begin
+    if (subIsBasicALU|subIsBasicShift) begin
         stsz_out={1'b1,3'b11,!instr[1]);
     end else if (isBasicALU | isBasicShift) begin
         stsz_out={1'b1,3'b11,!instr[1]);
-    end else if (isBasicFPUScalarA && instr[13:9]==5'd3 || 
-instr[13:8]==6'd8) begin
-        stsz=5'h7;
+    end else if (isBasicFPUScalarA && instr[13:9]==5'd3 || instr[13:9]==5'd4) begin
+        stsz=5'hd;
     end else if (isBasicFPUScalarA) begin
+        stsz_out=5'h1;
+    end else if (isBasicMUL && operation[4]==1'b0) begin
+        stsz_out=4'h11;
+    end else if (isBasicMUL) begin
+        stsz_out=4'h10;
+    end else if (isBasicFPUScalarB && instr[13:10]==4 && instr[9:8]!=3) begin
         stsz_out=5'h5;
+    end else if (isBasicFPUScalarB) begin
+        stsz_out=5'h2;
+    end else if (isBasicFPUScalarC && instr[13:8]==38) begin
+        stsz_out=5'h5;
+    end else begin
+        stsz_out=5'h1;
     end
   end  
  
-  always @(posedge clk) begin
-    if (rst) fpu_reor<=32'b111110101100011010001000;
-    else if (reor_en) begin
-        fpu_reor[2:0]<=fpu_reor[3*reor_val[2:0]+:3];
-        fpu_reor[5:3]<=fpu_reor[3*reor_val[5:3]+:3];
-        fpu_reor[8:6]<=fpu_reor[3*reor_val[8:6]+:3];
-        fpu_reor[11:9]<=fpu_reor[3*reor_val[11:9]+:3];
-        fpu_reor[14:12]<=fpu_reor[3*reor_val[14:12]+:3];
-        fpu_reor[17:15]<=fpu_reor[3*reor_val[17:15]+:3];
-        fpu_reor[20:18]<=fpu_reor[3*reor_val[20:18]+:3];
-        fpu_reor[23:21]<=fpu_reor[3*reor_val[23:21]+:3];
-    end
-  end
 
   always @*
   begin
@@ -1742,11 +1738,11 @@ opcode_main[0] ? `op_add64 : `op_add32;
 	      0: poperation[30]=`op_mul32;
 	      1: poperation[30]=`op_mul32_64;
 	      2: poperation[30]=`op_mul64;
-	      3: poperation[30]=`op_lmul64;
+	     // 3: poperation[30]=`op_lmul64;
 	      4: poperation[30]=`op_imul32;
 	      5: poperation[30]=`op_imul32_64;
 	      6: poperation[30]=`op_imul64;
-	      7: poperation[30]=`op_limul64;
+	     // 7: poperation[30]=`op_limul64;
 	      8: begin poperation[30]=`op_enptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; if (oddmode[3]) perror[30]=2'b1; end
 	      9: begin poperation[30]=`op_unptr; pport[30]=PORT_ALU; prB_use[30]=1'b0; end
 	      default: perror[30]=2'b1;
@@ -1992,18 +1988,15 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prAlloc[34]=1'b1;
       {poperation[34][10],poperation[34][9:8]}=instr[16:14];
       case(instr[13:8])
-          6'd16: begin poperation[34][7:0]=`fop_addS; end
-          6'd17: begin poperation[34][7:0]=`fop_subS; end
-          6'd18: begin poperation[34][7:0]=`fop_mulS; end
-          6'd19: begin poperation[34][7:0]=`fop_addSP; end
-          6'd20: begin poperation[34][7:0]=`fop_subSP; end
-          6'd21: begin poperation[34][7:0]=`fop_mulSP; end
-          6'd22: begin poperation[34][7:0]=`fop_addEE;  
-                 prA[34]=rA_reor32; prB[34]=rB_reor32; prT[34]=rT_reor32; end
-          6'd23: begin poperation[34][7:0]=`fop_subEE; 
-                 prA[34]=rA_reor32; prB[34]=rB_reor32; prT[34]=rT_reor32; end
-          6'd24: begin poperation[34][7:0]=`fop_mulEE;  
-                 prA[34]=rA_reor32; prB[34]=rB_reor32; prT[34]=rT_reor32; end
+          6'd16: begin poperation[34][7:0]=`fop_addS; pport[34]=PORT_FADD; end
+          6'd17: begin poperation[34][7:0]=`fop_subS; pport[34]=PORT_FADD; end
+          6'd18: begin poperation[34][7:0]=`fop_mulS; pport[34]=PORT_FADD; end
+          6'd19: begin poperation[34][7:0]=`fop_addSPL; pport[34]=PORT_FADD; end
+          6'd20: begin poperation[34][7:0]=`fop_subSPL; pport[34]=PORT_FADD; end
+          6'd21: begin poperation[34][7:0]=`fop_mulSPL; pport[34]=PORT_FADD; end
+          6'd22: begin poperation[34][7:0]=`fop_addSPH; pport[34]=PORT_FMUL; end
+          6'd23: begin poperation[34][7:0]=`fop_subSPH; pport[34]=PORT_FMUL; end
+          6'd24: begin poperation[34][7:0]=`fop_mulSPH; pport[34]=PORT_FMUL; end
           6'd26,6'd27: begin 
 	      poperation[34][7:0]=`fop_permDS; 
 	      pport[34]=PORT_FANY; 

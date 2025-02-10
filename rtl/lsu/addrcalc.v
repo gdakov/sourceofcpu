@@ -478,8 +478,8 @@ module addrcalc(
          5'd18: opsize=2;
          5'd19: opsize=3;
          5'h3:  opsize=4; //long double
-         5'h0,5'h1,5'h2:  opsize=5; //int, double, single 128 bit (u)
-         5'hc,5'hd,5'he:  opsize=7; //int, double, single 256 bit (a)
+         5'h0,5'h1,5'h2:  opsize=5; //int, double, single 64 bit
+         5'hc,5'hd,5'he:  opsize=7; //int, double, single 128 bit
          5'h4,5'h5,5'h6:  opsize=2; //singleE,single,singleD
          5'h8,5'h9,5'ha:  opsize=3; //doubleE, double, singlePairD
 	 //7,11=64 bit
