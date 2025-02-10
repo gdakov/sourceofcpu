@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 
-`include "struct.veriloghdl"
+`include "struct.v"
 
 
 module aoi21_array(a11,a12,a2,b);
@@ -261,6 +261,183 @@ endmodule
   endgenerate
   
      
+endmodule
+
+(* align_width="a,b,out" *) module adder(a,b,out,cin,en,cout,cout8,cout16,cout32);
+  parameter WIDTH=32;
+  input [WIDTH-1:0] a;
+  input [WIDTH-1:0] b;
+  output [WIDTH-1:0] out;
+  input cin;
+  input en;
+  output cout;
+  output cout8;
+  output cout16;
+  output cout32;
+
+
+  (* align_width *) wire [WIDTH-1:0] nP0;
+  (* align_width *) wire [WIDTH-1:0] nG0;
+
+  (* align_width *) wire [WIDTH-1:0] P1;
+  (* align_width *) wire [WIDTH-1:0] G1;
+
+  (* align_width *) wire [WIDTH-1:0] nP2;
+  (* align_width *) wire [WIDTH-1:0] nG2;
+
+  (* align_width *) wire [WIDTH-1:0] P3;
+  (* align_width *) wire [WIDTH-1:0] G3;
+
+  (* align_width *) wire [WIDTH-1:0] nP4;
+  (* align_width *) wire [WIDTH-1:0] nG4;
+
+  (* align_width *) wire [WIDTH-1:0] P5;
+  (* align_width *) wire [WIDTH-1:0] G5;
+
+  (* align_width *) wire [WIDTH-1:0] nP6;
+  (* align_width *) wire [WIDTH-1:0] nG6;
+
+  (* align_width *) wire [WIDTH-1:0] P7;
+  (* align_width *) wire [WIDTH-1:0] G7;
+
+  wire [WIDTH-1:0] C;
+  wire [WIDTH-1:0] nC;
+
+  wire [WIDTH-1:0] X;
+  wire [WIDTH-1:0] nX;
+
+  wire [WIDTH-1:0] C1;
+  wire [WIDTH-1:0] nC1;
+
+
+  genvar i;
+
+  nand_array #(WIDTH) nG0_mod(a,b,nG0);
+  nor_array #(WIDTH)  nP0_mod(a,b,nP0);
+
+  xor_array #(WIDTH) x_mod(a,b,X);
+  nxor_array #(WIDTH) nx_mod(a,b,nX);
+
+  assign C1={C[WIDTH-2:0],cin};
+  assign nC1[WIDTH-1:1]=nC[WIDTH-2:0];
+  not_array #(1) C1_mod (cin,nC1[0]);
+
+  assign cout=C[WIDTH-1];
+
+
+  generate
+    for (i=0;i<WIDTH;i=i+1)
+      begin : out_gen
+        assign out[i]=(X[i] & en) ? ~C1[i] : 1'bz;
+        assign out[i]=(nX[i] & en) ? ~nC1[i] : 1'bz;
+      end
+    if (WIDTH>1)
+      begin
+        nor_array #(WIDTH-1)  P1_mod(nP0[WIDTH-1:1],nP0[WIDTH-2:0],P1[WIDTH-1:1]);
+        not_array #(1) P1_tail_mod(nP0[0],P1[0]);
+        oai21_array #(WIDTH-1) G1_mod(nP0[WIDTH-1:1],nG0[WIDTH-2:0],nG0[WIDTH-1:1],G1[WIDTH-1:1]);
+        not_array #(1) G1_tail_mod(nG0[0],G1[0]);
+      end
+    else
+      begin
+        oai21_array #(WIDTH) C_mod(nP0,{WIDTH{~cin}},nG0,C);
+        not_array #(WIDTH) nC_mod(C,nC);
+      end
+    if (WIDTH>2)
+      begin
+        nand_array #(WIDTH-2)  nP2_mod(P1[WIDTH-1:2],P1[WIDTH-3:0],nP2[WIDTH-1:2]);
+        not_array #(2) nP2_tail_mod(P1[1:0],nP2[1:0]);
+        aoi21_array #(WIDTH-2) nG2_mod(P1[WIDTH-1:2],G1[WIDTH-3:0],G1[WIDTH-1:2],nG2[WIDTH-1:2]);
+        not_array #(2) nG2_tail_mod(G1[1:0],nG2[1:0]);
+      end
+    else if (WIDTH>1)
+      begin
+        aoi21_array #(WIDTH) nC_mod(P1,{WIDTH{cin}},G1,nC);
+        not_array #(WIDTH) C_mod(nC,C);
+      end
+
+    if (WIDTH>4)
+      begin
+        nor_array #(WIDTH-4)  P3_mod(nP2[WIDTH-1:4],nP2[WIDTH-5:0],P3[WIDTH-1:4]);
+        not_array #(4) P3_tail_mod(nP2[3:0],P3[3:0]);
+        oai21_array #(WIDTH-4) G3_mod(nP2[WIDTH-1:4],nG2[WIDTH-5:0],nG2[WIDTH-1:4],G3[WIDTH-1:4]);
+        not_array #(4) G3_tail_mod(nG2[3:0],G3[3:0]);
+      end
+    else if (WIDTH>2)
+      begin
+        oai21_array #(WIDTH) C_mod(nP2,{WIDTH{~cin}},nG2,C);
+        not_array #(WIDTH) nC_mod(C,nC);
+      end
+    if (WIDTH>8)
+      begin
+        nand_array #(WIDTH-8)  nP4_mod(P3[WIDTH-1:8],P3[WIDTH-9:0],nP4[WIDTH-1:8]);
+        not_array #(8) nP4_tail_mod(P3[7:0],nP4[7:0]);
+        aoi21_array #(WIDTH-8) nG4_mod(P3[WIDTH-1:8],G3[WIDTH-9:0],G3[WIDTH-1:8],nG4[WIDTH-1:8]);
+        not_array #(8) nG4_tail_mod(G3[7:0],nG4[7:0]);
+      end
+    else if (WIDTH>4)
+      begin
+        aoi21_array #(WIDTH) nC_mod(P3,{WIDTH{cin}},G3,nC);
+        not_array #(WIDTH) C_mod(nC,C);
+      end
+
+    if (WIDTH>16)
+      begin
+        nor_array #(WIDTH-16)  P5_mod(nP4[WIDTH-1:16],nP4[WIDTH-17:0],P5[WIDTH-1:16]);
+        not_array #(16) P5_tail_mod(nP4[15:0],P5[15:0]);
+        oai21_array #(WIDTH-16) G5_mod(nP4[WIDTH-1:16],nG4[WIDTH-17:0],nG4[WIDTH-1:16],G5[WIDTH-1:16]);
+        not_array #(16) G5_tail_mod(nG4[15:0],G5[15:0]);
+      end
+    else if (WIDTH>8)
+      begin
+        oai21_array #(WIDTH) C_mod(nP4,{WIDTH{~cin}},nG4,C);
+        not_array #(WIDTH) nC_mod(C,nC);
+      end
+    if (WIDTH>32)
+      begin
+        nand_array #(WIDTH-32)  nP6_mod(P5[WIDTH-1:32],P5[WIDTH-33:0],nP6[WIDTH-1:32]);
+        not_array #(32) nP6_tail_mod(P5[31:0],nP6[31:0]);
+        aoi21_array #(WIDTH-32) nG6_mod(P5[WIDTH-1:32],G5[WIDTH-33:0],G5[WIDTH-1:32],nG6[WIDTH-1:32]);
+        not_array #(32) nG6_tail_mod(G5[31:0],nG6[31:0]);
+      end
+    else if (WIDTH>16)
+      begin
+        aoi21_array #(WIDTH) nC_mod(P5,{WIDTH{cin}},G5,nC);
+        not_array #(WIDTH) C_mod(nC,C);
+      end
+
+    if (WIDTH>64)
+      begin
+        //nor_array #(WIDTH-64)  P7_mod(nP6[WIDTH-1:64],nP6[WIDTH-65:0],P7[WIDTH-1:64]);
+        //not_array #(64) P7_tail_mod(nP6[63:0],P7[63:0]);
+        //oai21_array #(WIDTH-64) G7_mod(nP6[WIDTH-1:64],nG6[WIDTH-65:0],nG6[WIDTH-1:64],G7[WIDTH-1:64]);
+        //not_array #(64) G7_tail_mod(nG6[63:0],G7[63:0]);
+
+        oai21_array #(64) nC_mod(nP6[63:0],{64{~cin}},nG6[63:0],C[63:0]);
+        not_array #(64) C_mod(C[63:0],nC[63:0]);
+        oai21_array #(WIDTH-64) nCx_mod(nP6[WIDTH-1:64],{WIDTH-64{nC[63]}},nG6[WIDTH-1:64],C[WIDTH-1:64]);
+        not_array #(WIDTH-64) Cx_mod(C[WIDTH-1:64],nC[WIDTH-1:64]);
+      end
+    else if (WIDTH>32)
+      begin
+        aoi21_array #(32) C_mod(P5[31:0],{32{cin}},G5[31:0],nC[31:0]);
+        not_array #(32) nC_mod(nC[31:0],C[31:0]);
+        aoi21_array #(WIDTH-32) Cx_mod(P5[WIDTH-1:32],{WIDTH-32{C[31]}},G5[WIDTH-1:32],nC[WIDTH-1:32]);
+        not_array #(WIDTH-32) nCx_mod(nC[WIDTH-1:32],C[WIDTH-1:32]);
+      end
+
+    if (WIDTH>=8) assign cout8=C[7];
+    else assign cout8=1'b0;
+
+    if (WIDTH>=16) assign cout16=C[15];
+    else assign cout16=1'b0;
+
+    if (WIDTH>=32) assign cout32=C[31];
+    else assign cout32=1'b0;
+
+  endgenerate
+
+
 endmodule
 
 
@@ -760,7 +937,7 @@ endmodule
   assign exbits2=~&ben[-1:2] ? a[43:32] : 12'b0;;
 
   addrcalcsec_shift nih_mod(ptr[`ptr_exp],C[41:10],cout_sec0);
-  addrcalcsec_check_upper3 hin_mod(ptr,unptr[43:11],1'b0},33'b0,pos_ack,neg_ack,pos_flip,neg_flip,
+  addrcalcsec_check_upper3 hin_mod(ptr,{unptr[43:11],1'b0},33'b0,pos_ack,neg_ack,pos_flip,neg_flip,
     ndiff);
   
   nand_array #(WIDTH) nG0_mod(xa[63:0],xb,nG0);
@@ -1311,12 +1488,12 @@ endmodule
   
   assign tmp2[0]=1'b0;
 
-  assign cout_sec=~ cout_sec0 & ~ cout_sec1 ? pos_ack[2'b0] | neg_ack[2'b0] && ~err;
-  assign cout_sec=cout_sec0 & ~ cout_sec1 ? pos_ack[2'b1] | neg_ack[2'b1] && ~err;
-  assign cout_sec=cout_sec1 & ~ cout_sec0 ? pos_ack[2'b1] | neg_ack[2'b1] && ~err;
-  assign cout_sec=cout_sec0 &  cout_sec1 ? pos_ack[2'b2] | neg_ack[2'b2] && ~err;
+  assign cout_sec=~ cout_sec0 & ~ cout_sec1 ? pos_ack[2'b0] | neg_ack[2'b0] && ~err : 1'bz;
+  assign cout_sec=cout_sec0 & ~ cout_sec1 ? pos_ack[2'b1] | neg_ack[2'b1] && ~err : 1'bz;
+  assign cout_sec=cout_sec1 & ~ cout_sec0 ? pos_ack[2'b1] | neg_ack[2'b1] && ~err : 1'bz;
+  assign cout_sec=cout_sec0 &  cout_sec1 ? pos_ack[2'd2] | neg_ack[2'd2] && ~err : 1'bz;
   adder_CSA #44 csaA(c1,c2,c3,tmp1,tmp2);
-  adder_csa #44 csaB(c4,b,tmp1,tmp3,tmp4);
+  adder_CSA #44 csaB(c4,b,tmp1,tmp3,tmp4);
   adder_CSA #44 csaC(a,tmp3,tmp4,tmpa,tmpb);
   
   adder #(WIDTH) add_mod(tmpa,tmpb[WIDTH-1:0],out[43:0],c_s,1'b0,en,,,,);

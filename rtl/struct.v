@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 `timescale 10ps/1ps
-`include "/home/gorandakov/heptane/rtl/config.veriloghdl"
+`include "../config.v"
 
 `define b3i
 typedef struct packed {
