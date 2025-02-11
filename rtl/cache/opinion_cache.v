@@ -412,11 +412,11 @@ module ccRam_way(
 
   output ErrA,ErrB;
   input write_wen_noins;
-  input [119:0][ADDR_WIDTH-1:0] write_addrE0;
-  input [119:0]write_hitE0; //+1 cycle
-  input [119:0][ADDR_WIDTH-1:0] write_addrO0;
-  input [119:0]write_hitO0; //+1 cycle
-  input [119:0]write_odd0;
+  input [59:0][ADDR_WIDTH-1:0] write_addrE0;
+  input [59:0]write_hitE0; //+1 cycle
+  input [59:0][ADDR_WIDTH-1:0] write_addrO0;
+  input [59:0]write_hitO0; //+1 cycle
+  input [59:0]write_odd0;
 
   reg init;
 
