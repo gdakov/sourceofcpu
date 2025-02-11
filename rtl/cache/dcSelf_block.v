@@ -41,10 +41,10 @@ module dcache1_ram(
   input [3:0] read_nClkEn;
   input [3:0] [ADDR_WIDTH-1:0] read_addr;
   output [3:0] [DATA_WIDTH-1:0] read_data;
-  input [119:0][ADDR_WIDTH-1:0] write_addr;
-  input [119:0][DATA_WIDTH-1:0] write_data;
-  input [119:0] write_wen;
-  input [119:0][8:0] write_ben;
+  input [59:0][ADDR_WIDTH-1:0] write_addr;
+  input [59:0][DATA_WIDTH-1:0] write_data;
+  input [59:0] write_wen;
+  input [59:0][8:0] write_ben;
 
   reg [DATA_WIDTH-1:0] ram [ADDR_COUNT-1:0];
   reg [3:0][ADDR_WIDTH-1:0] read_addr_reg;
@@ -113,16 +113,16 @@ module dcache1_bank(
   output read_err;
   input read_err_in;
 
-  input [119:0][ADDR_WIDTH-1:0] write_addrE0;
-  input [119:0]write_hitE0; //+1 cycle
-  input [119:0][ADDR_WIDTH-1:0] write_addrO0;
-  input [119:0]write_hitO0; //+1 cycle
-  input [119:0]write_bankEn0;
-  input [119:0][4:0] write_begin0;
-  input [119:0][4:0] write_end0;
-  input [119:0][3:0] write_bBen0;
-  input [119:0][3:0] write_enBen0;
-  input [3:0][119:0][DATA_WIDTH-1:0] write_data;
+  input [59:0][ADDR_WIDTH-1:0] write_addrE0;
+  input [59:0]write_hitE0; //+1 cycle
+  input [59:0][ADDR_WIDTH-1:0] write_addrO0;
+  input [59:0]write_hitO0; //+1 cycle
+  input [59:0]write_bankEn0;
+  input [59:0][4:0] write_begin0;
+  input [59:0][4:0] write_end0;
+  input [59:0][3:0] write_bBen0;
+  input [59:0][3:0] write_enBen0;
+  input [3:0][59:0][DATA_WIDTH-1:0] write_data;
   input ins_hit;
   input init;
   
@@ -363,29 +363,29 @@ module dcache1_way(
   inout [7:0] read_hitEi;
   inout [7:0] read_hitOi;
 
-  input [119:0][ADDR_WIDTH-2:0] write_addrE0;
-  input [119:0][ADDR_WIDTH-2:0] write_addrO0;
-  input [119:0][BANK_COUNT-1:0] write_bank0;
-  input [119:0][4:0] write_begin0;
-  input [119:0][4:0] write_end0;
-  input [119:0][3:0] write_bBen0;
-  input [119:0][3:0] write_enBen0;
-  input [119:0]write_clkEn0;
-  input [119:0]write_hit0;
-  input [119:0][1:0] write_pbit0;
-  input [119:0]write_d128_0;
-  output [119:0][1:0] write_hitCl0;
-  output [119:0][1:0] write_dupl0;
-  input [119:0]write_split0;
-  input [119:0]write_odd0;
-  output [119:0] write0_err;
+  input [59:0][ADDR_WIDTH-2:0] write_addrE0;
+  input [59:0][ADDR_WIDTH-2:0] write_addrO0;
+  input [59:0][BANK_COUNT-1:0] write_bank0;
+  input [59:0][4:0] write_begin0;
+  input [59:0][4:0] write_end0;
+  input [59:0][3:0] write_bBen0;
+  input [59:0][3:0] write_enBen0;
+  input [59:0]write_clkEn0;
+  input [59:0]write_hit0;
+  input [59:0][1:0] write_pbit0;
+  input [59:0]write_d128_0;
+  output [59:0][1:0] write_hitCl0;
+  output [59:0][1:0] write_dupl0;
+  input [59:0]write_split0;
+  input [59:0]write_odd0;
+  output [59:0] write0_err;
   
   input write_insert_early;
   input [36:0] write_addr;
   input write_insert;    
   input write_insertExclusive;
   input write_insertDirty;
-  input [3:0][119:0][35:0] write_data;
+  input [3:0][59:0][35:0] write_data;
   input [15:0] write_dataPTR;
   
 
@@ -411,10 +411,10 @@ module dcache1_way(
   wire [5:0] errL;
   wire dirtyE,dirtyO;
   
-  reg [119:0][4:0] write_begin0_reg;
-  reg [119:0][4:0] write_end0_reg;
-  reg [119:0][3:0] write_bBen0_reg;
-  reg [119:0][3:0] write_enBen0_reg;
+  reg [59:0][4:0] write_begin0_reg;
+  reg [59:0][4:0] write_end0_reg;
+  reg [59:0][3:0] write_bBen0_reg;
+  reg [59:0][3:0] write_enBen0_reg;
 
   wire [3:0] read_hitEL;
   wire [3:0] read_hitOL;
@@ -448,27 +448,27 @@ module dcache1_way(
   
   reg read_odd0_reg,read_odd1_reg,read_odd2_reg,read_odd3_reg;
   reg read_split0_reg,read_split1_reg,read_split2_reg,read_split3_reg;
-  reg [119:0] write_odd0_reg,write_odd1_reg;
-  reg [119:0] write_split0_reg,write_split1_reg;
+  reg [59:0] write_odd0_reg,write_odd1_reg;
+  reg [59:0] write_split0_reg,write_split1_reg;
   reg write_insert_reg;
   
   reg read_invalidate_reg;
   
-  wire [119:0] write_reqE0,write_reqO0;
+  wire [59:0] write_reqE0,write_reqO0;
   
-  reg [119:0] write_clkEn0_reg;
-  reg [119:0] write_clkEn0_reg2;
+  reg [59:0] write_clkEn0_reg;
+  reg [59:0] write_clkEn0_reg2;
 
-  reg [119:0][ADDR_WIDTH-2:0] write_addrE0_reg;
-  reg [119:0][ADDR_WIDTH-2:0] write_addrO0_reg;
+  reg [59:0][ADDR_WIDTH-2:0] write_addrE0_reg;
+  reg [59:0][ADDR_WIDTH-2:0] write_addrO0_reg;
   reg [ADDR_WIDTH-2:0] read_addrE0_reg;
   reg [ADDR_WIDTH-2:0] read_addrO0_reg;
   reg read_clkEn0_reg;
-  wire [119:0][1:0] write_hitO;
-  wire [119:0][1:0] write_hitE;
+  wire [59:0][1:0] write_hitO;
+  wire [59:0][1:0] write_hitE;
   reg ins_hit_reg;
  
-  wire [1:0] write_dupl[1:0][119:0];
+  wire [1:0] write_dupl[1:0][59:0];
   
   wire [1:0] read_pbit0P;
   wire [1:0] read_pbit1P;
@@ -550,8 +550,8 @@ module dcache1_way(
           read_bankHit[b],
           read_data[DATA_WIDTH*b+:DATA_WIDTH],
           read_data_in[DATA_WIDTH*b+:DATA_WIDTH],
-          write_addrE0_reg[6:0], write_hitEL[119:0][0] && write_hit0,
-          write_addrO0_reg[6:0], write_hitOL[119:0][0] && write_hit0,
+          write_addrE0_reg[6:0], write_hitEL[59:0][0] && write_hit0,
+          write_addrO0_reg[6:0], write_hitOL[59:0][0] && write_hit0,
           write_bank0[b], 
           write_begin0_reg,write_end0_reg,
           write_bBen0_reg,write_enBen0_reg,
@@ -581,8 +581,8 @@ module dcache1_way(
           read_bankHit[b],
           read_data[DATA_WIDTH*b+:DATA_WIDTH],
           read_data_in[DATA_WIDTH*b+:DATA_WIDTH],
-          write_addrE0_reg[6:0], write_hitEH[119:0][0] && write_hit0,
-          write_addrO0_reg[6:0], write_hitOH[119:0][0] && write_hit0,
+          write_addrE0_reg[6:0], write_hitEH[59:0][0] && write_hit0,
+          write_addrO0_reg[6:0], write_hitOH[59:0][0] && write_hit0,
           write_bank0[b], 
           write_begin0_reg,write_end0_reg,
           write_bBen0_reg,write_enBen0_reg,
