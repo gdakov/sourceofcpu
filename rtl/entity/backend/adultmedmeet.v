@@ -692,6 +692,10 @@ module smallInstr_decoder(
         stsz_out=5'h2;
     end else if (subIsMovOrExt) begin
         stsz_out={1'b1,3'b11,opcode_main[1]};
+    end else if (isMovOrExtB) begin
+        stsz_out={1'b1,2'b1,opcode_main[2:1]};
+    end else if (isImmLoadStore) begin
+        stsz_out={1'b1,3'b11,1'b0};
     end else begin
         stsz_out=5'h1;
     end
@@ -1426,6 +1430,7 @@ module smallInstr_decoder(
       
       trien[19]=magic[1:0]==2'b11 && isImmLoadStore;
       pport[19]=PORT_ALU;
+      poperation[19]=`op_mov64;
       prT_use[19]=1'b1;;
       prB_use[19]=1'b1;
       puseRs[19]=1'b1;
@@ -1585,9 +1590,9 @@ module smallInstr_decoder(
       //verilator lint_off CASEINCOMPLETE
       case(opcode_main)
       8'd183: poperation[26][7:0]=`op_mov64;
-      8'd184: poperation[26][7:0]=`op_mov32;
+      8'd184: poperation[26][7:0]=`op_mov8;
       8'd185: poperation[26][7:0]=`op_mov16;
-      8'd186: poperation[26][7:0]=`op_mov8;
+      8'd186: poperation[26][7:0]=`op_mov32;
       8'd187: poperation[26][7:0]=`op_zxt8_64;
       8'd189: poperation[26][7:0]=`op_sxt8_32;
       endcase
