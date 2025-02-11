@@ -688,12 +688,10 @@ module smallInstr_decoder(
         stsz_out=4'h11;
     end else if (isBasicMUL) begin
         stsz_out=4'h10;
-    end else if (isBasicFPUScalarB && instr[13:10]==4 && instr[9:8]!=3) begin
-        stsz_out=5'h5;
-    end else if (isBasicFPUScalarB) begin
+     end else if (isBasicFPUScalarB) begin
         stsz_out=5'h2;
-    end else if (isBasicFPUScalarC && instr[13:8]==38) begin
-        stsz_out=5'h5;
+    end else if (subIsMovOrExt) begin
+        stsz_out={1'b1,3'b11,opcode_main[1]};
     end else begin
         stsz_out=5'h1;
     end
@@ -808,8 +806,8 @@ module smallInstr_decoder(
        //verilator lint_off CASEINCOMPLETE
       case(opcode_sub)
 	6'h20,6'h29: poperation[1][7:0]=`op_mov64;
-	6'h21: poperation[1][7:0]=`op_mov32;
-	6'h22: poperation[1][7:0]=`op_zxt8_64; 
+	6'h21: poperation[1][7:0]=`op_zxt8_64;
+	6'h22: poperation[1][7:0]=`op_mov32;
 	6'h23: poperation[1][7:0]=`op_zxt16_64;
 	6'h24: poperation[1][7:0]=`op_sxt8_32;
 	6'h25: poperation[1][7:0]=`op_sxt16_32;
@@ -1988,9 +1986,9 @@ opcode_main[0] ? `op_add64 : `op_add32;
       prAlloc[34]=1'b1;
       {poperation[34][10],poperation[34][9:8]}=instr[16:14];
       case(instr[13:8])
-          6'd16: begin poperation[34][7:0]=`fop_addS; pport[34]=PORT_FADD; end
-          6'd17: begin poperation[34][7:0]=`fop_subS; pport[34]=PORT_FADD; end
-          6'd18: begin poperation[34][7:0]=`fop_mulS; pport[34]=PORT_FADD; end
+          6'd16: begin poperation[34][7:0]=`fop_movSPH; pport[34]=PORT_FADD; end
+          6'd17: begin poperation[34][7:0]=`fop_movSPH; pport[34]=PORT_FADD; end
+          6'd18: begin poperation[34][7:0]=`fop_movSPL; pport[34]=PORT_FMUL; end
           6'd19: begin poperation[34][7:0]=`fop_addSPL; pport[34]=PORT_FADD; end
           6'd20: begin poperation[34][7:0]=`fop_subSPL; pport[34]=PORT_FADD; end
           6'd21: begin poperation[34][7:0]=`fop_mulSPL; pport[34]=PORT_FADD; end
@@ -2110,8 +2108,8 @@ opcode_main[0] ? `op_add64 : `op_add32;
       case(instr[13:8])
           6'd32,6'd36: begin poperation[37][7:0]=`fop_cmpDH; pport[37]=PORT_FADD; end
           6'd33,6'd37: begin poperation[37][7:0]=`fop_cmpDL; pport[37]=PORT_FADD; end
-          6'd34,6'd38: begin poperation[37][7:0]=`fop_cmpE; pport[37]=PORT_FADD; prA[37]=rA_reor32; prB[37]=rB_reor32; end
-          6'd35,6'd39: begin poperation[37][7:0]=`fop_cmpS; pport[37]=PORT_FADD; end
+          6'd34,6'd38: begin poperation[37][7:0]=`fop_cmpSL; pport[37]=PORT_FADD; end
+          6'd35,6'd39: begin poperation[37][7:0]=`fop_cmpSH; pport[37]=PORT_FMUL; end
 	  6'd40: begin poperation[37][7:0]=`fop_tblD; pport[37]=PORT_MUL; prA_useF[37]=1'b0; prT_use[37]=1'b1; end
 	  6'd41: begin poperation[37][7:0]=`fop_cvtD; pport[37]=PORT_MUL; prA_useF[37]=1'b0; prT_use[37]=1'b1; end
 	  6'd42: begin poperation[37][7:0]=`fop_cvt32D; pport[37]=PORT_MUL; prA_useF[37]=1'b0; prT_use[37]=1'b1; end
