@@ -18,9 +18,7 @@ limitations under the License.
 `include "../config.v"
 
 `define b3i
-typedef struct packed {
-  logic [7:0] bits;
-} xbit;
+
 
 `define operation_width 13
 `define fpu_op_width 12
