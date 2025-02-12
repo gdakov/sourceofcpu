@@ -120,14 +120,14 @@ module cc_comb (
   reg [IP_WIDTH-6:0] cc_readB_IP_reg;
   
   
-  wire [59:0] readA_dataX0;
-  wire [59:0] cc_readA_dataX0;
+  wire [`wport-1:0] readA_dataX0;
+  wire [`wport-1:0] cc_readA_dataX0;
   wire [14:0] readA_dataXP[3:0];
-  reg [59:0] readA_dataX0_reg;
-  wire [59:0] readB_dataX0;
-  wire [59:0] cc_readB_dataX0;
+  reg [`wport-1:0] readA_dataX0_reg;
+  wire [`wport-1:0] readB_dataX0;
+  wire [`wport-1:0] cc_readB_dataX0;
   wire [14:0] readB_dataXP[3:0];
-  reg [59:0] readB_dataX0_reg;
+  reg [`wport-1:0] readB_dataX0_reg;
   wire [36:0] cc_exp_addr0;  
   reg [36:0] cc_exp_addr0_reg;  
 //  wire [71:0] read_dataY0;

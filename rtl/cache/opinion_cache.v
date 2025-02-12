@@ -384,8 +384,8 @@ module ccRam_way(
   input readA_set_flag;
   output [DATA_WIDTH-1:0] readA_data;
   input [DATA_WIDTH-1:0] readA_data_in;
-  output [59:0] readA_dataX;
-  input [59:0] readA_dataX_in;
+  output [`wport-1:0] readA_dataX;
+  input [`wport-1:0] readA_dataX_in;
   output [36:0] expun_addr;
   input [36:0] expun_addr_in;
   output readA_hit;
@@ -396,8 +396,8 @@ module ccRam_way(
   input readB_set_flag;
   output [DATA_WIDTH-1:0] readB_data;
   input [DATA_WIDTH-1:0] readB_data_in;
-  output [59:0] readB_dataX;
-  input [59:0] readB_dataX_in;
+  output [`wport-1:0] readB_dataX;
+  input [`wport-1:0] readB_dataX_in;
   output readB_hit;
   output [2:0] read_NRU;
   input [2:0] read_NRU_in;
@@ -412,11 +412,11 @@ module ccRam_way(
 
   output ErrA,ErrB;
   input write_wen_noins;
-  input [59:0][ADDR_WIDTH-1:0] write_addrE0;
-  input [59:0]write_hitE0; //+1 cycle
-  input [59:0][ADDR_WIDTH-1:0] write_addrO0;
-  input [59:0]write_hitO0; //+1 cycle
-  input [59:0]write_odd0;
+  input [`wport-1:0][ADDR_WIDTH-1:0] write_addrE0;
+  input [`wport-1:0]write_hitE0; //+1 cycle
+  input [`wport-1:0][ADDR_WIDTH-1:0] write_addrO0;
+  input [`wport-1:0]write_hitO0; //+1 cycle
+  input [`wport-1:0]write_odd0;
 
   reg init;
 
@@ -424,9 +424,9 @@ module ccRam_way(
   wire [DATA_WIDTH-1:0] readB_data_ram;
   reg [IP_WIDTH-6:0] write_IP_reg;
   
-  wire [59:0] readXA_data_ram;
-  wire [59:0] readXB_data_ram;
-  reg [59:0] writeX_data;
+  wire [`wport-1:0] readXA_data_ram;
+  wire [`wport-1:0] readXB_data_ram;
+  reg [`wport-1:0] writeX_data;
   wire [6:0] writeX_addr;
 
   integer k,j;
@@ -451,20 +451,20 @@ module ccRam_way(
   generate
     if (~INDEX[0]) begin
         assign readA_data=~(({DATA_WIDTH{readA_hit}} & readA_data_ram) | readA_data_in);
-        assign readA_dataX=~(({60{readA_hit}} & readXA_data_ram[59:0]) | readA_dataX_in);
+        assign readA_dataX=~(({60{readA_hit}} & readXA_data_ram[`wport-1:0]) | readA_dataX_in);
         assign expun_addr=~(({37{write_hit}} & expun_naddr[36:0]) | expun_addr_in);
         assign readB_data=~(({DATA_WIDTH{readB_hit}} & readB_data_ram) | readB_data_in);
-        assign readB_dataX=~(({60{readB_hit}} & readXB_data_ram[59:0]) | readB_dataX_in);
+        assign readB_dataX=~(({60{readB_hit}} & readXB_data_ram[`wport-1:0]) | readB_dataX_in);
         assign readAZ_data=~(({DATA_WIDTH/8{readAZ_hit}} & readAZ_data_ram) | readAZ_data_in);
         assign readAZ_dataX=~(({5{readAZ_hit}} & readXAZ_data_ram[4:0]) | readAZ_dataX_in);
         assign readBZ_data=~(({DATA_WIDTH/8{readBZ_hit}} & readBZ_data_ram) | readBZ_data_in);
         assign readBZ_dataX=~(({5{readBZ_hit}} & readXBZ_data_ram[4:0]) | readBZ_dataX_in);
     end else begin
         assign readA_data=~(~({DATA_WIDTH{readA_hit}} & readA_data_ram) & readA_data_in);
-        assign readA_dataX=~(~({60{readA_hit}} & readXA_data_ram[59:0]) & readA_dataX_in);
+        assign readA_dataX=~(~({60{readA_hit}} & readXA_data_ram[`wport-1:0]) & readA_dataX_in);
         assign expun_addr=~(~({37{write_hit}} & expun_naddr[36:0]) & expun_addr_in);
         assign readB_data=~(~({DATA_WIDTH{readB_hit}} & readB_data_ram) & readB_data_in);
-        assign readB_dataX=~(~({60{readB_hit}} & readXB_data_ram[59:0]) & readB_dataX_in);
+        assign readB_dataX=~(~({60{readB_hit}} & readXB_data_ram[`wport-1:0]) & readB_dataX_in);
         assign readAZ_data=~(~({DATA_WIDTH/8{readAZ_hit}} & readAZ_data_ram) & readAZ_data_in);
         assign readAZ_dataX=~(~({5{readAZ_hit}} & readXAZ_data_ram[4:0]) & readAZ_dataX_in);
         assign readBZ_data=~(~({DATA_WIDTH/8{readBZ_hit}} & readBZ_data_ram) & readBZ_data_in);
@@ -661,13 +661,13 @@ module ccRam_half(
   input [IP_WIDTH-2:0] readA_IP;
   input readA_set_flag;
   output [DATA_WIDTH-1:0] readA_data;
-  output [59:0] readA_dataX;
+  output [`wport-1:0] readA_dataX;
   output [7:0] readA_hit_way;
   input readB_clkEn;
   input [IP_WIDTH-2:0] readB_IP;
   input readB_set_flag;
   output [DATA_WIDTH-1:0] readB_data;
-  output [59:0] readB_dataX;
+  output [`wport-1:0] readB_dataX;
   output [7:0] readB_hit_way;
   output [36:0] expun_addr;
   output readA_hit,readB_hit,expun_hit;
@@ -731,9 +731,9 @@ module ccRam_half(
       end
       for(k=0;k<9;k=k+1) begin : way_gen
           wire [DATA_WIDTH-1:0] readA_dataP;
-          wire [59:0] readA_dataXP;
+          wire [`wport-1:0] readA_dataXP;
           wire [DATA_WIDTH-1:0] readB_dataP;
-          wire [59:0] readB_dataXP;
+          wire [`wport-1:0] readB_dataXP;
           wire [2:0] read_NRUP;
           wire [36:0] expun_addrP;
           if (k) ccRam_way #(k-1) way_mod(

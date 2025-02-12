@@ -34,9 +34,9 @@ module ccTag_ram(
 
   input clk;
   input rst;
-  input [59:0]read_clkEn;
-  input [59:0][ADDR_WIDTH-1:0] read_addr;
-  output [59:0][DATA_WIDTH-1:0] read_data;
+  input [`wport-1:0]read_clkEn;
+  input [`wport-1:0][ADDR_WIDTH-1:0] read_addr;
+  output [`wport-1:0][DATA_WIDTH-1:0] read_data;
   input [ADDR_WIDTH-1:0] write_addr;
   input [DATA_WIDTH-1:0] write_data;
   input write_wen;
@@ -128,10 +128,10 @@ module ccTag(
 
   input clk;
   input rst;
-  input [59:0] read_clkEn;
-  input [59:0] [PHYS_BITS-8:0] read_phys_addr;
-  output [59:0] read_hit;
-  output [59:0] read_err;
+  input [`wport-1:0] read_clkEn;
+  input [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr;
+  output [`wport-1:0] read_hit;
+  output [`wport-1:0] read_err;
   
   input [PHYS_BITS-8:0] write_phys_addr;
   input write_wen;
@@ -147,25 +147,25 @@ module ccTag(
   inout [7:0] EI;
   input init;
 
-  wire [59:0][PHYS_BITS-8:0] tag_paddr;
-  wire [59:0]tag_valid;
+  wire [`wport-1:0][PHYS_BITS-8:0] tag_paddr;
+  wire [`wport-1:0]tag_valid;
 
 
-  wire [59:0][DATA_WIDTH-1:0] read_data;
-  wire [59:0][DATA_WIDTH-1:0] readW_data;
-  wire [59:0][DATA_WIDTH-1:0] read_dataW;
+  wire [`wport-1:0][DATA_WIDTH-1:0] read_data;
+  wire [`wport-1:0][DATA_WIDTH-1:0] readW_data;
+  wire [`wport-1:0][DATA_WIDTH-1:0] read_dataW;
 
   wire [DATA_WIDTH-1:0] write_data_way;
   wire [DATA_WIDTH-1:0] write_data_new;
   
-  reg [59:0] read_clkEn_reg;
-  reg [59:0] read_clkEn_reg2;
+  reg [`wport-1:0] read_clkEn_reg;
+  reg [`wport-1:0] read_clkEn_reg2;
 
-  reg [59:0] read_hit_reg;
+  reg [`wport-1:0] read_hit_reg;
 
-  reg [59:0] [PHYS_BITS-8:0] read_phys_addr_reg;
+  reg [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr_reg;
   reg [PHYS_BITS-8:0] write_phys_addr_reg;
-  reg [59:0] [PHYS_BITS-8:0] read_phys_addr_reg2;
+  reg [`wport-1:0] [PHYS_BITS-8:0] read_phys_addr_reg2;
  
 
   wire [2:0] read_NRUr;
