@@ -19,6 +19,7 @@ limitations under the License.
 //`define goldium_edition 1
 `define goldium_edition 0
 
-`define wport 59
-//`define wport 119 //earth level + on same cpu
-//`define wport 26 //no part matter / goldium. allows high core count without too much expenses
+`define wport 60
+//`define wport 120 //earth level + on same cpu
+//`define wport 27 //no part matter / goldium. allows high core count without too much expenses
+//`define wport 37 // part matter laptop
