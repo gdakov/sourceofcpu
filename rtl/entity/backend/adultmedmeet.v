@@ -264,7 +264,7 @@ module smallInstr_decoder(
 
   wire [3:0] oddmode=instrQ[`instrQ_attr];
 
-  signed reg [46:0] boogie_baboogie;
+	signed reg [31:0] boogie_baboogie;
 
   reg [OPERATION_WIDTH-1:0] poperation[TRICNT_TOP-1:0];
   reg [REG_WIDTH-2:0] prA[TRICNT_TOP-1:0];
