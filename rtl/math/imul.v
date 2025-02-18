@@ -125,9 +125,11 @@ module imul(
   assign Res0[64:0]=is_swp_reg & ~alt_jxcross_reg ? {1'b0,swp_res_reg} : 65'bz;
   assign swp_res=is_swp[0] ? {32'b0,R[7:0],R[15:8],R[23:16],R[31:24]}: 
 	  {R[7:0],R[15:8],R[23:16],R[31:24],R[39:32],R[47:40],R[55:48],R[63:56]};
-
+  assign Res0=upper_reg ? simdres : 64'bz;
+	
   addrcalcsec_mul msec(R[63:0],C[11:0],attr,sec_res);
 
+  assign simdres=A[15:0]*B[15:0]+A[31:16]*B[31:16]+A[47:32]*B[47:32]+A[63:48]*B[63:48];
   wire [64:0] dec_res;
   reg is_dec,is_dec_reg;
   reg is_mlb;
