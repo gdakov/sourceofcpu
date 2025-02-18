@@ -823,10 +823,10 @@ endmodule
 
 
 (* align_width="a,b,out" *) module addsub_alu(a,b,out,sub,cin,en,sxtEn,pooh,ben,cout,cout4,cout8LL,cout16,cout32,cout_sec,ndiff,cout44);
-  parameter WIDTH=64;
-  input [64:0] a;
-  input [64:0] b;
-  output [65:0] out;
+  parameter WIDTH=68;
+	input [67:0] a;
+	input [67:0] b;
+	output [68:0] out;
   input [5:0] sub;
   input cin;
   input en;
@@ -905,23 +905,23 @@ endmodule
   
   genvar i;
   
-  assign bitEn={{21{ben[1]&en}},{11{ben[0]&en}},{16{en}},{8{ben[-1]&en}},{8{ben[-2]&en}}};
+	assign bitEn={{21{ben[1]&en}},{11{ben[0]&en}},{17{en}},{9{ben[-1]&en}},{8{ben[-2]&en}}};
   
   
 
-  assign ptr=b[64] && ~sub[1] ? b[63:0] : a[63:0];
-  assign unptr=b[64] && ~sub[1] ? xa[43:4] : xb[43:4];
+	assign ptr=b[67] && ~sub[1] ? b[66:0] : a[66:0];
+	assign unptr=b[67] && ~sub[1] ? xa[46:4] : xb[46:4];
   
   assign cout_sec[0]=pos_ack[{1'b0,cout_sec0}] | neg_ack[{1'b0,cout_sec0}] && ~err;
   assign cout_sec[1]=pos_ack[3] & ~err;
   assign cout_sec[2]=neg_ack[3] & ~err;
 
-  assign err=a[64] & b[64] & ~sub[1] || ~a[64] & b[64] & sub[1] || a[64] & ~sub[3] || b[64] & ~sub[0];
+	assign err=a[67] & b[67] & ~sub[1] || ~a[67] & b[67] & sub[1] || a[67] & ~sub[3] || b[67] & ~sub[0];
 
-  assign is_ptr=a[64]|b[64] && ~(a[64]&b[64]&sub[1]) && ben==2'b01;
+	assign is_ptr=a[67]|b[67] && ~(a[67]&b[67]&sub[1]) && ben==2'b01;
 
-  assign out[64]=en ? is_ptr : 1'bz;
-  assign out[65]=en ? ^out[64:0] : 1'bz;
+	assign out[67]=en ? is_ptr : 1'bz;
+	assign out[68]=en ? ^out[67:0] : 1'bz;
 //65th bit offset by 4 phases in regfile and alu!
   /* magic voodo adder trickery to get sign extend with no extra delay.
      forwarder does set upper bits A=all0 B=all1 to make it all carry propagate.
@@ -929,22 +929,22 @@ endmodule
      Not completely free- probably one row of cells increase.
   */
 
-  assign X1=sxtEn ? {{32{X[31]}},X[31:0]} : X;
-  assign nX1=sxtEn ? {{32{nX[31]}},nX[31:0]} : nX;
+	assign X1=sxtEn ? {{33{X[31]}},X[33:0]} : X;
+	assign nX1=sxtEn ? {{33{nX[31]}},nX[33:0]} : nX;
 
-  assign exbits=is_ptr ? ptr[63:44]: ~&ben[-1:-2] ? a[63:44] : 20'b0;
+	assign exbits=is_ptr ? ptr[66:48]: ~&ben[-1:-2] ? a[66:48] : 20'b0;
 
-  assign exbits2=~&ben[-1:2] ? a[43:32] : 12'b0;;
+	assign exbits2=~&ben[-1:2] ? a[47:32] : 13'b0;
 
   addrcalcsec_shift nih_mod(ptr[`ptr_exp],C[41:10],cout_sec0);
   addrcalcsec_check_upper3 hin_mod(ptr,{unptr[43:11],1'b0},33'b0,pos_ack,neg_ack,pos_flip,neg_flip,
     ndiff);
   
-  nand_array #(WIDTH) nG0_mod(xa[63:0],xb,nG0);
-  nor_array #(WIDTH)  nP0_mod(xa[63:0],xb,nP0);
+	nand_array #(WIDTH) nG0_mod(xa[66:0],xb,nG0);
+	nor_array #(WIDTH)  nP0_mod(xa[66:0],xb,nP0);
   
-  xor_array #(WIDTH) X_mod (xa[63:0],xb,X);
-  nxor_array #(WIDTH) nX_mod (xa[63:0],xb,nX);
+	xor_array #(WIDTH) X_mod (xa[66:0],xb,X);
+	nxor_array #(WIDTH) nX_mod (xa[66:0],xb,nX);
 
   assign C1={C[WIDTH-2:0],sub[1]};
   assign nC1[WIDTH-1:1]=nC[WIDTH-2:0];
@@ -952,12 +952,12 @@ endmodule
   
   assign cout=C[WIDTH-1];
  
-  assign xb=sub[0] ? b[63:0] : 64'bz; 
-  assign xb=sub[1] ? ~b[63:0] : 64'bz; 
-  assign xb=sub[2] ? {b[62:0],1'b0} : 64'bz; 
-  assign xa=sub[3] ? a[63:0] : 64'bz;
-  assign xa=sub[4] ? {a[61:0],2'b0} : 64'bz;
-  assign xa=sub[5] ? {a[60:0],3'b0} : 64'bz;
+	assign xb=sub[0] ? b[66:0] : 67'bz; 
+	assign xb=sub[1] ? ~b[66:0] : 67'bz; 
+	assign xb=sub[2] ? {b[65:0],1'b0} : 67'bz; 
+	assign xa=sub[3] ? a[66:0] : 67'bz;
+	assign xa=sub[4] ? {a[64:0],2'b0} : 67'bz;
+	assign xa=sub[5] ? {a[63:0],3'b0} : 67'bz;
 
 
 
@@ -1032,10 +1032,10 @@ endmodule
       end
     if (WIDTH>32)
       begin
-        nand_array #(WIDTH-32)  nP6_mod(P5[WIDTH-1:32],P5[WIDTH-33:0],nP6[WIDTH-1:32]);
-        not_array #(32) nP6_tail_mod(P5[31:0],nP6[31:0]);
-        aoi21_array #(WIDTH-32) nG6_mod(P5[WIDTH-1:32],G5[WIDTH-33:0],G5[WIDTH-1:32],nG6[WIDTH-1:32]);
-        not_array #(32) nG6_tail_mod(G5[31:0],nG6[31:0]);
+	      nand_array #(WIDTH-36)  nP6_mod(P5[WIDTH-1:36],P5[WIDTH-37:0],nP6[WIDTH-1:36]);
+	      not_array #(32) nP6_tail_mod(P5[35:4],nP6[35:4]);
+	      aoi21_array #(WIDTH-36) nG6_mod(P5[WIDTH-1:36],G5[WIDTH-37:0],G5[WIDTH-1:36],nG6[WIDTH-1:36]);
+	      not_array #(32) nG6_tail_mod(G5[35:4],nG6[35:4]);
       end
     else if (WIDTH>16)
       begin
@@ -1043,7 +1043,7 @@ endmodule
         not_array #(32) C_mod(nC,C);
       end
 
-    if (WIDTH>64)
+	  if (WIDTH>68)
       begin
         nor_array #(WIDTH-64)  P7_mod(nP6[WIDTH-1:64],nP6[WIDTH-65:0],P7[WIDTH-1:64]);
         not_array #(64) P7_tail_mod(nP6[63:0],P7[63:0]);
@@ -1055,10 +1055,13 @@ endmodule
       end
     else if (WIDTH>32)
       begin
-        aoi21_array #(32) C_mod(P5[31:0],{32{cin}},G5[31:0],nC[31:0]);
-        not_array #(32) nC_mod(nC[31:0],C[31:0]);
-        aoi21_array #(WIDTH-32) Cx_mod(P5[WIDTH-1:32],{WIDTH-32{C[31]}},G5[WIDTH-1:32],nC[WIDTH-1:32]);
-        not_array #(WIDTH-32) nCx_mod(nC[WIDTH-1:32],C[WIDTH-1:32]);
+	      aoi21_array #(4) C_mod(P5[3:0],cin,G5[3:0],C[3:0];
+        not_array #(32) nC_mod(nC[3:0],C[3:0]);
+				     aoi21_array #(WIDTH-32) Cx_mod(P5[66:34],{WIDTH-32{C[33]}},G5[WIDTH-1:34],nC[WIDTH-1:34]);
+				     not_array #(WIDTH-32) nCx_mod(nC[WIDTH-1:34],C[WIDTH-1:34]);
+				     aoi21_array #(4) C_mod(P5[33:4],C[3],G5[33:4],C[33:4];
+        not_array #(32) nC_mod(nC[3:0],C[3:0]);
+			     
       end
       
     if (WIDTH>=4) assign cout4=C[3];
