@@ -1442,7 +1442,7 @@ endmodule
   parameter PTRBIT=0;
   input [64:0] a;//base
   input [64:0] b;
-  input [64:0] c; //index
+  input [31:0] c; //index
   //output [64:0] ptr;
   output [63+PTRBIT:0] out;
   output cout_sec;
@@ -1472,8 +1472,8 @@ endmodule
 
   wire [43:0] c_s;
 
-  wire [63+PTRBIT:0] ptr=(c[64] & shift==4'b1) ? c[63+PTRBIT:0] : a[63+PTRBIT:0]|{c[63+PTRBIT:44]&~{21{swppr}},44'b0};
-  wire [64:0] unptr=(c[64] & shift==4'b1) ? a[63:0] : {32'b0,c[31:0]};
+  wire [63+PTRBIT:0] ptr=a[63+PTRBIT:0]|{c[63+PTRBIT:44]&~{21{swppr}},44'b0};
+  wire [64:0] unptr={32'b0,c[31:0]};
 
   genvar k;
   
@@ -1481,11 +1481,12 @@ endmodule
   assign nxorab=a[43:0]~^b[43:0];
   assign andab=a[43:0]&b[43:0];
   assign orab=a[43:0]|b[43:0];
-  assign c1={c[43:0]} & {44{shift[0]}};
-  assign c2={c[42:0],1'b0} & {44{shift[1]}};
-  assign c3={c[41:0],2'b0} & {44{shift[2]}};
-  assign c4={c[40:0],3'b0} & {44{shift[3]}};
-  
+  assign c1={c,3'b0} & {32{shift[0]}};
+  assign c2={c,4'b0} & {32{shift[1]}};
+  assign c3={c,4'b0} & {32{shift[2]}};
+  assign c4={c,5'b0} & {32{shift[3]}};
+  assign c5={c[14:10],10'b0,c[9:5],9'b0,c[4:0],1'b0}&{45{!shift}};
+	
   assign tmp2[0]=1'b0;
 
   assign cout_sec=~ cout_sec0 & ~ cout_sec1 ? pos_ack[2'b0] | neg_ack[2'b0] && ~err : 1'bz;
@@ -1493,8 +1494,12 @@ endmodule
   assign cout_sec=cout_sec1 & ~ cout_sec0 ? pos_ack[2'b1] | neg_ack[2'b1] && ~err : 1'bz;
   assign cout_sec=cout_sec0 &  cout_sec1 ? pos_ack[2'd2] | neg_ack[2'd2] && ~err : 1'bz;
   adder_CSA #44 csaA(c1,c2,c3,tmp1,tmp2);
-  adder_CSA #44 csaB(c4,b,tmp1,tmp3,tmp4);
-  adder_CSA #44 csaC(a,tmp3,tmp4,tmpa,tmpb);
+	//adder_CSA #44 csaB(c4,b,c5,tmp3,tmp4);
+	adder_CSA #44 csaF(tmp1,tmp2,c4,tmpx,tmpy);
+	adder_CSA #44 csaG(tmpx,tmpy,c5,tmp3,tmp4);
+	adder_CSA #44 csaD(c4,c5, a,tmpp,tmpq);
+	adder_CSA #44 csaE(tmp1,tmp2,tmpp,tmpm,tmpn);
+	adder_CSA #44 csaC(tmpm,tmpn,tmpq,tmpb);
   
   adder #(WIDTH) add_mod(tmpa,tmpb[WIDTH-1:0],out[43:0],c_s,1'b0,en,,,,);
   assign out[63+PTRBIT:44]=en ? ptr[63+PTRBIT:44] : 'z;
