@@ -38,8 +38,8 @@ module imul(
   input [12:0] op_prev;
   input [2:0] rmode;
   input en;
-  input [64:0] R;
-  input [64:0] C;
+  input signed [64:0] R;
+  input signed [64:0] C;
   input [3:0] attr;
   output [64:0] Res;
   output reg alt;
