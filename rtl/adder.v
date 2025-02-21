@@ -955,11 +955,7 @@ endmodule
 	assign xb=sub[0] ? b[66:0] : 67'bz; 
 	assign xb=sub[1] ? ~b[66:0] : 67'bz; 
 	assign xb=sub[2] ? {b[65:0],1'b0} : 67'bz; 
-	assign xa=sub[3] ? a[66:0] : 67'bz;
-	assign xa=sub[4] ? {a[64:0],2'b0} : 67'bz;
-	assign xa=sub[5] ? {a[63:0],3'b0} : 67'bz;
-
-
+	assign xa= a[66:0];
 
   generate
         
